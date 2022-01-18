@@ -1,0 +1,172 @@
+// SPDX-FileCopyrightText: 2021 Open Networking Foundation
+//
+// SPDX-License-Identifier: LicenseRef-ONF-Member-Only-1.0
+
+submodule onf-vcs {
+  belongs-to onf-enterprise { prefix ent; }
+
+  import ietf-yang-types{ prefix yg; }
+  import onf-aether-types{ prefix at; }
+
+  include onf-upf;
+  include onf-device-group;
+  include onf-application;
+
+  organization "Open Networking Foundation.";
+  contact "Scott Baker";
+  description
+    "An Aether Virtual Cellular Service (VCS) is
+     used to connect devices with applications";
+
+  revision "2022-01-14" {
+    description "Refactored as submodule";
+    reference "RFC 6020";
+  }
+
+  revision "2021-09-10" {
+    description "An Aether Virtual Cellular Service";
+    reference "RFC 6087";
+  }
+
+  typedef vcs-id {
+        type yg:yang-identifier {
+            length 1..32;
+        }
+    description "The typedef for vcs-id";
+  }
+
+  grouping vcs {
+    description "The vcs grouping";
+
+    list vcs {
+      key "vcs-id";
+      description
+        "List of virtual cellular services";
+
+      leaf vcs-id {
+        type vcs-id;
+        description "ID for this vcs.";
+      }
+
+      leaf display-name {
+        type string {
+            length 1..80;
+        }
+        description "display name to use in GUI or CLI";
+      }
+
+      list device-group {
+        key "device-group";
+        leaf device-group {
+          type leafref {
+            path "../../../device-group/dg-id";
+          }
+          description
+            "Link to device group";
+        }
+        leaf enable {
+          type boolean;
+          default true;
+          description
+            "Enable this device group";
+        }
+        description
+          "A list of device groups. Groups will only participate in
+           the VCS if the enable field is set to True";
+      }
+
+      leaf default-behavior {
+        type at:behavior;
+        mandatory true;
+        description
+          "Default behavior if no filter rules match";
+      }
+
+      list filter {
+        key "application";
+        leaf application {
+          type leafref {
+            path "../../../../application/app-id";
+          }
+          mandatory true;
+          description
+            "Link to application";
+        }
+        leaf priority {
+          type at:priority;
+          default 0;
+          description
+            "Priority of this application";
+        }
+        leaf allow {
+          type boolean;
+          default true;
+          description
+            "Allow or deny this application";
+        }
+        description
+          "A list of applications to allow and/or deny. Rules are executed in
+           priority order. The first rule to match will determine the fate
+           of the packet.";
+      }
+
+      leaf upf {
+        type leafref {
+          path "../../upf/upf-id";
+        }
+        description
+          "Link to user plane that implements this vcf";
+      }
+
+      leaf description {
+        type at:description;
+        description "description of this vcs";
+      }
+
+      // the following are populated from the template
+      leaf sst {
+        type at:sst;
+        mandatory true;
+        description "Slice/Service type. Immutable.";
+      }
+
+      leaf sd {
+        type at:sd;
+        mandatory true;
+        description "Slice differentiator. Immutable.";
+      }
+
+      container slice {
+        description "Per-Slice QOS Settings";
+        container mbr {
+          description "Maximum bitrate";
+          leaf uplink {
+            type at:bitrate;
+            units bps;
+            description "Per-Slice MBR uplink data rate in bps";
+          }
+
+          leaf downlink {
+            type at:bitrate;
+            units bps;
+            description "Per-Slice MBR downlink data rate in bps";
+          }
+
+          leaf uplink-burst-size {
+            type at:burst;
+            units bytes;
+            description "Per-Slice Uplink burst size";
+          }
+
+          leaf downlink-burst-size {
+            type at:burst;
+            units bytes;
+            description "Per-Slice Downlink burst size";
+          }
+        }
+      }
+
+      // end of items populated from the template
+    }
+  }
+}

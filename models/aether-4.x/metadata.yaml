@@ -1,0 +1,47 @@
+name: aether
+version: 4.0.18
+modules:
+  - name: onf-aether-types
+    organization: Open Networking Foundation
+    revision: 2022-01-18
+    file: onf-aether-types.yang
+  - name: onf-aether-application
+    organization: Open Networking Foundation
+    revision: 2022-01-18
+    file: onf-application.yang
+  - name: onf-aether-connectivity-service
+    organization: Open Networking Foundation
+    revision: 2022-01-18
+    file: onf-connectivity-service.yang
+  - name: onf-aether-device-group
+    organization: Open Networking Foundation
+    revision: 2022-01-18
+    file: onf-device-group.yang
+  - name: onf-aether-enterprise
+    organization: Open Networking Foundation
+    revision: 2022-01-18
+    file: onf-enterprise.yang
+  - name: onf-aether-ip-domain
+    organization: Open Networking Foundation
+    revision: 2022-01-18
+    file: onf-ip-domain.yang
+  - name: onf-aether-site
+    organization: Open Networking Foundation
+    revision: 2022-01-18
+    file: onf-site.yang
+  - name: onf-aether-template
+    organization: Open Networking Foundation
+    revision: 2022-01-18
+    file: onf-template.yang
+  - name: onf-aether-traffic-class
+    organization: Open Networking Foundation
+    revision: 2022-01-18
+    file: onf-traffic-class.yang
+  - name: onf-aether-upf
+    organization: Open Networking Foundation
+    revision: 2022-01-18
+    file: onf-upf.yang
+  - name: onf-aether-vcs
+    organization: Open Networking Foundation
+    revision: 2022-01-18
+    file: onf-vcs.yang
