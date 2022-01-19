@@ -19,7 +19,7 @@ package main
 import (
 	"context"
 	"fmt"
-	"github.com/onosproject/config-models/models/aether-4.0.18/api"
+	"github.com/onosproject/aether-models/models/aether-4.0.18/api"
 	"github.com/onosproject/config-models/pkg/xpath/navigator"
 	"github.com/onosproject/onos-api/go/onos/config/admin"
 	"github.com/onosproject/onos-lib-go/pkg/logging"
