@@ -1,4 +1,4 @@
-name: aether
+name: aether-4.x
 version: 4.0.18
 modules:
   - name: onf-aether-types
