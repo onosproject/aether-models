@@ -1,0 +1,129 @@
+module: onf-connectivity-service
+  +--rw connectivity-services
+     +--rw connectivity-service* [id]
+        +--rw id                    connectivity-service-id
+        +--rw display-name?         string
+        +--rw description?          at:description
+        +--rw core-5g-endpoint?     inet:uri
+        +--rw acc-prometheus-url?   inet:uri
+
+module: onf-enterprise
+  +--rw enterprises
+     +--rw enterprise* [ent-id]
+        +--rw ent-id                  enterprise-id
+        +--rw display-name?           string
+        +--rw description?            at:description
+        +--rw connectivity-service* [connectivity-service]
+        |  +--rw connectivity-service    -> /cs:connectivity-services/connectivity-service/id
+        |  +--rw enabled?                boolean
+        +--rw application* [app-id]
+        |  +--rw app-id          application-id
+        |  +--rw display-name?   string
+        |  +--rw description?    at:description
+        |  +--rw address         ietf:host
+        |  +--rw endpoint* [endpoint-id]
+        |     +--rw endpoint-id      yg:yang-identifier
+        |     +--rw port-start?      ietf:port-number
+        |     +--rw port-end?        ietf:port-number
+        |     +--rw protocol?        at:protocol
+        |     +--rw mbr
+        |     |  +--rw uplink?     at:bitrate
+        |     |  +--rw downlink?   at:bitrate
+        |     +--rw traffic-class?   -> ../../../traffic-class/tc-id
+        |     +--rw display-name?    string
+        +--rw traffic-class* [tc-id]
+        |  +--rw tc-id           traffic-class-id
+        |  +--rw display-name?   string
+        |  +--rw arp?            at:arp
+        |  +--rw qci?            at:qci
+        |  +--rw pelr?           at:pelr
+        |  +--rw pdb?            at:pdb
+        |  +--rw description?    at:description
+        +--rw template* [tp-id]
+        |  +--rw tp-id               template-id
+        |  +--rw display-name?       string
+        |  +--rw sst?                at:sst
+        |  +--rw sd?                 at:sd
+        |  +--rw slice
+        |  |  +--rw mbr
+        |  |     +--rw uplink?                at:bitrate
+        |  |     +--rw downlink?              at:bitrate
+        |  |     +--rw uplink-burst-size?     at:burst
+        |  |     +--rw downlink-burst-size?   at:burst
+        |  +--rw default-behavior    at:behavior
+        |  +--rw description?        at:description
+        +--rw site* [site-id]
+           +--rw site-id            site-id
+           +--rw display-name?      string
+           +--rw small-cell* [small-cell-id]
+           |  +--rw small-cell-id    yg:yang-identifier
+           |  +--rw address?         inet:host
+           |  +--rw tac              at:tac
+           |  +--rw enable?          boolean
+           |  +--rw display-name?    string
+           +--rw monitoring
+           |  +--rw edge-cluster-prometheus-url?      inet:uri
+           |  +--rw edge-monitoring-prometheus-url?   inet:uri
+           |  +--rw edge-device* [edge-device-id]
+           |     +--rw edge-device-id    yg:yang-identifier
+           |     +--rw display-name?     string
+           |     +--rw description?      at:description
+           +--rw imsi-definition
+           |  +--rw mcc           at:mcc
+           |  +--rw mnc           at:mnc
+           |  +--rw enterprise    at:ent
+           |  +--rw format        string
+           +--rw description?       at:description
+           +--rw upf* [upf-id]
+           |  +--rw upf-id             upf-id
+           |  +--rw address            inet:host
+           |  +--rw port               inet:port-number
+           |  +--rw config-endpoint?   inet:uri
+           |  +--rw display-name?      string
+           |  +--rw description?       at:description
+           +--rw vcs* [vcs-id]
+           |  +--rw vcs-id              vcs-id
+           |  +--rw display-name?       string
+           |  +--rw device-group* [device-group]
+           |  |  +--rw device-group    -> ../../../device-group/dg-id
+           |  |  +--rw enable?         boolean
+           |  +--rw default-behavior    at:behavior
+           |  +--rw filter* [application]
+           |  |  +--rw application    -> ../../../../application/app-id
+           |  |  +--rw priority?      at:priority
+           |  |  +--rw allow?         boolean
+           |  +--rw upf?                -> ../../upf/upf-id
+           |  +--rw description?        at:description
+           |  +--rw sst                 at:sst
+           |  +--rw sd                  at:sd
+           |  +--rw slice
+           |     +--rw mbr
+           |        +--rw uplink?                at:bitrate
+           |        +--rw downlink?              at:bitrate
+           |        +--rw uplink-burst-size?     at:burst
+           |        +--rw downlink-burst-size?   at:burst
+           +--rw device-group* [dg-id]
+           |  +--rw dg-id           device-group-id
+           |  +--rw description?    at:description
+           |  +--rw display-name?   string
+           |  +--rw imsis* [imsi-id]
+           |  |  +--rw imsi-id            yg:yang-identifier
+           |  |  +--rw imsi-range-from?   uint64
+           |  |  +--rw imsi-range-to?     uint64
+           |  |  +--rw display-name?      string
+           |  +--rw ip-domain?      -> ../../ip-domain/ip-id
+           |  +--rw device
+           |     +--rw mbr
+           |     |  +--rw uplink      at:bitrate
+           |     |  +--rw downlink    at:bitrate
+           |     +--rw traffic-class    -> ../../../../traffic-class/tc-id
+           +--rw ip-domain* [ip-id]
+              +--rw ip-id            ip-domain-id
+              +--rw display-name?    string
+              +--rw dnn              at:dnn
+              +--rw dns-primary?     inet:ip-address
+              +--rw dns-secondary?   inet:ip-address
+              +--rw subnet           inet:ipv4-prefix
+              +--rw admin-status?    at:admin-status
+              +--rw mtu?             at:mtu
+              +--rw description?     at:description

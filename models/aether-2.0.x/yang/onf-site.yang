@@ -1,0 +1,179 @@
+// SPDX-FileCopyrightText: 2021 Open Networking Foundation
+//
+// SPDX-License-Identifier: LicenseRef-ONF-Member-Only-1.0
+
+submodule onf-site {
+  belongs-to onf-enterprise { prefix ent; }
+
+  import ietf-inet-types { prefix inet; }
+  import ietf-yang-types{ prefix yg; }
+  import onf-aether-types{ prefix at; }
+
+  include onf-upf;
+  include onf-vcs;
+  include onf-device-group;
+  include onf-ip-domain;
+
+  organization "Open Networking Foundation.";
+  contact "Scott Baker";
+  description
+    "An Aether site is a location where resources are deployed.";
+
+  revision "2022-01-14" {
+    description "Refactored as submodule";
+    reference "RFC 6020";
+  }
+
+  revision "2021-09-10" {
+    description "An Aether Site.";
+    reference "RFC 6087";
+  }
+
+  typedef site-id {
+        type yg:yang-identifier {
+            length 1..32;
+        }
+    description "The typedef for site-id";
+  }
+
+  grouping site {
+    description "The site grouping";
+
+    list site {
+      key "site-id";
+      description
+        "List of site";
+
+      leaf site-id {
+        type site-id;
+        description "ID for this site.";
+      }
+
+      leaf display-name {
+        type string {
+            length 1..80;
+        }
+        description "display name to use in GUI or CLI";
+      }
+
+      list small-cell {
+        key "small-cell-id";
+        leaf small-cell-id {
+          type yg:yang-identifier;
+          description
+            "Id of small cell";
+        }
+        leaf address {
+          type inet:host;
+          description
+            "Address of small cell";
+        }
+        leaf tac {
+          type at:tac;
+          mandatory true;
+          description
+              "Type Allocation Code";
+        }
+        leaf enable {
+          type boolean;
+          default true;
+          description
+            "Enable this small cell";
+        }
+        leaf display-name {
+          type string {
+              length 1..80;
+          }
+          description "display name to use in GUI or CLI";
+        }
+        description
+          "List of small cell addresses";
+      }
+
+      container monitoring {
+        leaf edge-cluster-prometheus-url {
+          type inet:uri;
+          description
+            "URL of edge cluster prometheus";
+        }
+        leaf edge-monitoring-prometheus-url {
+          type inet:uri;
+          description
+            "URL of monitoring prometheus";
+        }
+        list edge-device {
+          key "edge-device-id";
+          leaf edge-device-id {
+            type yg:yang-identifier;
+            description
+              "Id of edge monitoring device";
+          }
+          leaf display-name {
+            type string {
+                length 1..80;
+            }
+            description "display name to use in GUI or CLI";
+          }
+          leaf description {
+            type at:description;
+            description "description of this site";
+          }
+          description
+            "List of edge monitoring devices";
+        }
+        description
+            "container for monitoring";
+      }
+
+      container imsi-definition {
+        leaf mcc {
+          type at:mcc;
+          mandatory true;
+          description "mobile country code";
+        }
+        leaf mnc {
+          type at:mnc;
+          mandatory true;
+          description "mobile network code";
+        }
+        leaf enterprise {
+          type at:ent;
+          mandatory true;
+          description "enterprise-specific identifier";
+        }
+        leaf format {
+          type string {
+            length 15;
+          }
+          mandatory true;
+          description "IMSI format specifier, describes how fields are packed into an IMSI. Must be exactly 15 characters long. For example, CCCNNNEEESSSSSS.";
+          // Format specifiers:
+          //   C = MCC
+          //   N = MNC
+          //   E = Enterprise
+          //   0 = Forced Zero
+          //   S = Subscriber ID
+          // default is
+          //   3 digit MCC
+          //   3 digit MNC
+          //   3 digit enterprise ID
+          //   5 digit subscriber ID
+        }
+        description "container for imsi-defination";
+      }
+
+      leaf description {
+        type at:description;
+        description "description of this site";
+      }
+
+      uses upf;
+
+      uses vcs;
+
+      uses device-group;
+
+      uses ip-domain;
+    }
+  }
+}

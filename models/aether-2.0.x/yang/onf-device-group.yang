@@ -1,0 +1,136 @@
+// SPDX-FileCopyrightText: 2021 Open Networking Foundation
+//
+// SPDX-License-Identifier: LicenseRef-ONF-Member-Only-1.0
+
+submodule onf-device-group {
+  belongs-to onf-enterprise { prefix ent; }
+
+  import ietf-yang-types{ prefix yg; }
+  import onf-aether-types { prefix at; }
+
+  include onf-ip-domain;
+  include onf-traffic-class;
+
+  organization "Open Networking Foundation.";
+  contact "Scott Baker";
+  description
+    "An aether device group represents a list of device IMSIS.
+     This list is expressed as a set of ranges,
+         [(from_imsi, to_imsi),
+          (from_imsi, to_imsi),
+          ...].
+     Each device group belongs to a site and has associated
+     with it an ip-profile that determines the IP address
+     and DNS settings that apply to devices within the
+     group";
+
+  revision "2022-01-14" {
+    description "Refactored as submodule";
+    reference "RFC 6020";
+  }
+
+  revision "2021-06-02" {
+    description "An Aether Device Group";
+    reference "RFC 6087";
+  }
+
+  typedef device-group-id {
+        type yg:yang-identifier {
+            length 1..32;
+        }
+    description "The typedef for device-group-id";
+  }
+
+  grouping device-group {
+    description "The device-group grouping";
+
+    list device-group {
+      key "dg-id";
+      description
+        "List of device groups";
+
+      leaf dg-id {
+        type device-group-id;
+        description "ID for this device group.";
+      }
+
+      leaf description {
+        type at:description;
+        description "description of this device group";
+      }
+
+      leaf display-name {
+        type string {
+            length 1..80;
+        }
+        description "display name to use in GUI or CLI";
+      }
+
+      list imsis {
+        // TODO: imsi-range-from cannot be used as a list index
+        key "imsi-id";
+        leaf imsi-id {
+          type yg:yang-identifier;
+          description
+              "Id of this imsi-range";
+        }
+        leaf imsi-range-from {
+          type uint64;
+          description
+              "value of imsi-range-from";
+        }
+        leaf imsi-range-to {
+          type uint64;
+          description
+              "value of imsi-range-to";
+        }
+        leaf display-name {
+          type string {
+              length 1..80;
+          }
+          description "display name to use in GUI or CLI";
+        }
+        description
+          "List of imsi ranges that comprise this group. It's acceptable for
+           a range to degenerate to being a singleton";
+      }
+
+      leaf ip-domain {
+        type leafref {
+          path "../../ip-domain/ip-id";
+        }
+        description
+          "Link to ip-domain settings that determine the pool of IP addresses,
+           as well as the domain resolver settings to use";
+      }
+
+      container device {
+        description "Per-device QOS Settings";
+        container mbr {
+          description "Maximum bitrate";
+          leaf uplink {
+            type at:bitrate;
+            units bps;
+            mandatory true;
+            description "Per-device MBR uplink data rate in bps";
+          }
+
+          leaf downlink {
+            type at:bitrate;
+            units bps;
+            mandatory true;
+            description "Per-device MBR downlink data rate in bps";
+          }
+        }
+        leaf traffic-class {
+          type leafref {
+            path "../../../../traffic-class/tc-id";
+          }
+          mandatory true;
+          description
+            "Link to traffic class";
+        }
+      }
+    }
+  }
+}
