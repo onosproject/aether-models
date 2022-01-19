@@ -3,15 +3,15 @@
 FROM onosproject/golang-build:v1.0 as build
 
 ENV GO111MODULE=on
-COPY . /models/aether-4.0.18
-RUN cd /models/aether-4.0.18 && make build
+COPY . /models/aether-4.x-4.0.18
+RUN cd /models/aether-4.x-4.0.18 && make build
 
 FROM alpine:3.11
 RUN apk add libc6-compat
 
 USER nobody
 
-COPY --from=build /models/aether-4.0.18/_bin/aether-4.0.18 /usr/local/bin/aether-4.0.18
+COPY --from=build /models/aether-4.x-4.0.18/_bin/aether-4.x-4.0.18 /usr/local/bin/aether-4.x-4.0.18
 
-ENTRYPOINT ["aether-4.0.18"]
+ENTRYPOINT ["aether-4.x-4.0.18"]
 CMD ["5152"]

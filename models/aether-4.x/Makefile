@@ -11,7 +11,7 @@ all: help
 
 help: # @HELP Print the command options
 	@echo
-	@echo "\033[0;31m    Model Plugin: aether \033[0m"
+	@echo "\033[0;31m    Model Plugin: aether-4.x \033[0m"
 	@echo
 	@grep -E '^.*: .* *# *@HELP' $(MAKEFILE_LIST) \
     | sort \
@@ -21,21 +21,21 @@ help: # @HELP Print the command options
     '
 
 image: # @HELP Build the docker image (available parameters: DOCKER_REPOSITORY, VERSION)
-	docker build . -t ${DOCKER_REPOSITORY}aether:${VERSION}
+	docker build . -t ${DOCKER_REPOSITORY}aether-4.x:${VERSION}
 
 build: # @HELP Build the executable (available parameters: VERSION)
 	go mod tidy
-	go build -o _bin/aether-${VERSION} ./plugin
+	go build -o _bin/aether-4.x-${VERSION} ./plugin
 
 test: build # @HELP Run the unit tests
 	go test ./...
 
 publish: image  # @HELP Builds and publish the docker image (available parameters: DOCKER_REPOSITORY, VERSION)
-	docker push ${DOCKER_REPOSITORY}aether:${VERSION}
+	docker push ${DOCKER_REPOSITORY}aether-4.x:${VERSION}
 
 kind-only: # @HELP Loads the docker image into the kind cluster  (available parameters: KIND_CLUSTER_NAME, DOCKER_REPOSITORY, VERSION)
 	@if [ "`kind get clusters`" = '' ]; then echo "no kind cluster found" && exit 1; fi
-	kind load docker-image --name ${KIND_CLUSTER_NAME} ${DOCKER_REPOSITORY}aether:${VERSION}
+	kind load docker-image --name ${KIND_CLUSTER_NAME} ${DOCKER_REPOSITORY}aether-4.x:${VERSION}
 
 kind: # @HELP build the docker image and loads it into the currently configured kind cluster (available parameters: KIND_CLUSTER_NAME, DOCKER_REPOSITORY, VERSION)
 kind: image kind-only

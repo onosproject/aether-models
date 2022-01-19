@@ -1,5 +1,7 @@
 SHELL 			  = bash -e -o pipefail
 KIND_CLUSTER_NAME ?= kind
+DOCKER_USER       ?=
+DOCKER_PASSWORD   ?=
 
 .PHONY: models
 
@@ -17,13 +19,13 @@ help: # @HELP Print the command options
 models: clean# @HELP Generate Golang code for all the models
 	@cd models && for model in *; do echo -e "Generating $$model:\n"; docker run -v $$(pwd)/$$model:/config-model onosproject/model-compiler:latest; echo -e "\n\n"; done
 
-build-models: models # @HELP Build Docker containers for all the models
+docker-build: models # @HELP Build Docker containers for all the models
 	@cd models && for model in *; do echo -e "Buildind container for $$model:\n"; pushd $$model; make image; popd; echo -e "\n\n"; done
 
-publish-models:	# @HELP Publish Docker containers for all the models
+docker-push: # @HELP Publish Docker containers for all the models
 	@cd models && for model in *; do pushd $$model; make publish; popd; done
 
-kind-models: # @HELP Load Docker containers for all the models in a kind cluster (use: KIND_CLUSTER_NAME to customize the cluster name)
+kind-load: # @HELP Load Docker containers for all the models in a kind cluster (use: KIND_CLUSTER_NAME to customize the cluster name)
 	@cd models && for model in *; do pushd $$model; make kind; popd; done
 
 yang-lint: # @HELP Lint the yang models
@@ -38,3 +40,15 @@ clean:	# @HELP Removes the generated code
 
 test: yang-lint models # @HELP Make sure the generated code has been committed
 	@bash test/generated.sh
+
+docker-login:
+ifdef DOCKER_USER
+ifdef DOCKER_PASSWORD
+	echo ${DOCKER_PASSWORD} | docker login -u ${DOCKER_USER} --password-stdin
+else
+	@echo "DOCKER_USER is specified but DOCKER_PASSWORD is missing"
+	@exit 1
+endif
+endif
+
+jenkins-publish: docker-build docker-login docker-push# @HELP Target used by Jenkins to publish docker images

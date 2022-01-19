@@ -19,7 +19,7 @@ package main
 import (
 	"context"
 	"fmt"
-	"github.com/onosproject/config-models/models/aether-4.0.18/api"
+	"github.com/onosproject/config-models/models/aether-4.x-4.0.18/api"
 	"github.com/onosproject/config-models/pkg/xpath/navigator"
 	"github.com/onosproject/onos-api/go/onos/config/admin"
 	"github.com/onosproject/onos-lib-go/pkg/logging"
@@ -110,7 +110,7 @@ func (s server) GetModelInfo(ctx context.Context, request *admin.ModelInfoReques
 	log.Infof("Received model info request: %+v", request)
 	return &admin.ModelInfoResponse{
 		ModelInfo: &admin.ModelInfo{
-			Name:           "aether",
+			Name:           "aether-4.x",
 			Version:        "4.0.18",
 			ModelData:      modelData,
 			GetStateMode:   0,
@@ -162,7 +162,7 @@ func (s server) Validate(ygotModel *ygot.ValidatedGoStruct, opts ...ygot.Validat
 	deviceDeref := *ygotModel
 	device, ok := deviceDeref.(*api.Device)
 	if !ok {
-		return fmt.Errorf("Unable to convert model aether-4.0.18")
+		return fmt.Errorf("Unable to convert model aether-4.x-4.0.18")
 	}
 	return device.Validate()
 }
