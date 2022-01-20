@@ -17,6 +17,24 @@ module onf-aether-types {
     reference "RFC 6087";
   }
 
+  typedef imsi {
+      type uint64 {
+      }
+    description "International Mobile Subscriber Identity";
+  }
+
+  typedef imei {
+      type uint64 {
+      }
+    description "International Mobile Equipment Identity";
+  }
+
+  typedef iccid {
+      type uint64 {
+      }
+    description "Integrated Circuit Card ID";
+  }
+
   typedef bitrate {
       type uint64 {
       }

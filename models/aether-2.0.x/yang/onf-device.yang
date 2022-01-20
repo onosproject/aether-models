@@ -1,0 +1,72 @@
+// SPDX-FileCopyrightText: 2021 Open Networking Foundation
+//
+// SPDX-License-Identifier: LicenseRef-ONF-Member-Only-1.0
+
+submodule onf-device {
+  belongs-to onf-enterprise { prefix ent; }
+
+  import ietf-yang-types{ prefix yg; }
+  import onf-aether-types { prefix at; }
+  include onf-sim-card;
+
+  organization "Open Networking Foundation.";
+    contact "Scott Baker";
+    description
+      "A Aether Device...";
+
+  revision "2022-01-19" {
+    description "An Aether Device";
+    reference "RFC 6087";
+  }
+
+  typedef device-id {
+        type yg:yang-identifier {
+            length 1..32;
+        }
+    description "The typedef for device-id";
+  }
+
+  grouping device {
+    description "The top level container";
+
+    list device {
+      key "dev-id";
+      unique "imei";
+      description
+        "List of devices";
+
+      leaf dev-id {
+        type device-id;
+        description "ID for this device.";
+      }
+
+      leaf imei {
+        type at:imei;
+        description
+           "IMEI for this device";
+      }
+
+      leaf description {
+        type at:description;
+        description "description of this device";
+      }
+
+      leaf display-name {
+        type string {
+            length 1..80;
+        }
+        description "display name to use in GUI or CLI";
+      }
+
+      // TODO: Device Type
+
+      leaf sim-card {
+        type leafref {
+            path "../../sim-card/sim-id";
+        }
+        description
+          "Link to simcard";
+      }
+    }
+  }
+}
