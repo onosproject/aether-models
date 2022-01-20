@@ -1,0 +1,115 @@
+// SPDX-FileCopyrightText: 2021 Open Networking Foundation
+//
+// SPDX-License-Identifier: LicenseRef-ONF-Member-Only-1.0
+
+submodule onf-priority-traffic-rule {
+  belongs-to onf-enterprise { prefix ent; }
+
+  import ietf-yang-types{ prefix yg; }
+  import onf-aether-types{ prefix at; }
+  include onf-device;
+  include onf-traffic-class;
+  include onf-application;
+
+  organization "Open Networking Foundation.";
+  contact "Scott Baker";
+  description
+    "The aether traffic class associates qos constants
+     with a named class of service";
+
+  revision "2022-01-19" {
+    description "An Aether Priority Traffic Rule";
+    reference "RFC 6087";
+  }
+
+  typedef priority-traffic-rule-id {
+        type yg:yang-identifier {
+            length 1..32;
+        }
+    description "The typedef for priority traffic rule id";
+  }
+
+  grouping priority-traffic-rule {
+    description "The top level container";
+
+    list priority-traffic-rule {
+      key "ptr-id";
+      unique "device endpoint";
+      description
+        "List of priority traffic rules";
+
+      leaf ptr-id {
+        type priority-traffic-rule-id;
+        description "ID for this priority traffic class.";
+      }
+
+      leaf display-name {
+        type string {
+            length 1..80;
+        }
+        description "display name to use in GUI or CLI";
+      }
+
+      leaf device {
+        type leafref {
+          path "../../device/dev-id";
+        }
+        mandatory true;
+        description
+          "Link to device";
+      }
+
+      leaf endpoint {
+        type leafref {
+          path "../../../application/endpoint/endpoint-id";
+        }
+        mandatory true;
+        description
+          "Link to application";
+      }
+
+      container mbr {
+        description "Maximum bitrate";
+        leaf uplink {
+          type at:bitrate;
+          units bps;
+          description "Per-Device per-Application MBR uplink data rate in bps";
+        }
+
+        leaf downlink {
+          type at:bitrate;
+          units bps;
+          description "Per-Device per application MBR downlink data rate in bps";
+        }
+      }
+
+      container gbr {
+        description "Guaranteed bitrate";
+        leaf uplink {
+          type at:bitrate;
+          units bps;
+          description "Per-Device per-Application GBR uplink data rate in bps";
+        }
+
+        leaf downlink {
+          type at:bitrate;
+          units bps;
+          description "Per-Device per application GBR downlink data rate in bps";
+        }
+      }
+
+      leaf traffic-class {
+        type leafref {
+          path "../../../traffic-class/tc-id";
+        }
+        description
+          "Link to traffic class";
+      }
+
+      leaf description {
+        type at:description;
+        description "description of this priority traffic rule";
+      }
+    }
+  }
+}

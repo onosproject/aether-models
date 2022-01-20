@@ -16,14 +16,22 @@ module onf-enterprise {
   include onf-device-group;
   include onf-ip-domain;
   include onf-application;
+  include onf-sim-card;
   include onf-traffic-class;
   include onf-template;
+  include onf-device;
+  include onf-priority-traffic-rule;
 
   organization "Open Networking Foundation.";
   contact "Scott Baker";
   description
     "An Aether Enterprise is an administration entity that
      has ownership of resrouces.";
+
+  revision "2022-01-19" {
+    description "Sim-card, Device, and Priority-Traffic-Rule Support";
+    reference "RFC 6020";
+  }
 
   revision "2022-01-14" {
     description "Refactored to work with submodules";

@@ -9,6 +9,9 @@ submodule onf-site {
   import ietf-yang-types{ prefix yg; }
   import onf-aether-types{ prefix at; }
 
+  include onf-device;
+  include onf-priority-traffic-rule;
+  include onf-sim-card;
   include onf-upf;
   include onf-vcs;
   include onf-device-group;
@@ -166,6 +169,12 @@ submodule onf-site {
         type at:description;
         description "description of this site";
       }
+
+      uses device;
+
+      uses priority-traffic-rule;
+
+      uses sim-card;
 
       uses upf;
 
