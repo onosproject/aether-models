@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: LicenseRef-ONF-Member-Only-1.0
 
-submodule onf-vcs {
+submodule onf-slice {
   belongs-to onf-enterprise { prefix ent; }
 
   import ietf-yang-types{ prefix yg; }
@@ -15,7 +15,7 @@ submodule onf-vcs {
   organization "Open Networking Foundation.";
   contact "Scott Baker";
   description
-    "An Aether Virtual Cellular Service (VCS) is
+    "An Aether Slice is
      used to connect devices with applications";
 
   revision "2022-01-14" {
@@ -24,28 +24,28 @@ submodule onf-vcs {
   }
 
   revision "2021-09-10" {
-    description "An Aether Virtual Cellular Service";
+    description "An Aether Slice";
     reference "RFC 6087";
   }
 
-  typedef vcs-id {
+  typedef slice-id {
         type yg:yang-identifier {
             length 1..32;
         }
-    description "The typedef for vcs-id";
+    description "The typedef for slice-id";
   }
 
-  grouping vcs {
-    description "The vcs grouping";
+  grouping slice {
+    description "The slice grouping";
 
-    list vcs {
-      key "vcs-id";
+    list slice {
+      key "slice-id";
       description
-        "List of virtual cellular services";
+        "List of Slices";
 
-      leaf vcs-id {
-        type vcs-id;
-        description "ID for this vcs.";
+      leaf slice-id {
+        type slice-id;
+        description "ID for this slice.";
       }
 
       leaf display-name {
@@ -72,7 +72,7 @@ submodule onf-vcs {
         }
         description
           "A list of device groups. Groups will only participate in
-           the VCS if the enable field is set to True";
+           the Slice if the enable field is set to True";
       }
 
       leaf default-behavior {
@@ -120,7 +120,7 @@ submodule onf-vcs {
 
       leaf description {
         type at:description;
-        description "description of this vcs";
+        description "description of this slice";
       }
 
       // the following are populated from the template
@@ -136,33 +136,30 @@ submodule onf-vcs {
         description "Slice differentiator. Immutable.";
       }
 
-      container slice {
-        description "Per-Slice QOS Settings";
-        container mbr {
-          description "Maximum bitrate";
-          leaf uplink {
-            type at:bitrate;
-            units bps;
-            description "Per-Slice MBR uplink data rate in bps";
-          }
+      container mbr {
+        description "Per slice Maximum Bit Rate";
+        leaf uplink {
+          type at:bitrate;
+          units bps;
+          description "Per-Slice MBR uplink data rate in bps";
+        }
 
-          leaf downlink {
-            type at:bitrate;
-            units bps;
-            description "Per-Slice MBR downlink data rate in bps";
-          }
+        leaf downlink {
+          type at:bitrate;
+          units bps;
+          description "Per-Slice MBR downlink data rate in bps";
+        }
 
-          leaf uplink-burst-size {
-            type at:burst;
-            units bytes;
-            description "Per-Slice Uplink burst size";
-          }
+        leaf uplink-burst-size {
+          type at:burst;
+          units bytes;
+          description "Per-Slice Uplink burst size";
+        }
 
-          leaf downlink-burst-size {
-            type at:burst;
-            units bytes;
-            description "Per-Slice Downlink burst size";
-          }
+        leaf downlink-burst-size {
+          type at:burst;
+          units bytes;
+          description "Per-Slice Downlink burst size";
         }
       }
 
