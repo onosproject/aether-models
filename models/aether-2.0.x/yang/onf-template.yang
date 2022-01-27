@@ -11,9 +11,9 @@ submodule onf-template {
   organization "Open Networking Foundation.";
   contact "Scott Baker";
   description
-    "The aether vcs-template holds common parameters used
-     by a virtual connectivity service. Templates are used to
-     populate a VCS.";
+    "The aether slice-template holds common parameters used
+     by a Slice. Templates are used to
+     populate a Slice.";
 
   revision "2022-01-14" {
     description "Refactored as submodule";
@@ -21,7 +21,7 @@ submodule onf-template {
   }
 
   revision "2021-09-10" {
-    description "An Aether Virtual Cellular Service Template";
+    description "An Aether Slice Template";
     reference "RFC 6087";
   }
 
@@ -38,11 +38,11 @@ submodule onf-template {
     list template {
       key "tp-id";
       description
-        "List of vcs templates";
+        "List of slice templates";
 
       leaf tp-id {
         type template-id;
-        description "ID for this vcs template.";
+        description "ID for this slice template.";
       }
 
       leaf display-name {
@@ -62,33 +62,30 @@ submodule onf-template {
         description "Slice differentiator";
       }
 
-      container slice {
-        description "Per-Slice QOS Settings";
-        container mbr {
-          description "Maximum bitrate";
-          leaf uplink {
-            type at:bitrate;
-            units bps;
-            description "Per-Slice MBR uplink data rate in bps";
-          }
+      container mbr {
+        description "Per-Slice QOS Settings Maximum Bit Rate";
+        leaf uplink {
+          type at:bitrate;
+          units bps;
+          description "Per-Slice MBR uplink data rate in bps";
+        }
 
-          leaf downlink {
-            type at:bitrate;
-            units bps;
-            description "Per-Slice MBR downlink data rate in bps";
-          }
+        leaf downlink {
+          type at:bitrate;
+          units bps;
+          description "Per-Slice MBR downlink data rate in bps";
+        }
 
-          leaf uplink-burst-size {
-            type at:burst;
-            units bytes;
-            description "Per-Slice Uplink burst size";
-          }
+        leaf uplink-burst-size {
+          type at:burst;
+          units bytes;
+          description "Per-Slice Uplink burst size";
+        }
 
-          leaf downlink-burst-size {
-            type at:burst;
-            units bytes;
-            description "Per-Slice Downlink burst size";
-          }
+        leaf downlink-burst-size {
+          type at:burst;
+          units bytes;
+          description "Per-Slice Downlink burst size";
         }
       }
 
@@ -101,7 +98,7 @@ submodule onf-template {
 
       leaf description {
         type at:description;
-        description "description of this vcs template";
+        description "description of this slice template";
       }
     }
   }

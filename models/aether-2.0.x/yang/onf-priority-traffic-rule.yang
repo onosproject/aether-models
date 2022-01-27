@@ -59,13 +59,22 @@ submodule onf-priority-traffic-rule {
           "Link to device";
       }
 
+      leaf application {
+        type leafref {
+          path "../../../application/app-id";
+        }
+        mandatory true;
+        description
+          "Link to application";
+      }
+
       leaf endpoint {
         type leafref {
           path "../../../application/endpoint/endpoint-id";
         }
         mandatory true;
         description
-          "Link to application";
+          "Link to endpoint in application";
       }
 
       container mbr {

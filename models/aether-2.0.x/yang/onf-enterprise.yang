@@ -12,7 +12,7 @@ module onf-enterprise {
 
   include onf-site;
   include onf-upf;
-  include onf-vcs;
+  include onf-slice;
   include onf-device-group;
   include onf-ip-domain;
   include onf-application;

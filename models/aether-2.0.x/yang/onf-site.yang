@@ -13,7 +13,7 @@ submodule onf-site {
   include onf-priority-traffic-rule;
   include onf-sim-card;
   include onf-upf;
-  include onf-vcs;
+  include onf-slice;
   include onf-device-group;
   include onf-ip-domain;
 
@@ -178,7 +178,7 @@ submodule onf-site {
 
       uses upf;
 
-      uses vcs;
+      uses slice;
 
       uses device-group;
 

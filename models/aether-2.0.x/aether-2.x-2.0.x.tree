@@ -44,12 +44,11 @@ module: onf-enterprise
         |  +--rw display-name?       string
         |  +--rw sst?                at:sst
         |  +--rw sd?                 at:sd
-        |  +--rw slice
-        |  |  +--rw mbr
-        |  |     +--rw uplink?                at:bitrate
-        |  |     +--rw downlink?              at:bitrate
-        |  |     +--rw uplink-burst-size?     at:burst
-        |  |     +--rw downlink-burst-size?   at:burst
+        |  +--rw mbr
+        |  |  +--rw uplink?                at:bitrate
+        |  |  +--rw downlink?              at:bitrate
+        |  |  +--rw uplink-burst-size?     at:burst
+        |  |  +--rw downlink-burst-size?   at:burst
         |  +--rw default-behavior    at:behavior
         |  +--rw description?        at:description
         +--rw site* [site-id]
@@ -84,6 +83,7 @@ module: onf-enterprise
            |  +--rw ptr-id           priority-traffic-rule-id
            |  +--rw display-name?    string
            |  +--rw device           -> ../../device/dev-id
+           |  +--rw application      -> ../../../application/app-id
            |  +--rw endpoint         -> ../../../application/endpoint/endpoint-id
            |  +--rw mbr
            |  |  +--rw uplink?     at:bitrate
@@ -106,8 +106,8 @@ module: onf-enterprise
            |  +--rw config-endpoint?   inet:uri
            |  +--rw display-name?      string
            |  +--rw description?       at:description
-           +--rw vcs* [vcs-id]
-           |  +--rw vcs-id              vcs-id
+           +--rw slice* [slice-id]
+           |  +--rw slice-id            slice-id
            |  +--rw display-name?       string
            |  +--rw device-group* [device-group]
            |  |  +--rw device-group    -> ../../../device-group/dg-id
@@ -121,12 +121,11 @@ module: onf-enterprise
            |  +--rw description?        at:description
            |  +--rw sst                 at:sst
            |  +--rw sd                  at:sd
-           |  +--rw slice
-           |     +--rw mbr
-           |        +--rw uplink?                at:bitrate
-           |        +--rw downlink?              at:bitrate
-           |        +--rw uplink-burst-size?     at:burst
-           |        +--rw downlink-burst-size?   at:burst
+           |  +--rw mbr
+           |     +--rw uplink?                at:bitrate
+           |     +--rw downlink?              at:bitrate
+           |     +--rw uplink-burst-size?     at:burst
+           |     +--rw downlink-burst-size?   at:burst
            +--rw device-group* [dg-id]
            |  +--rw dg-id           device-group-id
            |  +--rw description?    at:description
