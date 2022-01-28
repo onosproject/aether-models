@@ -20,12 +20,18 @@ help: # @HELP Print the command options
         {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}; \
     '
 
-image: # @HELP Build the docker image (available parameters: DOCKER_REPOSITORY, VERSION)
+image: openapi # @HELP Build the docker image (available parameters: DOCKER_REPOSITORY, VERSION)
 	docker build . -t ${DOCKER_REPOSITORY}aether-4.x:${VERSION}
 
 build: # @HELP Build the executable (available parameters: VERSION)
 	go mod tidy
-	go build -o _bin/aether-4.x-${VERSION} ./plugin
+	go build -o _bin/aether-4.x ./plugin
+
+.PHONY: openapi
+openapi: # @HELP Generate OpenApi specs
+	go mod download
+	go mod tidy
+	go run openapi/openapi-gen.go -o openapi.yaml
 
 test: build # @HELP Run the unit tests
 	go test ./...

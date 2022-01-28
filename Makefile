@@ -1,7 +1,8 @@
-SHELL 			  = bash -e -o pipefail
-KIND_CLUSTER_NAME ?= kind
-DOCKER_USER       ?=
-DOCKER_PASSWORD   ?=
+SHELL 			  		= bash -e -o pipefail
+KIND_CLUSTER_NAME 		?= kind
+DOCKER_USER       		?=
+DOCKER_PASSWORD   		?=
+MODEL_COMPILER_VERSION  ?= v0.9.7
 
 .PHONY: models
 
@@ -17,9 +18,12 @@ help: # @HELP Print the command options
 	'
 
 models: clean# @HELP Generate Golang code for all the models
-	@cd models && for model in *; do echo -e "Generating $$model:\n"; docker run -v $$(pwd)/$$model:/config-model onosproject/model-compiler:latest; echo -e "\n\n"; done
+	@cd models && for model in *; do echo -e "Generating $$model:\n"; docker run -v $$(pwd)/$$model:/config-model onosproject/model-compiler:${MODEL_COMPILER_VERSION}; echo -e "\n\n"; done
 
-docker-build: models # @HELP Build Docker containers for all the models
+models-openapi: # @HELP generates the openapi specs for the models
+	@cd models && for model in *; do echo -e "Buildind OpenApi Specs for $$model:\n"; pushd $$model; make openapi; popd; echo -e "\n\n"; done
+
+docker-build: models models-openapi # @HELP Build Docker containers for all the models
 	@cd models && for model in *; do echo -e "Buildind container for $$model:\n"; pushd $$model; make image; popd; echo -e "\n\n"; done
 
 docker-push: # @HELP Publish Docker containers for all the models
@@ -38,7 +42,7 @@ pyang-tool: # @HELP Install the Pyang tool if needed
 clean:	# @HELP Removes the generated code
 	@cd models && for model in *; do pushd $$model; rm -f Dockerfile Makefile *.tree; popd; done;
 
-test: yang-lint models # @HELP Make sure the generated code has been committed
+test: yang-lint models models-openapi# @HELP Make sure the generated code has been committed
 	@bash test/generated.sh
 
 docker-login:

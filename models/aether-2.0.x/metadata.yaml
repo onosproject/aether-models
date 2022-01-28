@@ -1,5 +1,6 @@
 name: aether-2.x
 version: 2.0.x
+goPackage: github.com/onosproject/aether-models/models/aether-2.x
 modules:
   - name: onf-aether-connectivity-service
     organization: Open Networking Foundation
