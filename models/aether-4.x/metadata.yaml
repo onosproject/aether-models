@@ -1,6 +1,6 @@
 name: aether-4.x
 version: 4.0.18
-goPackage: github.com/onosproject/aether-models/models/aether-2.x
+goPackage: github.com/onosproject/aether-models/models/aether-4.x
 modules:
   - name: onf-aether-types
     organization: Open Networking Foundation

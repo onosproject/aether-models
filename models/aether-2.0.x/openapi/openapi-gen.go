@@ -4,7 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"github.com/ghodss/yaml"
-	"github.com/onosproject/aether-models/models/aether-2.x/api"
+	"github.com/onosproject/aether-models/models/aether-2.0.x/api"
 	openapi_gen "github.com/onosproject/config-models/pkg/openapi-gen"
 	"io/ioutil"
 	"os"
