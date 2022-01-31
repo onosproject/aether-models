@@ -127,17 +127,17 @@ module: onf-enterprise
            |     +--rw uplink-burst-size?     at:burst
            |     +--rw downlink-burst-size?   at:burst
            +--rw device-group* [dg-id]
-           |  +--rw dg-id           device-group-id
-           |  +--rw description?    at:description
-           |  +--rw display-name?   string
+           |  +--rw dg-id            device-group-id
+           |  +--rw description?     at:description
+           |  +--rw display-name?    string
            |  +--rw device* [device-id]
            |  |  +--rw device-id    -> ../../../device/dev-id
            |  |  +--rw enable?      boolean
-           |  +--rw ip-domain?      -> ../../ip-domain/ip-id
+           |  +--rw ip-domain?       -> ../../ip-domain/ip-id
            |  +--rw mbr
-           |     +--rw uplink           at:bitrate
-           |     +--rw traffic-class    -> ../../../../traffic-class/tc-id
-           |     +--rw downlink         at:bitrate
+           |  |  +--rw uplink      at:bitrate
+           |  |  +--rw downlink    at:bitrate
+           |  +--rw traffic-class    -> ../../../traffic-class/tc-id
            +--rw ip-domain* [ip-id]
               +--rw ip-id            ip-domain-id
               +--rw display-name?    string
