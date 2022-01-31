@@ -103,21 +103,21 @@ submodule onf-device-group {
           description "Per-device MBR uplink data rate in bps";
         }
 
-        leaf traffic-class {
-          type leafref {
-            path "../../../../traffic-class/tc-id";
-          }
-          mandatory true;
-          description
-            "Link to traffic class";
-        }
-
         leaf downlink {
           type at:bitrate;
           units bps;
           mandatory true;
           description "Per-device MBR downlink data rate in bps";
         }
+      }
+
+      leaf traffic-class {
+        type leafref {
+          path "../../../traffic-class/tc-id";
+        }
+        mandatory true;
+        description
+          "Link to traffic class";
       }
     }
   }
