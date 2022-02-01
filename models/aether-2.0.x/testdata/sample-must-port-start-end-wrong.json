@@ -1,0 +1,45 @@
+{
+  "enterprises": {
+    "enterprise": [
+      {
+        "ent-id": "acme",
+        "description": "ACME Corporation",
+        "display-name": "ACME Corp",
+        "application": [
+          {
+            "app-id": "acme-dataacquisition",
+            "description": "Data Acquisition",
+            "display-name": "DA",
+            "address": "da.acme.com",
+            "endpoint": [
+              {
+                "endpoint-id": "da1",
+                "display-name": "data acquisition endpoint",
+                "port-end": 1230,
+                "port-start": 1230,
+                "protocol": "TCP",
+                "mbr": {
+                  "uplink": "2000000",
+                  "downlink": "1000000"
+                },
+                "traffic-class": "class-2"
+              },
+              {
+                "endpoint-id": "da2",
+                "display-name": "data acquisition endpoint",
+                "port-end": 1010,
+                "port-start": 1020,
+                "protocol": "TCP",
+                "mbr": {
+                  "uplink": "4000000",
+                  "downlink": "3000000"
+                },
+                "traffic-class": "class-2"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
