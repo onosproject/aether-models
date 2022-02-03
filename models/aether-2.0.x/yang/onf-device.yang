@@ -30,32 +30,22 @@ submodule onf-device {
     description "The top level container";
 
     list device {
-      key "dev-id";
+      key "device-id";
       unique "imei";
       description
         "List of devices";
 
-      leaf dev-id {
+      leaf device-id {
         type device-id;
         description "ID for this device.";
       }
+
+      uses at:desc-display-name;
 
       leaf imei {
         type at:imei;
         description
            "IMEI for this device";
-      }
-
-      leaf description {
-        type at:description;
-        description "description of this device";
-      }
-
-      leaf display-name {
-        type string {
-            length 1..80;
-        }
-        description "display name to use in GUI or CLI";
       }
 
       // TODO: Device Type

@@ -33,26 +33,21 @@ submodule onf-priority-traffic-rule {
     description "The top level container";
 
     list priority-traffic-rule {
-      key "ptr-id";
+      key "priority-traffic-rule-id";
       unique "device endpoint";
       description
         "List of priority traffic rules";
 
-      leaf ptr-id {
+      leaf priority-traffic-rule-id {
         type priority-traffic-rule-id;
         description "ID for this priority traffic class.";
       }
 
-      leaf display-name {
-        type string {
-            length 1..80;
-        }
-        description "display name to use in GUI or CLI";
-      }
+      uses at:desc-display-name;
 
       leaf device {
         type leafref {
-          path "../../device/dev-id";
+          path "../../../device/device-id";
         }
         mandatory true;
         description
@@ -61,7 +56,7 @@ submodule onf-priority-traffic-rule {
 
       leaf application {
         type leafref {
-          path "../../../application/app-id";
+          path "../../../../application/application-id";
         }
         mandatory true;
         description
@@ -70,55 +65,51 @@ submodule onf-priority-traffic-rule {
 
       leaf endpoint {
         type leafref {
-          path "../../../application/endpoint/endpoint-id";
+          path "../../../../application/endpoint/endpoint-id";
         }
         mandatory true;
         description
           "Link to endpoint in application";
       }
 
-      container mbr {
-        description "Maximum bitrate";
-        leaf uplink {
-          type at:bitrate;
-          units bps;
-          description "Per-Device per-Application MBR uplink data rate in bps";
+      choice bitrate {
+        description "Either an GBR or an MBR can be specified, but not both";
+        case mbr-case {
+          container mbr {
+            description "Per-Device per-Application MBR (Maximum BitRate) in bps";
+            uses bitrate;
+          }
         }
-
-        leaf downlink {
-          type at:bitrate;
-          units bps;
-          description "Per-Device per application MBR downlink data rate in bps";
-        }
-      }
-
-      container gbr {
-        description "Guaranteed bitrate";
-        leaf uplink {
-          type at:bitrate;
-          units bps;
-          description "Per-Device per-Application GBR uplink data rate in bps";
-        }
-
-        leaf downlink {
-          type at:bitrate;
-          units bps;
-          description "Per-Device per application GBR downlink data rate in bps";
+        case gbr-case {
+          container gbr {
+            description "Per-Device per-Application GBR (Guaranteed BitRate) in bps";
+            uses bitrate;
+          }
         }
       }
 
       leaf traffic-class {
         type leafref {
-          path "../../../traffic-class/tc-id";
+          path "../../../../traffic-class/traffic-class-id";
         }
         description
           "Link to traffic class";
       }
-
-      leaf description {
-        type at:description;
-        description "description of this priority traffic rule";
-      }
     }
+  }
+
+  grouping bitrate {
+      description "uplink and downlink leafs for GBR and MBR";
+      leaf uplink {
+        type at:bitrate;
+        units bps;
+        description "Per-Device per-Application uplink data rate in bps";
+      }
+
+      leaf downlink {
+        type at:bitrate;
+        units bps;
+        description "Per-Device per application downlink data rate in bps";
+      }
   }
 }

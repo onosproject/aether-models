@@ -36,21 +36,16 @@ submodule onf-template {
     description "The template grouping";
 
     list template {
-      key "tp-id";
+      key "template-id";
       description
         "List of slice templates";
 
-      leaf tp-id {
+      leaf template-id {
         type template-id;
         description "ID for this slice template.";
       }
 
-      leaf display-name {
-        type string {
-            length 1..80;
-        }
-        description "display name to use in GUI or CLI";
-      }
+      uses at:desc-display-name;
 
       leaf sst {
         type at:sst;
@@ -94,11 +89,6 @@ submodule onf-template {
         mandatory true;
         description
           "Default behavior if no filter rules match";
-      }
-
-      leaf description {
-        type at:description;
-        description "description of this slice template";
       }
     }
   }

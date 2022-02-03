@@ -11,6 +11,7 @@ submodule onf-slice {
   include onf-upf;
   include onf-device-group;
   include onf-application;
+  include onf-priority-traffic-rule;
 
   organization "Open Networking Foundation.";
   contact "Scott Baker";
@@ -48,18 +49,13 @@ submodule onf-slice {
         description "ID for this slice.";
       }
 
-      leaf display-name {
-        type string {
-            length 1..80;
-        }
-        description "display name to use in GUI or CLI";
-      }
+      uses at:desc-display-name;
 
       list device-group {
         key "device-group";
         leaf device-group {
           type leafref {
-            path "../../../device-group/dg-id";
+            path "../../../device-group/device-group-id";
           }
           description
             "Link to device group";
@@ -86,7 +82,7 @@ submodule onf-slice {
         key "application";
         leaf application {
           type leafref {
-            path "../../../../application/app-id";
+            path "../../../../application/application-id";
           }
           mandatory true;
           description
@@ -116,11 +112,6 @@ submodule onf-slice {
         }
         description
           "Link to user plane that implements this vcf";
-      }
-
-      leaf description {
-        type at:description;
-        description "description of this slice";
       }
 
       // the following are populated from the template
@@ -164,6 +155,8 @@ submodule onf-slice {
       }
 
       // end of items populated from the template
+      uses priority-traffic-rule;
+
     }
   }
 }

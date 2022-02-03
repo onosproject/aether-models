@@ -46,32 +46,22 @@ submodule onf-device-group {
     description "The device-group grouping";
 
     list device-group {
-      key "dg-id";
+      key "device-group-id";
       description
         "List of device groups";
 
-      leaf dg-id {
+      leaf device-group-id {
         type device-group-id;
         description "ID for this device group.";
       }
 
-      leaf description {
-        type at:description;
-        description "description of this device group";
-      }
-
-      leaf display-name {
-        type string {
-            length 1..80;
-        }
-        description "display name to use in GUI or CLI";
-      }
+      uses at:desc-display-name;
 
       list device {
         key "device-id";
         leaf device-id {
           type leafref {
-            path "../../../device/dev-id";
+            path "../../../device/device-id";
           }
           description
              "Link to device";
@@ -87,7 +77,7 @@ submodule onf-device-group {
 
       leaf ip-domain {
         type leafref {
-          path "../../ip-domain/ip-id";
+          path "../../ip-domain/ip-domain-id";
         }
         description
           "Link to ip-domain settings that determine the pool of IP addresses,
@@ -113,7 +103,7 @@ submodule onf-device-group {
 
       leaf traffic-class {
         type leafref {
-          path "../../../traffic-class/tc-id";
+          path "../../../traffic-class/traffic-class-id";
         }
         mandatory true;
         description

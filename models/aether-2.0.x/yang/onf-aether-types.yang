@@ -174,4 +174,19 @@ module onf-aether-types {
     }
     description "The typedef for description";
   }
+
+  grouping desc-display-name {
+    description "reusable leafs for description and display-name";
+    leaf display-name {
+      type string {
+          length 1..80;
+      }
+      description "display name to use in GUI or CLI";
+    }
+
+    leaf description {
+      type description;
+      description "long description field";
+    }
+  }
 }

@@ -39,22 +39,12 @@ submodule onf-sim-card {
         description "ID for this sim card.";
       }
 
+      uses at:desc-display-name;
+
       leaf iccid {
         type at:iccid;
         description
            "ICCID for this sim card";
-      }
-
-      leaf description {
-        type at:description;
-        description "description of this sim card";
-      }
-
-      leaf display-name {
-        type string {
-            length 1..80;
-        }
-        description "display name to use in GUI or CLI";
       }
 
       leaf imsi {
