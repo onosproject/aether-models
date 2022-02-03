@@ -10,7 +10,6 @@ submodule onf-site {
   import onf-aether-types{ prefix at; }
 
   include onf-device;
-  include onf-priority-traffic-rule;
   include onf-sim-card;
   include onf-upf;
   include onf-slice;
@@ -52,12 +51,7 @@ submodule onf-site {
         description "ID for this site.";
       }
 
-      leaf display-name {
-        type string {
-            length 1..80;
-        }
-        description "display name to use in GUI or CLI";
-      }
+      uses at:desc-display-name;
 
       list small-cell {
         key "small-cell-id";
@@ -66,6 +60,9 @@ submodule onf-site {
           description
             "Id of small cell";
         }
+
+        uses at:desc-display-name;
+
         leaf address {
           type inet:host;
           description
@@ -82,12 +79,6 @@ submodule onf-site {
           default true;
           description
             "Enable this small cell";
-        }
-        leaf display-name {
-          type string {
-              length 1..80;
-          }
-          description "display name to use in GUI or CLI";
         }
         description
           "List of small cell addresses";
@@ -111,16 +102,8 @@ submodule onf-site {
             description
               "Id of edge monitoring device";
           }
-          leaf display-name {
-            type string {
-                length 1..80;
-            }
-            description "display name to use in GUI or CLI";
-          }
-          leaf description {
-            type at:description;
-            description "description of this site";
-          }
+          uses at:desc-display-name;
+
           description
             "List of edge monitoring devices";
         }
@@ -165,14 +148,7 @@ submodule onf-site {
         description "container for imsi-defination";
       }
 
-      leaf description {
-        type at:description;
-        description "description of this site";
-      }
-
       uses device;
-
-      uses priority-traffic-rule;
 
       uses sim-card;
 

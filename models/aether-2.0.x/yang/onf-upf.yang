@@ -43,6 +43,8 @@ submodule onf-upf {
         description "ID for this upf.";
       }
 
+      uses at:desc-display-name;
+
       leaf address {
         type inet:host;
         mandatory true;
@@ -60,18 +62,6 @@ submodule onf-upf {
       leaf config-endpoint {
         type inet:uri;
         description "url for configuring the UPF";
-      }
-
-      leaf display-name {
-        type string {
-            length 1..80;
-        }
-        description "display name to use in GUI or CLI";
-      }
-
-      leaf description {
-        type at:description;
-        description "description of this UPF";
       }
     }
   }

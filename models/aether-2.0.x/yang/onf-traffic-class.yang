@@ -35,21 +35,16 @@ submodule onf-traffic-class {
     description "The traffic-class grouping";
 
     list traffic-class {
-      key "tc-id";
+      key "traffic-class-id";
       description
         "List of traffic class";
 
-      leaf tc-id {
+      leaf traffic-class-id {
         type traffic-class-id;
         description "ID for this traffic class.";
       }
 
-      leaf display-name {
-        type string {
-            length 1..80;
-        }
-        description "display name to use in GUI or CLI";
-      }
+      uses at:desc-display-name;
 
       leaf arp {
         type at:arp;
@@ -69,11 +64,6 @@ submodule onf-traffic-class {
       leaf pdb {
         type at:pdb;
         description "PDB";
-      }
-
-      leaf description {
-        type at:description;
-        description "description of this traffic class";
       }
     }
   }

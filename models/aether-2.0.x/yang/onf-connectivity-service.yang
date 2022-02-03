@@ -37,26 +37,16 @@ module onf-connectivity-service {
     description "The connectivity-services top level container";
 
     list connectivity-service {
-      key "id";
+      key "connectivity-service-id";
       description
         "List of connectivity services";
 
-      leaf id {
+      leaf connectivity-service-id {
         type connectivity-service-id;
         description "ID for this connectivity service.";
       }
 
-      leaf display-name {
-        type string {
-            length 1..80;
-        }
-        description "display name to use in GUI or CLI";
-      }
-
-      leaf description {
-        type at:description;
-        description "description of this connectivity service";
-      }
+      uses at:desc-display-name;
 
       leaf core-5g-endpoint {
         type inet:uri;

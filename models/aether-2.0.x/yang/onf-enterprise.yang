@@ -54,32 +54,22 @@ module onf-enterprise {
     description "The top level enterprises container";
 
     list enterprise {
-      key "ent-id";
+      key "enterprise-id";
       description
         "List of enterprises";
 
-      leaf ent-id {
+      leaf enterprise-id {
         type enterprise-id;
         description "ID for this enterprise.";
       }
 
-      leaf display-name {
-        type string {
-            length 1..80;
-        }
-        description "display name to use in GUI or CLI";
-      }
-
-      leaf description {
-        type at:description;
-        description "description of this enterprise";
-      }
+      uses at:desc-display-name;
 
       list connectivity-service {
         key "connectivity-service";
         leaf connectivity-service {
           type leafref {
-            path "/cs:connectivity-services/cs:connectivity-service/cs:id";
+            path "/cs:connectivity-services/cs:connectivity-service/cs:connectivity-service-id";
           }
           description
             "Link to connectivity services where configuration should be pushed for this enterprise's devices";
