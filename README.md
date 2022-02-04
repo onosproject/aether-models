@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2019-present Open Networking Foundation <info@opennetworking.org>
+
+SPDX-License-Identifier: Apache-2.0
+-->
+
 # aether-models
 Repository to hold the onos-config models related to Aether
 

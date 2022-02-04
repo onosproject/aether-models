@@ -1,0 +1,5 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+
+Files: *VERSION .gitreview *go.mod *go.sum VERSION *.json *.tree *generated.go *.yang *main.go *paths.go models/*/Makefile models/*/Dockerfile models/*/openapi-gen.go models/aether-2.0.x/openapi/openapi-gen.go
+Copyright: 2021 Open Networking Foundation
+License: Apache-2.0

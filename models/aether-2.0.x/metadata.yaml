@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2019-present Open Networking Foundation <info@opennetworking.org>
+#
+# SPDX-License-Identifier: Apache-2.0
+
 name: aether-2.x
 version: 2.0.x
 goPackage: github.com/onosproject/aether-models/models/aether-2.0.x
