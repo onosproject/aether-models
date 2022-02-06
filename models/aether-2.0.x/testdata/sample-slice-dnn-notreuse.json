@@ -1,0 +1,85 @@
+{
+  "enterprises": {
+    "enterprise": [
+      {
+        "enterprise-id": "acme",
+        "site": [
+          {
+            "site-id": "acme-chicago",
+            "device-group": [
+              {
+                "display-name": "ACME Chicago Inventory",
+                "device-group-id": "acme-chicago-default",
+                "ip-domain": "acme-chicago",
+                "traffic-class": "class-1"
+              },
+              {
+                "display-name": "ACME Dallas Inventory",
+                "device-group-id": "acme-dallas-default",
+                "ip-domain": "acme-dallas",
+                "traffic-class": "class-1"
+              },
+              {
+                "display-name": "ACME Dallas 2 Inventory",
+                "device-group-id": "acme-dallas-extra",
+                "ip-domain": "acme-chicago",
+                "traffic-class": "class-1"
+              },
+              {
+                "display-name": "ACME Dallas 3 Inventory",
+                "device-group-id": "acme-dallas-more",
+                "ip-domain": "acme-dallas",
+                "traffic-class": "class-1"
+              }
+            ],
+            "ip-domain": [
+              {
+                "admin-status": "DISABLE",
+                "dnn": "dnnacme",
+                "ip-domain-id": "acme-chicago",
+                "subnet": "163.25.44.0/31"
+              },
+              {
+                "admin-status": "DISABLE",
+                "dnn": "dnndallas",
+                "ip-domain-id": "acme-dallas",
+                "subnet": "163.25.55.0/31"
+              },
+              {
+                "admin-status": "DISABLE",
+                "dnn": "dnndallas2",
+                "ip-domain-id": "acme-dallas2",
+                "subnet": "163.25.77.0/31"
+              },
+              {
+                "admin-status": "ENABLE",
+                "dnn": "dnnhouston",
+                "ip-domain-id": "acme-houston",
+                "subnet": "163.25.66.0/31"
+              }
+            ],
+            "slice": [
+              {
+                "default-behavior": "DENY-ALL",
+                "device-group": [
+                  {
+                    "enable": true,
+                    "device-group": "acme-chicago-production-robots"
+                  }
+                ],
+                "slice-id": "acme-chicago-robots",
+                "sd": 2973238,
+                "sst": 79
+              }
+            ]
+          }
+        ],
+        "traffic-class": [
+          {
+            "traffic-class-id": "class-1"
+          }
+        ]
+      }
+    ]
+  }
+}
