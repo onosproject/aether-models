@@ -2,12 +2,12 @@
   "enterprises": {
     "enterprise": [
       {
-        "ent-id": "acme",
+        "enterprise-id": "acme",
         "description": "ACME Corporation",
         "display-name": "ACME Corp",
         "application": [
           {
-            "app-id": "acme-dataacquisition",
+            "application-id": "acme-dataacquisition",
             "description": "Data Acquisition",
             "display-name": "DA",
             "address": "da.acme.com",

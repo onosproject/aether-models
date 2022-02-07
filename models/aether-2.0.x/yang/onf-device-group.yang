@@ -46,6 +46,11 @@ submodule onf-device-group {
     description "The device-group grouping";
 
     list device-group {
+//      must "count(../ent:ip-domain[@ent:ip-id=ent:ip-domain]) = 1" {
+//        error-message "no 2 device-groups can use same ip-domain DNN";
+//        description "device-group refers to ip-domain. the DNN in ip-domain cannot
+//        be used by more than 1 slice";
+//      }
       key "device-group-id";
       description
         "List of device groups";
