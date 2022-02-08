@@ -344,10 +344,6 @@ components:
           uniqueItems: true
           x-keys:
           - endpoint-id
-          x-must:
-          - ErrorMessage:
-              Name: port-start must be less than or equal to port-end
-            Name: number(./ent:port-start) <= number(./ent:port-end)
       required:
       - address
       - application-id
