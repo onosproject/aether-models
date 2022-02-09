@@ -103,7 +103,7 @@ func (s server) GetModelInfo(ctx context.Context, request *admin.ModelInfoReques
 	log.Infof("Received model info request: %+v", request)
 	return &admin.ModelInfoResponse{
 		ModelInfo: &admin.ModelInfo{
-			Name:               "aether-2.x",
+			Name:               "aether",
 			Version:            "2.0.x",
 			ModelData:          modelData,
 			SupportedEncodings: encodings,
@@ -153,7 +153,7 @@ func (s server) validate(ygotModel *ygot.ValidatedGoStruct, opts ...ygot.Validat
 	deviceDeref := *ygotModel
 	device, ok := deviceDeref.(*api.Device)
 	if !ok {
-		return errors.NewInvalid("Unable to convert model aether-2.x-2.0.x")
+		return errors.NewInvalid("Unable to convert model aether-2.0.x")
 	}
 	return device.Validate()
 }

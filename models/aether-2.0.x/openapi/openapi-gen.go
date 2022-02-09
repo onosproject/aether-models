@@ -24,9 +24,9 @@ func main() {
 
 	description := "TODO add a description field in Metadata.yaml?"
 	settings := openapi_gen.ApiGenSettings{
-		ModelType:    "aether-2.x",
+		ModelType:    "aether",
 		ModelVersion: "2.0.x",
-		Title:        "aether-2.x-2.0.x",
+		Title:        "aether-2.0.x",
 		Description:  string(description),
 	}
 
