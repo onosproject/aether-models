@@ -59,4 +59,10 @@ else
 endif
 endif
 
-jenkins-publish: docker-build docker-login docker-push# @HELP Target used by Jenkins to publish docker images
+jenkins-tools: # @HELP installs tooling needed for Jenkins
+	cd .. && go get -u github.com/jstemmer/go-junit-report && go get github.com/t-yuki/gocover-cobertura
+
+build-tools: # @HELP install the ONOS build tools if needed
+	@if [ ! -d "../build-tools" ]; then cd .. && git clone https://github.com/onosproject/build-tools.git; fi
+
+jenkins-publish: build-tools jenkins-tools docker-build docker-login docker-push# @HELP Target used by Jenkins to publish docker images
