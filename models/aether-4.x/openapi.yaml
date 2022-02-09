@@ -1293,11 +1293,11 @@ info:
     name: LicenseRef-ONF-Member-1.0
     url: https://opennetworking.org/wp-content/uploads/2020/06/ONF-Member-Only-Software-License-v1.0.pdf
   termsOfService: https://opennetworking.org/wp-content/uploads/2019/02/ONF-Licensing-and-IPR-FAQ-2020-06.pdf
-  title: aether-4.x-4.0.18
+  title: aether-4.0.18
   version: 4.0.18
 openapi: 3.0.0
 paths:
-  /aether-4.x/v4.0.18/{target}/application:
+  /aether/v4.0.18/{target}/application:
     delete:
       operationId: deleteApplication
       responses:
@@ -1327,7 +1327,7 @@ paths:
         "201":
           description: created
       summary: POST /application
-  /aether-4.x/v4.0.18/{target}/application/application/{id}:
+  /aether/v4.0.18/{target}/application/application/{id}:
     delete:
       operationId: deleteApplication_Application
       responses:
@@ -1365,7 +1365,7 @@ paths:
         "201":
           description: created
       summary: POST /application/application
-  /aether-4.x/v4.0.18/{target}/application/application/{id}/endpoint/{endpoint-id}:
+  /aether/v4.0.18/{target}/application/application/{id}/endpoint/{endpoint-id}:
     delete:
       operationId: deleteApplication_Application_Endpoint
       responses:
@@ -1411,7 +1411,7 @@ paths:
         "201":
           description: created
       summary: POST /application/application/{id}/endpoint
-  /aether-4.x/v4.0.18/{target}/application/application/{id}/endpoint/{endpoint-id}/mbr:
+  /aether/v4.0.18/{target}/application/application/{id}/endpoint/{endpoint-id}/mbr:
     delete:
       operationId: deleteApplication_Application_Endpoint_Mbr
       responses:
@@ -1457,7 +1457,7 @@ paths:
         "201":
           description: created
       summary: POST /application/application/{id}/endpoint/{endpoint-id}/mbr
-  /aether-4.x/v4.0.18/{target}/connectivity-service:
+  /aether/v4.0.18/{target}/connectivity-service:
     delete:
       operationId: deleteConnectivity-service
       responses:
@@ -1487,7 +1487,7 @@ paths:
         "201":
           description: created
       summary: POST /connectivity-service
-  /aether-4.x/v4.0.18/{target}/connectivity-service/connectivity-service/{id}:
+  /aether/v4.0.18/{target}/connectivity-service/connectivity-service/{id}:
     delete:
       operationId: deleteConnectivity-service_Connectivity-service
       responses:
@@ -1525,7 +1525,7 @@ paths:
         "201":
           description: created
       summary: POST /connectivity-service/connectivity-service
-  /aether-4.x/v4.0.18/{target}/device-group:
+  /aether/v4.0.18/{target}/device-group:
     delete:
       operationId: deleteDevice-group
       responses:
@@ -1555,7 +1555,7 @@ paths:
         "201":
           description: created
       summary: POST /device-group
-  /aether-4.x/v4.0.18/{target}/device-group/device-group/{id}:
+  /aether/v4.0.18/{target}/device-group/device-group/{id}:
     delete:
       operationId: deleteDevice-group_Device-group
       responses:
@@ -1593,7 +1593,7 @@ paths:
         "201":
           description: created
       summary: POST /device-group/device-group
-  /aether-4.x/v4.0.18/{target}/device-group/device-group/{id}/device:
+  /aether/v4.0.18/{target}/device-group/device-group/{id}/device:
     delete:
       operationId: deleteDevice-group_Device-group_Device
       responses:
@@ -1631,7 +1631,7 @@ paths:
         "201":
           description: created
       summary: POST /device-group/device-group/{id}/device
-  /aether-4.x/v4.0.18/{target}/device-group/device-group/{id}/device/mbr:
+  /aether/v4.0.18/{target}/device-group/device-group/{id}/device/mbr:
     delete:
       operationId: deleteDevice-group_Device-group_Device_Mbr
       responses:
@@ -1669,7 +1669,7 @@ paths:
         "201":
           description: created
       summary: POST /device-group/device-group/{id}/device/mbr
-  /aether-4.x/v4.0.18/{target}/device-group/device-group/{id}/imsis/{imsi-id}:
+  /aether/v4.0.18/{target}/device-group/device-group/{id}/imsis/{imsi-id}:
     delete:
       operationId: deleteDevice-group_Device-group_Imsis
       responses:
@@ -1717,7 +1717,7 @@ paths:
         "201":
           description: created
       summary: POST /device-group/device-group/{id}/imsis
-  /aether-4.x/v4.0.18/{target}/enterprise:
+  /aether/v4.0.18/{target}/enterprise:
     delete:
       operationId: deleteEnterprise
       responses:
@@ -1747,7 +1747,7 @@ paths:
         "201":
           description: created
       summary: POST /enterprise
-  /aether-4.x/v4.0.18/{target}/enterprise/enterprise/{id}:
+  /aether/v4.0.18/{target}/enterprise/enterprise/{id}:
     delete:
       operationId: deleteEnterprise_Enterprise
       responses:
@@ -1785,7 +1785,7 @@ paths:
         "201":
           description: created
       summary: POST /enterprise/enterprise
-  /aether-4.x/v4.0.18/{target}/enterprise/enterprise/{id}/connectivity-service/{connectivity-service}:
+  /aether/v4.0.18/{target}/enterprise/enterprise/{id}/connectivity-service/{connectivity-service}:
     delete:
       operationId: deleteEnterprise_Enterprise_Connectivity-service
       responses:
@@ -1831,7 +1831,7 @@ paths:
         "201":
           description: created
       summary: POST /enterprise/enterprise/{id}/connectivity-service
-  /aether-4.x/v4.0.18/{target}/ip-domain:
+  /aether/v4.0.18/{target}/ip-domain:
     delete:
       operationId: deleteIp-domain
       responses:
@@ -1861,7 +1861,7 @@ paths:
         "201":
           description: created
       summary: POST /ip-domain
-  /aether-4.x/v4.0.18/{target}/ip-domain/ip-domain/{id}:
+  /aether/v4.0.18/{target}/ip-domain/ip-domain/{id}:
     delete:
       operationId: deleteIp-domain_Ip-domain
       responses:
@@ -1899,7 +1899,7 @@ paths:
         "201":
           description: created
       summary: POST /ip-domain/ip-domain
-  /aether-4.x/v4.0.18/{target}/site:
+  /aether/v4.0.18/{target}/site:
     delete:
       operationId: deleteSite
       responses:
@@ -1929,7 +1929,7 @@ paths:
         "201":
           description: created
       summary: POST /site
-  /aether-4.x/v4.0.18/{target}/site/site/{id}:
+  /aether/v4.0.18/{target}/site/site/{id}:
     delete:
       operationId: deleteSite_Site
       responses:
@@ -1967,7 +1967,7 @@ paths:
         "201":
           description: created
       summary: POST /site/site
-  /aether-4.x/v4.0.18/{target}/site/site/{id}/imsi-definition:
+  /aether/v4.0.18/{target}/site/site/{id}/imsi-definition:
     delete:
       operationId: deleteSite_Site_Imsi-definition
       responses:
@@ -2005,7 +2005,7 @@ paths:
         "201":
           description: created
       summary: POST /site/site/{id}/imsi-definition
-  /aether-4.x/v4.0.18/{target}/site/site/{id}/monitoring:
+  /aether/v4.0.18/{target}/site/site/{id}/monitoring:
     delete:
       operationId: deleteSite_Site_Monitoring
       responses:
@@ -2043,7 +2043,7 @@ paths:
         "201":
           description: created
       summary: POST /site/site/{id}/monitoring
-  /aether-4.x/v4.0.18/{target}/site/site/{id}/monitoring/edge-device/{edge-device-id}:
+  /aether/v4.0.18/{target}/site/site/{id}/monitoring/edge-device/{edge-device-id}:
     delete:
       operationId: deleteSite_Site_Monitoring_Edge-device
       responses:
@@ -2089,7 +2089,7 @@ paths:
         "201":
           description: created
       summary: POST /site/site/{id}/monitoring/edge-device
-  /aether-4.x/v4.0.18/{target}/site/site/{id}/small-cell/{small-cell-id}:
+  /aether/v4.0.18/{target}/site/site/{id}/small-cell/{small-cell-id}:
     delete:
       operationId: deleteSite_Site_Small-cell
       responses:
@@ -2135,7 +2135,7 @@ paths:
         "201":
           description: created
       summary: POST /site/site/{id}/small-cell
-  /aether-4.x/v4.0.18/{target}/template:
+  /aether/v4.0.18/{target}/template:
     delete:
       operationId: deleteTemplate
       responses:
@@ -2165,7 +2165,7 @@ paths:
         "201":
           description: created
       summary: POST /template
-  /aether-4.x/v4.0.18/{target}/template/template/{id}:
+  /aether/v4.0.18/{target}/template/template/{id}:
     delete:
       operationId: deleteTemplate_Template
       responses:
@@ -2203,7 +2203,7 @@ paths:
         "201":
           description: created
       summary: POST /template/template
-  /aether-4.x/v4.0.18/{target}/template/template/{id}/slice:
+  /aether/v4.0.18/{target}/template/template/{id}/slice:
     delete:
       operationId: deleteTemplate_Template_Slice
       responses:
@@ -2241,7 +2241,7 @@ paths:
         "201":
           description: created
       summary: POST /template/template/{id}/slice
-  /aether-4.x/v4.0.18/{target}/template/template/{id}/slice/mbr:
+  /aether/v4.0.18/{target}/template/template/{id}/slice/mbr:
     delete:
       operationId: deleteTemplate_Template_Slice_Mbr
       responses:
@@ -2279,7 +2279,7 @@ paths:
         "201":
           description: created
       summary: POST /template/template/{id}/slice/mbr
-  /aether-4.x/v4.0.18/{target}/traffic-class:
+  /aether/v4.0.18/{target}/traffic-class:
     delete:
       operationId: deleteTraffic-class
       responses:
@@ -2309,7 +2309,7 @@ paths:
         "201":
           description: created
       summary: POST /traffic-class
-  /aether-4.x/v4.0.18/{target}/traffic-class/traffic-class/{id}:
+  /aether/v4.0.18/{target}/traffic-class/traffic-class/{id}:
     delete:
       operationId: deleteTraffic-class_Traffic-class
       responses:
@@ -2347,7 +2347,7 @@ paths:
         "201":
           description: created
       summary: POST /traffic-class/traffic-class
-  /aether-4.x/v4.0.18/{target}/upf:
+  /aether/v4.0.18/{target}/upf:
     delete:
       operationId: deleteUpf
       responses:
@@ -2377,7 +2377,7 @@ paths:
         "201":
           description: created
       summary: POST /upf
-  /aether-4.x/v4.0.18/{target}/upf/upf/{id}:
+  /aether/v4.0.18/{target}/upf/upf/{id}:
     delete:
       operationId: deleteUpf_Upf
       responses:
@@ -2415,7 +2415,7 @@ paths:
         "201":
           description: created
       summary: POST /upf/upf
-  /aether-4.x/v4.0.18/{target}/vcs:
+  /aether/v4.0.18/{target}/vcs:
     delete:
       operationId: deleteVcs
       responses:
@@ -2445,7 +2445,7 @@ paths:
         "201":
           description: created
       summary: POST /vcs
-  /aether-4.x/v4.0.18/{target}/vcs/vcs/{id}:
+  /aether/v4.0.18/{target}/vcs/vcs/{id}:
     delete:
       operationId: deleteVcs_Vcs
       responses:
@@ -2483,7 +2483,7 @@ paths:
         "201":
           description: created
       summary: POST /vcs/vcs
-  /aether-4.x/v4.0.18/{target}/vcs/vcs/{id}/device-group/{device-group}:
+  /aether/v4.0.18/{target}/vcs/vcs/{id}/device-group/{device-group}:
     delete:
       operationId: deleteVcs_Vcs_Device-group
       responses:
@@ -2531,7 +2531,7 @@ paths:
         "201":
           description: created
       summary: POST /vcs/vcs/{id}/device-group
-  /aether-4.x/v4.0.18/{target}/vcs/vcs/{id}/filter/{application}:
+  /aether/v4.0.18/{target}/vcs/vcs/{id}/filter/{application}:
     delete:
       operationId: deleteVcs_Vcs_Filter
       responses:
@@ -2580,7 +2580,7 @@ paths:
         "201":
           description: created
       summary: POST /vcs/vcs/{id}/filter
-  /aether-4.x/v4.0.18/{target}/vcs/vcs/{id}/slice:
+  /aether/v4.0.18/{target}/vcs/vcs/{id}/slice:
     delete:
       operationId: deleteVcs_Vcs_Slice
       responses:
@@ -2618,7 +2618,7 @@ paths:
         "201":
           description: created
       summary: POST /vcs/vcs/{id}/slice
-  /aether-4.x/v4.0.18/{target}/vcs/vcs/{id}/slice/mbr:
+  /aether/v4.0.18/{target}/vcs/vcs/{id}/slice/mbr:
     delete:
       operationId: deleteVcs_Vcs_Slice_Mbr
       responses:
