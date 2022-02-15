@@ -11,11 +11,11 @@ import (
 
 // aStr facilitates easy declaring of pointers to strings
 func aStr(s string) *string {
-     return &s
+	return &s
 }
 
 func TestApplicationAddress(t *testing.T) {
-	app := OnfEnterprise_Enterprises_Enterprise_Application {}
+	app := OnfEnterprise_Enterprises_Enterprise_Application{}
 
 	app.Address = aStr("my.host.name")
 	err := app.Validate()
@@ -56,5 +56,93 @@ func TestApplicationAddress(t *testing.T) {
 	// Error - subnet not a number
 	app.Address = aStr("1.2.3.4/x")
 	err = app.Validate()
+	assert.Error(t, err)
+}
+
+func TestSimCard(t *testing.T) {
+	sim := OnfEnterprise_Enterprises_Enterprise_Site_SimCard{}
+
+	// 18 digit, starts with 0
+	sim.Iccid = aStr("023456789012345678F")
+	err := sim.Validate()
+	assert.Nil(t, err)
+
+	// 18 + check digit
+	sim.Iccid = aStr("123456789012345678F")
+	err = sim.Validate()
+	assert.Nil(t, err)
+
+	// 19 + check digit
+	sim.Iccid = aStr("1234567890123456789F")
+	err = sim.Validate()
+	assert.Nil(t, err)
+
+	// 20 + check digit
+	sim.Iccid = aStr("12345678901234567890F")
+	err = sim.Validate()
+	assert.Nil(t, err)
+
+	// 21 + check digit
+	sim.Iccid = aStr("123456789012345678901F")
+	err = sim.Validate()
+	assert.Nil(t, err)
+
+	// 17 + check digit -- too short
+	sim.Iccid = aStr("12345678901234567F")
+	err = sim.Validate()
+	assert.Error(t, err)
+
+	// 22 + check digit -- too long
+	sim.Iccid = aStr("12345678901234567F")
+	err = sim.Validate()
+	assert.Error(t, err)
+
+	// invalid check digit
+	sim.Iccid = aStr("123456789012345678G")
+	err = sim.Validate()
+	assert.Error(t, err)
+
+	// invalid digit
+	sim.Iccid = aStr("1234567890123456A8F")
+	err = sim.Validate()
+	assert.Error(t, err)
+}
+
+func TestDevice(t *testing.T) {
+	dev := OnfEnterprise_Enterprises_Enterprise_Site_Device{}
+
+	// 14 digit, starts with 0
+	dev.Imei = aStr("02345678901234")
+	err := dev.Validate()
+	assert.Nil(t, err)
+
+	// 14 digit
+	dev.Imei = aStr("12345678901234")
+	err = dev.Validate()
+	assert.Nil(t, err)
+
+	// 15 digit
+	dev.Imei = aStr("123456789012345")
+	err = dev.Validate()
+	assert.Nil(t, err)
+
+	// 16 digit
+	dev.Imei = aStr("1234567890123456")
+	err = dev.Validate()
+	assert.Nil(t, err)
+
+	// 13 digit - too short
+	dev.Imei = aStr("123456789012343")
+	err = dev.Validate()
+	assert.Nil(t, err)
+
+	// 17 digit - too long
+	dev.Imei = aStr("12345678901234567")
+	err = dev.Validate()
+	assert.Error(t, err)
+
+	// not a valid digit
+	dev.Imei = aStr("123456789012345A")
+	err = dev.Validate()
 	assert.Error(t, err)
 }

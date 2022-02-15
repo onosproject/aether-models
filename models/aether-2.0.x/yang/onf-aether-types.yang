@@ -24,14 +24,18 @@ module onf-aether-types {
   }
 
   typedef imei {
-      type uint64 {
+      type string {
+          length 14..16;
+          pattern '[0-9]{14,16}';
       }
     description "International Mobile Equipment Identity";
   }
 
   typedef iccid {
-      type uint64 {
-      }
+      type string {
+          length 19..22;
+          pattern '[0-9]{18,21}[0-9A-F]';
+      }      
     description "Integrated Circuit Card ID";
   }
 
