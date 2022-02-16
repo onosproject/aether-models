@@ -7,7 +7,6 @@ module onf-connectivity-service {
   prefix cs;
 
   import ietf-inet-types { prefix inet; }
-  import ietf-yang-types{ prefix yg; }
   import onf-aether-types { prefix at; }
 
   organization "Open Networking Foundation.";
@@ -27,10 +26,8 @@ module onf-connectivity-service {
   }
 
   typedef connectivity-service-id {
-        type yg:yang-identifier {
-            length 1..32;
-        }
-   description "The typedef for connectivity-service-id";
+    type at:aether-identifier;
+    description "The typedef for connectivity-service-id";
   }
 
   container connectivity-services {

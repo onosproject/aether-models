@@ -48,6 +48,8 @@ clean:	# @HELP Removes the generated code
 
 test: yang-lint models models-openapi# @HELP Make sure the generated code has been committed
 	@bash test/generated.sh
+	cd models/aether-2.0.x && make test
+	cd models/aether-4.x && make test
 
 docker-login:
 ifdef DOCKER_USER

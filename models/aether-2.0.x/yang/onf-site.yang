@@ -6,7 +6,6 @@ submodule onf-site {
   belongs-to onf-enterprise { prefix ent; }
 
   import ietf-inet-types { prefix inet; }
-  import ietf-yang-types{ prefix yg; }
   import onf-aether-types{ prefix at; }
 
   include onf-device;
@@ -32,9 +31,7 @@ submodule onf-site {
   }
 
   typedef site-id {
-        type yg:yang-identifier {
-            length 1..32;
-        }
+    type at:aether-identifier;
     description "The typedef for site-id";
   }
 
@@ -56,7 +53,7 @@ submodule onf-site {
       list small-cell {
         key "small-cell-id";
         leaf small-cell-id {
-          type yg:yang-identifier;
+          type at:aether-identifier;
           description
             "Id of small cell";
         }
@@ -98,7 +95,7 @@ submodule onf-site {
         list edge-device {
           key "edge-device-id";
           leaf edge-device-id {
-            type yg:yang-identifier;
+            type at:aether-identifier;
             description
               "Id of edge monitoring device";
           }

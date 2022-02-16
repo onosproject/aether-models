@@ -6,7 +6,6 @@ submodule onf-application {
   belongs-to onf-enterprise { prefix ent; }
 
   import ietf-inet-types{ prefix ietf; }
-  import ietf-yang-types{ prefix yg; }
   import onf-aether-types{ prefix at; }
 
   include onf-traffic-class;
@@ -29,9 +28,7 @@ submodule onf-application {
   }
 
   typedef application-id {
-        type yg:yang-identifier {
-            length 1..32;
-        }
+    type at:aether-identifier;
     description "The typedef for application-id";
   }
 
@@ -60,7 +57,7 @@ submodule onf-application {
       list endpoint {
         key "endpoint-id";
         leaf endpoint-id {
-          type yg:yang-identifier;
+          type at:aether-identifier;
           description
               "Id of this endpoint";
         }

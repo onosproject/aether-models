@@ -6,7 +6,6 @@ submodule onf-ip-domain {
   belongs-to onf-enterprise { prefix ent; }
 
   import ietf-inet-types { prefix inet; }
-  import ietf-yang-types{ prefix yg; }
   import onf-aether-types { prefix at; }
 
   organization "Open Networking Foundation.";
@@ -27,9 +26,7 @@ submodule onf-ip-domain {
   }
 
   typedef ip-domain-id {
-        type yg:yang-identifier {
-            length 1..32;
-        }
+    type at:aether-identifier;
     description "The typedef for ip-domain-id";
   }
 
