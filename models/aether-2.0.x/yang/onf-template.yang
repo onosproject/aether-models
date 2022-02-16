@@ -5,7 +5,6 @@
 submodule onf-template {
   belongs-to onf-enterprise { prefix ent; }
 
-  import ietf-yang-types{ prefix yg; }
   import onf-aether-types{ prefix at; }
 
   organization "Open Networking Foundation.";
@@ -26,9 +25,7 @@ submodule onf-template {
   }
 
   typedef template-id {
-        type yg:yang-identifier {
-            length 1..32;
-        }
+    type at:aether-identifier;
     description "The typedef for template-id";
   }
 

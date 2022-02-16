@@ -146,3 +146,70 @@ func TestDevice(t *testing.T) {
 	err = dev.Validate()
 	assert.Error(t, err)
 }
+
+func TestIdentifier(t *testing.T) {
+	ent := OnfEnterprise_Enterprises_Enterprise{}
+
+	ent.EnterpriseId = aStr("test")
+	err := ent.Validate()
+	assert.Nil(t, err)
+
+	// Minimum length
+	ent.EnterpriseId = aStr("a")
+	err = ent.Validate()
+	assert.Nil(t, err)
+
+	// Maximum length
+	ent.EnterpriseId = aStr("a12345678901234567890123456789012345678901234567890123456789012")
+	err = ent.Validate()
+	assert.Nil(t, err)
+
+	ent.EnterpriseId = aStr("test-1")
+	err = ent.Validate()
+	assert.Nil(t, err)
+
+	// Two non-consecutive dashes are fine
+	ent.EnterpriseId = aStr("test-test-1")
+	err = ent.Validate()
+	assert.Nil(t, err)
+
+	// Two consecutive dashes are not allow
+	ent.EnterpriseId = aStr("test--1")
+	err = ent.Validate()
+	assert.Error(t, err)
+
+	// Uppercase is not allowed
+	ent.EnterpriseId = aStr("Uppercase")
+	err = ent.Validate()
+	assert.Error(t, err)
+
+	// Uppercase is not allowed, even if you hide it in the middle
+	ent.EnterpriseId = aStr("upperCase")
+	err = ent.Validate()
+	assert.Error(t, err)
+
+	// Starts with a number is not allowed
+	ent.EnterpriseId = aStr("1-test")
+	err = ent.Validate()
+	assert.Error(t, err)
+
+	// Empty string is not allowed
+	ent.EnterpriseId = aStr("")
+	err = ent.Validate()
+	assert.Error(t, err)
+
+	// Too Long
+	ent.EnterpriseId = aStr("a123456789012345678901234567890123456789012345678901234567890123")
+	err = ent.Validate()
+	assert.Error(t, err)
+
+	// No periods
+	ent.EnterpriseId = aStr("test.two")
+	err = ent.Validate()
+	assert.Error(t, err)
+
+	// No spaces
+	ent.EnterpriseId = aStr("test two")
+	err = ent.Validate()
+	assert.Error(t, err)
+}

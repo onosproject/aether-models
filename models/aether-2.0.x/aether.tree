@@ -22,7 +22,7 @@ module: onf-enterprise
         |  +--rw description?      description
         |  +--rw address           at:host-or-network
         |  +--rw endpoint* [endpoint-id]
-        |     +--rw endpoint-id      yg:yang-identifier
+        |     +--rw endpoint-id      at:aether-identifier
         |     +--rw display-name?    string
         |     +--rw description?     description
         |     +--rw port-start?      ietf:port-number
@@ -57,7 +57,7 @@ module: onf-enterprise
            +--rw display-name?      string
            +--rw description?       description
            +--rw small-cell* [small-cell-id]
-           |  +--rw small-cell-id    yg:yang-identifier
+           |  +--rw small-cell-id    at:aether-identifier
            |  +--rw display-name?    string
            |  +--rw description?     description
            |  +--rw address?         inet:host
@@ -67,7 +67,7 @@ module: onf-enterprise
            |  +--rw edge-cluster-prometheus-url?      inet:uri
            |  +--rw edge-monitoring-prometheus-url?   inet:uri
            |  +--rw edge-device* [edge-device-id]
-           |     +--rw edge-device-id    yg:yang-identifier
+           |     +--rw edge-device-id    at:aether-identifier
            |     +--rw display-name?     string
            |     +--rw description?      description
            +--rw imsi-definition
