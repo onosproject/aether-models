@@ -2,10 +2,25 @@
 
 SHELL = bash -e -o pipefail
 DOCKER_REPOSITORY ?= onosproject/
-VERSION           ?= $(shell cat ./VERSION)-aether-4.0.18
-LATEST_VERSION           ?= $(shell cat ./VERSION)-aether-latest
+BASE_VERSION ?= $(shell cat ./VERSION)
+VERSION           ?= ${BASE_VERSION}-aether-4.0.18
+LATEST_VERSION           ?= ${BASE_VERSION}-aether-latest
 KIND_CLUSTER_NAME ?= kind
 HAS_CHANGED=$(shell git --no-pager diff HEAD~1 HEAD . | wc -l) # check if the content of this folder is different than the parent commit
+IS_RELEASED_VERSION=$(shell MY_STRING="${BASE_VERSION}"; MY_REGEX='^([0-9]+)\.([0-9]+)\.([0-9]+)$$'; if [[ $$MY_STRING =~ $$MY_REGEX ]]; then echo true; else echo false; fi)
+
+## Docker labels. Only set ref and commit date if committed
+DOCKER_LABEL_VCS_URL       ?= $(shell git remote get-url $(shell git remote | head -n 1))
+DOCKER_LABEL_VCS_REF       = $(shell git rev-parse HEAD)
+DOCKER_LABEL_BUILD_DATE    ?= $(shell date -u "+%Y-%m-%dT%H:%M:%SZ")
+DOCKER_LABEL_COMMIT_DATE   = $(shell git show -s --format=%cd --date=iso-strict HEAD)
+DOCKER_BUILD_ARGS = \
+	--build-arg org_label_schema_version="${VERSION}" \
+	--build-arg org_label_schema_vcs_url="${DOCKER_LABEL_VCS_URL}" \
+	--build-arg org_label_schema_vcs_ref="${DOCKER_LABEL_VCS_REF}" \
+	--build-arg org_label_schema_build_date="${DOCKER_LABEL_BUILD_DATE}" \
+	--build-arg org_opencord_vcs_commit_date="${DOCKER_LABEL_COMMIT_DATE}" \
+	--build-arg org_opencord_vcs_dirty="${DOCKER_LABEL_VCS_DIRTY}"
 
 export CGO_ENABLED=0
 export GO111MODULE=on
@@ -28,7 +43,7 @@ mod-update: # @HELP Download the dependencies to the vendor folder
 	go mod vendor
 
 image: mod-update openapi # @HELP Build the docker image (available parameters: DOCKER_REPOSITORY, VERSION)
-	docker build . -t ${DOCKER_REPOSITORY}aether-4.x:${VERSION}
+	docker build $(DOCKER_BUILD_ARGS) -t ${DOCKER_REPOSITORY}aether-4.x:${VERSION} .
 	docker tag ${DOCKER_REPOSITORY}aether-4.x:${VERSION} ${DOCKER_REPOSITORY}aether-4.x:${LATEST_VERSION}
 
 .PHONY: openapi
@@ -39,17 +54,21 @@ test: mod-update # @HELP Run the unit tests
 	go test ./...
 
 repo-tag:
-ifneq ($(HAS_CHANGED),0)
+ifeq ($(IS_RELEASED_VERSION), true)
+ifneq ("$(HAS_CHANGED)", "0 ")
 	NEW_VERSION=${VERSION} ../../../build-tools/tag-collision-reject
 	git tag ${VERSION}
 	git push origin ${VERSION}
 else
 	@echo "No changes, nothing to tag"
 endif
+else
+	@echo "Not a released version, skip tagging"
+endif
 
 
 publish: image repo-tag # @HELP Builds and publish the docker image (available parameters: DOCKER_REPOSITORY, VERSION)
-ifneq ($(HAS_CHANGED),0)
+ifneq ("$(HAS_CHANGED)", "0 ")
 	docker push ${DOCKER_REPOSITORY}aether-4.x:${VERSION}
 	docker push ${DOCKER_REPOSITORY}aether-4.x:${LATEST_VERSION}
 else
