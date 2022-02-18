@@ -55,6 +55,10 @@ submodule onf-application {
       }
 
       list endpoint {
+        must "number(./ent:port-start) <= number(./ent:port-end)" {
+          error-message "port-start must be less than or equal to port-end";
+          description "prevent a port-start and -end having negative range";
+        }
         key "endpoint-id";
         leaf endpoint-id {
           type at:aether-identifier;

@@ -30,6 +30,12 @@
                 "device-group-id": "acme-dallas-more",
                 "ip-domain": "acme-dallas",
                 "traffic-class": "class-1"
+              },
+              {
+                "display-name": "ACME Dallas 4 Inventory",
+                "device-group-id": "acme-dallas-bis",
+                "ip-domain": "acme-dallas2",
+                "traffic-class": "class-1"
               }
             ],
             "ip-domain": [
@@ -47,7 +53,7 @@
               },
               {
                 "admin-status": "DISABLE",
-                "dnn": "dnndallas2",
+                "dnn": "dnndallas",
                 "ip-domain-id": "acme-dallas2",
                 "subnet": "163.25.77.0/31"
               },
