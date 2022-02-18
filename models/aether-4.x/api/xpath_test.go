@@ -6,7 +6,7 @@ package api
 
 import (
 	"fmt"
-	"github.com/antchfx/xpath"
+	"github.com/SeanCondon/xpath"
 	"github.com/onosproject/config-models/pkg/xpath/navigator"
 	"github.com/stretchr/testify/assert"
 	"io/ioutil"

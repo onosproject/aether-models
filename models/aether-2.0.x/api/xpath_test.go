@@ -6,7 +6,7 @@ package api
 
 import (
 	"fmt"
-	"github.com/antchfx/xpath"
+	"github.com/SeanCondon/xpath"
 	"github.com/onosproject/config-models/pkg/xpath/navigator"
 	"github.com/stretchr/testify/assert"
 	"io/ioutil"
@@ -154,7 +154,7 @@ func Test_XPathSelect(t *testing.T) {
 	}
 }
 
-func Test_XPathSelectIPDomain(t *testing.T) {
+func Test_XPathSelectSite(t *testing.T) {
 	sampleConfig, err := ioutil.ReadFile("../testdata/sample-slice-dnn-notreuse.json")
 	if err != nil {
 		assert.NoError(t, err)
@@ -173,62 +173,48 @@ func Test_XPathSelectIPDomain(t *testing.T) {
 	tests := []navigator.XpathSelect{
 		{
 			Name: "ip-domain of current device-group",
-			Path: "./ent:ip-domain",
-			Expected: []string{
-				"Iter Value: ip-domain: acme-dallas",
-			},
-		},
-		{
-			Name: "verify again that we can get ip-domain of current device-group",
-			Path: "./ent:ip-domain",
+			Path: "./ent:device-group[@ent:device-group-id='acme-dallas-default']/ent:ip-domain",
 			Expected: []string{
 				"Iter Value: ip-domain: acme-dallas",
 			},
 		},
 		{
 			Name: "ip domain chicago ip-domain-id",
-			Path: "../ent:ip-domain[@ent:ip-domain-id='acme-chicago']/@ent:ip-domain-id",
+			Path: "./ent:ip-domain[@ent:ip-domain-id='acme-chicago']/@ent:ip-domain-id",
 			Expected: []string{
 				"Iter Value: ip-domain-id: acme-chicago",
 			},
 		},
 		{
 			Name: "the ip domain of chicago device-group",
-			Path: "../ent:device-group[@ent:device-group-id='acme-chicago-default']/ent:ip-domain",
+			Path: "./ent:device-group[@ent:device-group-id='acme-chicago-default']/ent:ip-domain",
 			Expected: []string{
 				"Iter Value: ip-domain: acme-chicago",
 			},
 		},
 		{
 			Name: "the ip domain of dallas device-group",
-			Path: "../ent:device-group[@ent:device-group-id='acme-dallas-default']/ent:ip-domain",
+			Path: "./ent:device-group[@ent:device-group-id='acme-dallas-default']/ent:ip-domain",
 			Expected: []string{
 				"Iter Value: ip-domain: acme-dallas",
 			},
 		},
 		{
 			Name: "the DNN of ip-domain related to dallas device-group",
-			Path: "../ent:ip-domain[@ent:ip-domain-id=../ent:device-group[@ent:device-group-id='acme-dallas-default']/ent:ip-domain]/ent:dnn",
+			Path: "./ent:ip-domain[@ent:ip-domain-id=../ent:device-group[@ent:device-group-id='acme-dallas-default']/ent:ip-domain]/ent:dnn",
 			Expected: []string{
 				"Iter Value: dnn: dnndallas",
 			},
 		},
 		{
 			Name: "the set of all DG ip-domain references",
-			Path: "//ent:device-group/ent:ip-domain",
+			Path: "./ent:device-group/ent:ip-domain",
 			Expected: []string{
 				"Iter Value: ip-domain: acme-chicago",
+				"Iter Value: ip-domain: acme-dallas2",
 				"Iter Value: ip-domain: acme-dallas",
 				"Iter Value: ip-domain: acme-chicago",
 				"Iter Value: ip-domain: acme-dallas",
-			},
-		},
-		{
-			Name: "the set of all DG following nodes",
-			Path: "../following::node()",
-			Expected: []string{
-				"Iter Value: traffic-class: value of traffic-class",
-				"Iter Value: traffic-class-id: class-1",
 			},
 		},
 		{
@@ -240,7 +226,7 @@ func Test_XPathSelectIPDomain(t *testing.T) {
 		},
 		{
 			Name: "the set of all DG following-sibling nodes",
-			Path: "./following-sibling::node()",
+			Path: "./ent:device-group[@ent:device-group-id='acme-dallas-default']/following-sibling::node()",
 			Expected: []string{
 				"Iter Value: device-group: value of device-group",
 				"Iter Value: device-group: value of device-group",
@@ -253,10 +239,27 @@ func Test_XPathSelectIPDomain(t *testing.T) {
 			},
 		},
 		{
-			Name: "the id of ip-domain related to all device-groups",
-			Path: "../ent:ip-domain[contains(@ent:ip-domain-id,string(//ent:device-group/ent:ip-domain))]/@ent:ip-domain-id",
+			Name: "non unique ip-domains used in device-groups",
+			Path: "./ent:device-group[set-contains(following-sibling::ent:device-group/ent:ip-domain, ent:ip-domain)]/ent:ip-domain",
 			Expected: []string{
-				"Iter Value: ip-domain-id: acme-chicago", // Should be more than this
+				"Iter Value: ip-domain: acme-chicago",
+				"Iter Value: ip-domain: acme-dallas",
+			},
+		},
+		{
+			Name: "non unique dnns used in ip-domains",
+			Path: "./ent:ip-domain[set-contains(following-sibling::ent:ip-domain/ent:dnn, ent:dnn)]/ent:dnn]/@ent-ip-domain-id",
+			Expected: []string{
+				"Iter Value: dnn: dnndallas",
+			},
+		},
+		{
+			Name: "set of dnns of ipdomains used in device-groups",
+			Path: "ent:ip-domain[set-contains(../ent:device-group/ent:ip-domain, @ent:ip-domain-id)]/ent:dnn",
+			Expected: []string{
+				"Iter Value: dnn: dnnacme",
+				"Iter Value: dnn: dnndallas",
+				"Iter Value: dnn: dnndallas",
 			},
 		},
 	}
@@ -270,11 +273,9 @@ func Test_XPathSelectIPDomain(t *testing.T) {
 		assert.True(t, ynn.MoveToChild())
 		assert.True(t, ynn.MoveToChild())
 		assert.True(t, ynn.MoveToChild())
-		assert.True(t, ynn.MoveToNext())
-		assert.True(t, ynn.MoveToChild())
-		assert.True(t, ynn.MoveToNext()) // Device-group list
+		assert.True(t, ynn.MoveToNext()) // site
 
-		assert.Equal(t, "device-group", ynn.LocalName())
+		assert.Equal(t, "site", ynn.LocalName())
 		assert.Equal(t, xpath.ElementNode, ynn.NodeType())
 
 		iter := expr.Select(ynn)
@@ -312,12 +313,12 @@ func Test_XPathEvaluateDeviceGroup(t *testing.T) {
 		{
 			Name:     "test get ip-domain",
 			Path:     "string(./ent:ip-domain)",
-			Expected: "acme-dallas",
+			Expected: "acme-dallas2",
 		},
 		{
-			Name:     "test get again ip-domain",
+			Name:     "test get again device-group",
 			Path:     "string(./@ent:device-group-id)",
-			Expected: "acme-dallas-default", // Why is it different?
+			Expected: "acme-dallas-bis",
 		},
 		{
 			Name:     "check more than 1 device-groups use 'acme-dallas' ip-domain",
@@ -340,6 +341,16 @@ func Test_XPathEvaluateDeviceGroup(t *testing.T) {
 			Name:     "see that string of set of DG gives only first one",
 			Path:     "string(//ent:device-group/ent:ip-domain)",
 			Expected: "acme-chicago",
+		},
+		{
+			Name:     "see that ipdomain is not reused by device-group",
+			Path:     "boolean(../ent:device-group[set-contains(following-sibling::ent:device-group/ent:ip-domain, ent:ip-domain)])",
+			Expected: true, // acme-dallas is used twice
+		},
+		{
+			Name:     "see that ipdomain is not reused by device-group",
+			Path:     "boolean(../ent:device-group[set-contains(following-sibling::ent:device-group/ent:ip-domain, ent:ip-domain)])",
+			Expected: true, // acme-dallas is used twice
 		},
 	}
 
@@ -386,7 +397,7 @@ func Test_XPathEvaluateSlice(t *testing.T) {
 		{
 			Name:     "test count device-group",
 			Path:     "count(ent:device-group)",
-			Expected: float64(4),
+			Expected: float64(5),
 		},
 		{
 			Name:     "test count device-group whose following node has same ip-domain",

@@ -33,7 +33,6 @@ func Test_WalkAndValidatePortsMust(t *testing.T) {
 	assert.NoError(t, validateErr)
 }
 
-/*
 func Test_WalkAndValidateMustPortsWrong(t *testing.T) {
 	sampleConfig, err := ioutil.ReadFile("../testdata/sample-must-port-start-end-wrong.json")
 	if err != nil {
@@ -55,7 +54,6 @@ func Test_WalkAndValidateMustPortsWrong(t *testing.T) {
 	validateErr := ynn.WalkAndValidateMust()
 	assert.EqualError(t, validateErr, "port-start must be less than or equal to port-end. Must statement 'number(./ent:port-start) <= number(./ent:port-end)' to true. Container(s): [endpoint-id=da2]")
 }
-*/
 
 func Test_WalkAndValidateMustIpDomainSlice(t *testing.T) {
 	sampleConfig, err := ioutil.ReadFile("../testdata/sample-slice-dnn-notreuse.json")
