@@ -74,5 +74,5 @@ func Test_WalkAndValidateMustIpDomainSlice(t *testing.T) {
 	ynn, ynnOk := nn.(*navigator.YangNodeNavigator)
 	assert.True(t, ynnOk)
 	validateErr := ynn.WalkAndValidateMust()
-	assert.NoError(t, validateErr)
+	assert.EqualError(t, validateErr, `a device group cannot be used in more than one slice in a site. Must statement 'count(ent:slice[set-contains(following-sibling::ent:slice/ent:device-group/@ent:device-group, ent:device-group/@ent:device-group)]/@ent:slice-id) = 0' to true. Container(s): [slice-id=acme-dallas-robots]`)
 }

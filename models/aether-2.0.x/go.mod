@@ -15,3 +15,5 @@ require (
 	github.com/stretchr/testify v1.7.0
 	google.golang.org/grpc v1.41.0
 )
+
+replace github.com/SeanCondon/xpath => ../../../../antchfx/xpath

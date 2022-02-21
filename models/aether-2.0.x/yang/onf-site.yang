@@ -39,6 +39,11 @@ submodule onf-site {
     description "The site grouping";
 
     list site {
+      must "count(ent:slice[set-contains(following-sibling::ent:slice/ent:device-group/@ent:device-group, ent:device-group/@ent:device-group)]/@ent:slice-id) = 0" {
+        error-message "a device group cannot be used in more than one slice in a site";
+        description "device-group refers to ip-domain. the DNN in ip-domain cannot
+                     be used by more than 1 slice";
+      }
       key "site-id";
       description
         "List of site";

@@ -122,15 +122,29 @@ func Test_XPathSelect(t *testing.T) {
 			Name: "test slice starbucks-newyork-cameras dg starbucks-newyork-cameras-front enable",
 			Path: "/ent:enterprises/ent:enterprise/ent:site[@ent:site-id='starbucks-newyork']/ent:device-group[@ent:device-group-id='starbucks-newyork-cameras-front']/ent:ip-domain",
 			Expected: []string{
-				"Iter Value: ip-domain: starbucks-newyork",
+				"Iter Value: ip-domain: starbucks-newyork-1",
 			},
 		},
 		{
 			Name: "test ip-domain starbucks-newyork dg ip-domain by ref dg",
 			Path: "/ent:enterprises/ent:enterprise/ent:site[@ent:site-id='starbucks-newyork']/ent:ip-domain[@ent:ip-domain-id=../ent:device-group[@ent:device-group-id='starbucks-newyork-pos']/ent:ip-domain]/@ent:ip-domain-id",
 			Expected: []string{
-				"Iter Value: ip-domain-id: starbucks-newyork",
+				"Iter Value: ip-domain-id: starbucks-newyork-1",
 			},
+		},
+		{
+			Name: "set of device-groups used in slices",
+			Path: "ent:device-group[set-contains(../ent:slice/ent:device-group/@ent:device-group, ./@ent:device-group-id)]/@ent:device-group-id",
+			Expected: []string{
+				"Iter Value: device-group-id: starbucks-seattle-cameras-cter",
+				"Iter Value: device-group-id: starbucks-seattle-cameras-store",
+				"Iter Value: device-group-id: starbucks-seattle-pos-tills",
+			},
+		},
+		{
+			Name:     "repeated device-groups in slices of this site",
+			Path:     "./ent:slice[set-contains(following-sibling::ent:slice/ent:device-group/@ent:device-group, ent:device-group/@ent:device-group)]/@ent:slice-id",
+			Expected: []string{},
 		},
 	}
 
@@ -193,14 +207,14 @@ func Test_XPathSelectSite(t *testing.T) {
 			},
 		},
 		{
-			Name: "the ip domain of dallas device-group",
+			Name: "the ip domain of dallas-default device-group",
 			Path: "./ent:device-group[@ent:device-group-id='acme-dallas-default']/ent:ip-domain",
 			Expected: []string{
 				"Iter Value: ip-domain: acme-dallas",
 			},
 		},
 		{
-			Name: "the DNN of ip-domain related to dallas device-group",
+			Name: "the DNN of ip-domain related to dallas-default device-group",
 			Path: "./ent:ip-domain[@ent:ip-domain-id=../ent:device-group[@ent:device-group-id='acme-dallas-default']/ent:ip-domain]/ent:dnn",
 			Expected: []string{
 				"Iter Value: dnn: dnndallas",
@@ -218,14 +232,7 @@ func Test_XPathSelectSite(t *testing.T) {
 			},
 		},
 		{
-			Name:     "the set of all DG preceding-sibling nodes",
-			Path:     "./preceding-sibling::node()",
-			Expected: []string{
-				//"Iter Value: device-group: value of device-group",
-			},
-		},
-		{
-			Name: "the set of all DG following-sibling nodes",
+			Name: "the set of all following-sibling nodes of first DG",
 			Path: "./ent:device-group[@ent:device-group-id='acme-dallas-default']/following-sibling::node()",
 			Expected: []string{
 				"Iter Value: device-group: value of device-group",
@@ -235,6 +242,7 @@ func Test_XPathSelectSite(t *testing.T) {
 				"Iter Value: ip-domain: value of ip-domain",
 				"Iter Value: ip-domain: value of ip-domain",
 				"Iter Value: site-id: acme-chicago",
+				"Iter Value: slice: value of slice",
 				"Iter Value: slice: value of slice",
 			},
 		},
@@ -248,7 +256,7 @@ func Test_XPathSelectSite(t *testing.T) {
 		},
 		{
 			Name: "non unique dnns used in ip-domains",
-			Path: "./ent:ip-domain[set-contains(following-sibling::ent:ip-domain/ent:dnn, ent:dnn)]/ent:dnn]/@ent-ip-domain-id",
+			Path: "./ent:ip-domain[set-contains(following-sibling::ent:ip-domain/ent:dnn, ent:dnn)]/ent:dnn",
 			Expected: []string{
 				"Iter Value: dnn: dnndallas",
 			},
@@ -262,6 +270,70 @@ func Test_XPathSelectSite(t *testing.T) {
 				"Iter Value: dnn: dnndallas",
 			},
 		},
+		{
+			Name: "set of device-groups used in slices",
+			Path: "ent:device-group[set-contains(../ent:slice/ent:device-group/@ent:device-group, ./@ent:device-group-id)]/@ent:device-group-id",
+			Expected: []string{
+				"Iter Value: device-group-id: acme-chicago-default",
+				"Iter Value: device-group-id: acme-dallas-extra",
+				"Iter Value: device-group-id: acme-dallas-more",
+			},
+		},
+		{
+			Name: "set of ip-domains used in device-groups used slices",
+			Path: "ent:device-group[set-contains(../ent:slice/ent:device-group/@ent:device-group, ./@ent:device-group-id)]/ent:ip-domain",
+			Expected: []string{
+				"Iter Value: ip-domain: acme-chicago",
+				"Iter Value: ip-domain: acme-chicago",
+				"Iter Value: ip-domain: acme-dallas",
+			},
+		},
+		{
+			Name: "set of dnns of ip-domains used in device-groups used slices",
+			Path: "ent:ip-domain[set-contains(../ent:device-group[set-contains(../ent:slice/ent:device-group/@ent:device-group, ./@ent:device-group-id)]/ent:ip-domain, @ent:ip-domain-id)]/ent:dnn",
+			Expected: []string{
+				"Iter Value: dnn: dnnacme",
+				"Iter Value: dnn: dnndallas",
+			},
+		},
+		{
+			Name:     "set of dnns of ip-domains used in device-groups used slices 2",
+			Path:     "ent:ip-domain[set-contains(../ent:device-group[set-contains(../ent:slice[set-contains(following-sibling::ent:slice/@ent:slice-id, @ent:slice-id)]/ent:device-group/@ent:device-group, ./@ent:device-group-id)]/ent:ip-domain, @ent:ip-domain-id)]/ent:dnn",
+			Expected: []string{
+				//"Iter Value: dnn: dnnacme",
+				//"Iter Value: dnn: dnndallas",
+			},
+		},
+		{
+			Name: "set of dnns of ip-domains used in device-groups used in 1 named slice - acme-chicago-robots",
+			Path: "ent:ip-domain[set-contains(../ent:device-group[set-contains(../ent:slice[@ent:slice-id='acme-chicago-robots']/ent:device-group/@ent:device-group, ./@ent:device-group-id)]/ent:ip-domain, @ent:ip-domain-id)]/ent:dnn",
+			Expected: []string{
+				"Iter Value: dnn: dnnacme",
+			},
+		},
+		{
+			Name: "set of device-groups used in 1 named slice - acme-chicago-robots",
+			Path: "ent:slice[@ent:slice-id='acme-chicago-robots']/ent:device-group/@ent:device-group",
+			Expected: []string{
+				"Iter Value: device-group: acme-chicago-default",
+				"Iter Value: device-group: acme-dallas-extra",
+			},
+		},
+		{
+			Name: "set of device-groups used in 1 named slice - acme-dallas-robots",
+			Path: "ent:slice[@ent:slice-id='acme-dallas-robots']/ent:device-group/@ent:device-group",
+			Expected: []string{
+				"Iter Value: device-group: acme-dallas-extra",
+				"Iter Value: device-group: acme-dallas-more",
+			},
+		},
+		{
+			Name: "repeated device-groups in slices of this site",
+			Path: "./ent:slice[set-contains(following-sibling::ent:slice/ent:device-group/@ent:device-group, ent:device-group/@ent:device-group)]/@ent:slice-id",
+			Expected: []string{
+				"Iter Value: slice-id: acme-chicago-robots",
+			},
+		},
 	}
 
 	for _, test := range tests {
@@ -270,10 +342,10 @@ func Test_XPathSelectSite(t *testing.T) {
 		assert.NotNil(t, expr, test.Name)
 
 		ynn.MoveToRoot()
-		assert.True(t, ynn.MoveToChild())
-		assert.True(t, ynn.MoveToChild())
-		assert.True(t, ynn.MoveToChild())
-		assert.True(t, ynn.MoveToNext()) // site
+		assert.True(t, ynn.MoveToChild()) // enterprises
+		assert.True(t, ynn.MoveToChild()) // enterprise acme
+		assert.True(t, ynn.MoveToChild()) // enterprise-id acme
+		assert.True(t, ynn.MoveToNext())  // site acme-chicago
 
 		assert.Equal(t, "site", ynn.LocalName())
 		assert.Equal(t, xpath.ElementNode, ynn.NodeType())
@@ -352,6 +424,11 @@ func Test_XPathEvaluateDeviceGroup(t *testing.T) {
 			Path:     "boolean(../ent:device-group[set-contains(following-sibling::ent:device-group/ent:ip-domain, ent:ip-domain)])",
 			Expected: true, // acme-dallas is used twice
 		},
+		{
+			Name:     "count of times a device-group is repeated in slices of this site",
+			Path:     "count(../ent:slice[set-contains(following-sibling::ent:slice/ent:device-group/@ent:device-group, ent:device-group/@ent:device-group)]/@ent:slice-id)",
+			Expected: float64(1), // acme-dallas-extra is used twice
+		},
 	}
 
 	for _, test := range tests {
@@ -403,6 +480,22 @@ func Test_XPathEvaluateSlice(t *testing.T) {
 			Name:     "test count device-group whose following node has same ip-domain",
 			Path:     "string(ent:device-group[ent:ip-domain=following::ent:device-group/ent:ip-domain])",
 			Expected: "",
+		},
+		{
+			Name:     "count of DNNs used in all the slices in this site",
+			Path:     "count(ent:ip-domain[set-contains(../ent:device-group[set-contains(../ent:slice/ent:device-group/@ent:device-group, ./@ent:device-group-id)]/ent:ip-domain, @ent:ip-domain-id)]/ent:dnn)",
+			Expected: float64(2),
+		},
+		{
+			Name:     "count of device-groups used in the slices in this site",
+			Path:     "count(ent:device-group[set-contains(../ent:slice/ent:device-group/@ent:device-group, ./@ent:device-group-id)]/@ent:device-group-id)",
+			Expected: float64(3),
+		},
+		{
+			Name: "compare count of unique dnns to the count of device groups used in the slices in this site",
+			Path: `count(ent:device-group[set-contains(../ent:slice/ent:device-group/@ent:device-group, ./@ent:device-group-id)]/@ent:device-group-id) =
+count(../ent:ip-domain[set-contains(../ent:device-group[set-contains(../ent:slice/ent:device-group/@ent:device-group, ./@ent:device-group-id)]/ent:ip-domain, @ent:ip-domain-id)]/ent:dnn)`,
+			Expected: false,
 		},
 	}
 
