@@ -297,14 +297,10 @@ components:
           $ref: '#/components/schemas/Application_Application_Endpoint_Mbr'
         port-end:
           description: Last port in range
-          maximum: 65535
-          minimum: 0
           title: port-end
           type: integer
         port-start:
           description: First port in range
-          maximum: 65535
-          minimum: 0
           title: port-start
           type: integer
         protocol:
@@ -329,15 +325,11 @@ components:
         downlink:
           description: Per-Device per application MBR downlink data rate in bps
           format: int64
-          maximum: 1.8446744073709552e+19
-          minimum: 0
           title: downlink
           type: integer
         uplink:
           description: Per-Device per-Application MBR uplink data rate in bps
           format: int64
-          maximum: 1.8446744073709552e+19
-          minimum: 0
           title: uplink
           type: integer
       title: Application_Application_Endpoint_Mbr
@@ -482,15 +474,11 @@ components:
         downlink:
           description: Per-device MBR downlink data rate in bps
           format: int64
-          maximum: 1.8446744073709552e+19
-          minimum: 0
           title: downlink
           type: integer
         uplink:
           description: Per-device MBR uplink data rate in bps
           format: int64
-          maximum: 1.8446744073709552e+19
-          minimum: 0
           title: uplink
           type: integer
       required:
@@ -516,15 +504,11 @@ components:
         imsi-range-from:
           description: value of imsi-range-from
           format: int64
-          maximum: 1.8446744073709552e+19
-          minimum: 0
           title: imsi-range-from
           type: integer
         imsi-range-to:
           description: value of imsi-range-to
           format: int64
-          maximum: 1.8446744073709552e+19
-          minimum: 0
           title: imsi-range-to
           type: integer
       required:
@@ -663,8 +647,6 @@ components:
         mtu:
           default: 1492
           description: maximum transmission unit
-          maximum: 65535
-          minimum: 0
           title: mtu
           type: integer
         subnet:
@@ -748,7 +730,6 @@ components:
           description: enterprise-specific identifier
           format: int32
           maximum: 999
-          minimum: 0
           title: enterprise
           type: integer
         format:
@@ -907,14 +888,12 @@ components:
           description: Slice differentiator
           format: int32
           maximum: 16777215
-          minimum: 0
           title: sd
           type: integer
         slice:
           $ref: '#/components/schemas/Template_Template_Slice'
         sst:
           description: Slice/Service type
-          maximum: 255
           minimum: 1
           title: sst
           type: integer
@@ -935,31 +914,23 @@ components:
         downlink:
           description: Per-Slice MBR downlink data rate in bps
           format: int64
-          maximum: 1.8446744073709552e+19
-          minimum: 0
           title: downlink
           type: integer
         downlink-burst-size:
           default: 625000
           description: Per-Slice Downlink burst size
           format: int32
-          maximum: 4294967295
-          minimum: 0
           title: downlink-burst-size
           type: integer
         uplink:
           description: Per-Slice MBR uplink data rate in bps
           format: int64
-          maximum: 1.8446744073709552e+19
-          minimum: 0
           title: uplink
           type: integer
         uplink-burst-size:
           default: 625000
           description: Per-Slice Uplink burst size
           format: int32
-          maximum: 4294967295
-          minimum: 0
           title: uplink-burst-size
           type: integer
       title: Template_Template_Slice_Mbr
@@ -1011,7 +982,6 @@ components:
         pdb:
           description: PDB
           maximum: 1000
-          minimum: 0
           title: pdb
           type: integer
         pelr:
@@ -1083,8 +1053,6 @@ components:
           type: string
         port:
           description: Port for UPF
-          maximum: 65535
-          minimum: 0
           title: port
           type: integer
         site:
@@ -1176,7 +1144,6 @@ components:
           description: Slice differentiator. Immutable.
           format: int32
           maximum: 16777215
-          minimum: 0
           title: sd
           type: integer
         site:
@@ -1188,7 +1155,6 @@ components:
           $ref: '#/components/schemas/Vcs_Vcs_Slice'
         sst:
           description: Slice/Service type. Immutable.
-          maximum: 255
           minimum: 1
           title: sst
           type: integer
@@ -1235,7 +1201,6 @@ components:
         priority:
           description: Priority of this application
           maximum: 200
-          minimum: 0
           title: priority
           type: integer
       required:
@@ -1254,31 +1219,23 @@ components:
         downlink:
           description: Per-Slice MBR downlink data rate in bps
           format: int64
-          maximum: 1.8446744073709552e+19
-          minimum: 0
           title: downlink
           type: integer
         downlink-burst-size:
           default: 625000
           description: Per-Slice Downlink burst size
           format: int32
-          maximum: 4294967295
-          minimum: 0
           title: downlink-burst-size
           type: integer
         uplink:
           description: Per-Slice MBR uplink data rate in bps
           format: int64
-          maximum: 1.8446744073709552e+19
-          minimum: 0
           title: uplink
           type: integer
         uplink-burst-size:
           default: 625000
           description: Per-Slice Uplink burst size
           format: int32
-          maximum: 4294967295
-          minimum: 0
           title: uplink-burst-size
           type: integer
       title: Vcs_Vcs_Slice_Mbr
