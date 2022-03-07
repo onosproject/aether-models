@@ -286,6 +286,11 @@ components:
           uniqueItems: true
           x-keys:
           - site-id
+          x-must:
+          - ErrorMessage:
+              Name: a device group cannot be used in more than one slice in a site
+            Name: count(ent:slice[set-contains(following-sibling::ent:slice/ent:device-group/@ent:device-group,
+              ent:device-group/@ent:device-group)]/@ent:slice-id) = 0
         template:
           description: List of slice templates
           items:
@@ -377,14 +382,10 @@ components:
           $ref: '#/components/schemas/Enterprises_Enterprise_Application_Endpoint_Mbr'
         port-end:
           description: Last port in range
-          maximum: 65535
-          minimum: 0
           title: port-end
           type: integer
         port-start:
           description: First port in range
-          maximum: 65535
-          minimum: 0
           title: port-start
           type: integer
         protocol:
@@ -409,15 +410,11 @@ components:
         downlink:
           description: Per-Device per application MBR downlink data rate in bps
           format: int64
-          maximum: 1.8446744073709552e+19
-          minimum: 0
           title: downlink
           type: integer
         uplink:
           description: Per-Device per-Application MBR uplink data rate in bps
           format: int64
-          maximum: 1.8446744073709552e+19
-          minimum: 0
           title: uplink
           type: integer
       title: Enterprises_Enterprise_Application_Endpoint_Mbr
@@ -640,15 +637,11 @@ components:
         downlink:
           description: Per-device MBR downlink data rate in bps
           format: int64
-          maximum: 1.8446744073709552e+19
-          minimum: 0
           title: downlink
           type: integer
         uplink:
           description: Per-device MBR uplink data rate in bps
           format: int64
-          maximum: 1.8446744073709552e+19
-          minimum: 0
           title: uplink
           type: integer
       required:
@@ -665,7 +658,6 @@ components:
           description: enterprise-specific identifier
           format: int32
           maximum: 999
-          minimum: 0
           title: enterprise
           type: integer
         format:
@@ -739,8 +731,6 @@ components:
         mtu:
           default: 1492
           description: maximum transmission unit
-          maximum: 65535
-          minimum: 0
           title: mtu
           type: integer
         subnet:
@@ -823,8 +813,6 @@ components:
         imsi:
           description: IMSI for this sim card
           format: int64
-          maximum: 1.8446744073709552e+19
-          minimum: 0
           title: imsi
           type: integer
         sim-id:
@@ -898,7 +886,6 @@ components:
           description: Slice differentiator. Immutable.
           format: int32
           maximum: 16777215
-          minimum: 0
           title: sd
           type: integer
         slice-id:
@@ -910,7 +897,6 @@ components:
           type: string
         sst:
           description: Slice/Service type. Immutable.
-          maximum: 255
           minimum: 1
           title: sst
           type: integer
@@ -955,7 +941,6 @@ components:
         priority:
           description: Priority of this application
           maximum: 200
-          minimum: 0
           title: priority
           type: integer
       required:
@@ -967,31 +952,23 @@ components:
         downlink:
           description: Per-Slice MBR downlink data rate in bps
           format: int64
-          maximum: 1.8446744073709552e+19
-          minimum: 0
           title: downlink
           type: integer
         downlink-burst-size:
           default: 625000
           description: Per-Slice Downlink burst size
           format: int32
-          maximum: 4294967295
-          minimum: 0
           title: downlink-burst-size
           type: integer
         uplink:
           description: Per-Slice MBR uplink data rate in bps
           format: int64
-          maximum: 1.8446744073709552e+19
-          minimum: 0
           title: uplink
           type: integer
         uplink-burst-size:
           default: 625000
           description: Per-Slice Uplink burst size
           format: int32
-          maximum: 4294967295
-          minimum: 0
           title: uplink-burst-size
           type: integer
       title: Enterprises_Enterprise_Site_Slice_Mbr
@@ -1055,15 +1032,11 @@ components:
         downlink:
           description: Per-Device per application downlink data rate in bps
           format: int64
-          maximum: 1.8446744073709552e+19
-          minimum: 0
           title: downlink
           type: integer
         uplink:
           description: Per-Device per-Application uplink data rate in bps
           format: int64
-          maximum: 1.8446744073709552e+19
-          minimum: 0
           title: uplink
           type: integer
       title: Enterprises_Enterprise_Site_Slice_Priority-traffic-rule_Gbr
@@ -1074,15 +1047,11 @@ components:
         downlink:
           description: Per-Device per application downlink data rate in bps
           format: int64
-          maximum: 1.8446744073709552e+19
-          minimum: 0
           title: downlink
           type: integer
         uplink:
           description: Per-Device per-Application uplink data rate in bps
           format: int64
-          maximum: 1.8446744073709552e+19
-          minimum: 0
           title: uplink
           type: integer
       title: Enterprises_Enterprise_Site_Slice_Priority-traffic-rule_Mbr
@@ -1156,8 +1125,6 @@ components:
           type: string
         port:
           description: Port for UPF
-          maximum: 65535
-          minimum: 0
           title: port
           type: integer
         upf-id:
@@ -1200,12 +1167,10 @@ components:
           description: Slice differentiator
           format: int32
           maximum: 16777215
-          minimum: 0
           title: sd
           type: integer
         sst:
           description: Slice/Service type
-          maximum: 255
           minimum: 1
           title: sst
           type: integer
@@ -1226,31 +1191,23 @@ components:
         downlink:
           description: Per-Slice MBR downlink data rate in bps
           format: int64
-          maximum: 1.8446744073709552e+19
-          minimum: 0
           title: downlink
           type: integer
         downlink-burst-size:
           default: 625000
           description: Per-Slice Downlink burst size
           format: int32
-          maximum: 4294967295
-          minimum: 0
           title: downlink-burst-size
           type: integer
         uplink:
           description: Per-Slice MBR uplink data rate in bps
           format: int64
-          maximum: 1.8446744073709552e+19
-          minimum: 0
           title: uplink
           type: integer
         uplink-burst-size:
           default: 625000
           description: Per-Slice Uplink burst size
           format: int32
-          maximum: 4294967295
-          minimum: 0
           title: uplink-burst-size
           type: integer
       title: Enterprises_Enterprise_Template_Mbr
@@ -1279,7 +1236,6 @@ components:
         pdb:
           description: PDB
           maximum: 1000
-          minimum: 0
           title: pdb
           type: integer
         pelr:

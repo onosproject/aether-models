@@ -427,7 +427,7 @@
               {
                 "display-name": "Seattle Counter Cameras",
                 "device-group-id": "starbucks-seattle-cameras-cter",
-                "ip-domain": "starbucks-seattle",
+                "ip-domain": "starbucks-seattle-1",
                 "device": [
                   {
                     "device-id": "counter-camera-1",
@@ -443,7 +443,7 @@
               {
                 "display-name": "Seattle Store Cameras",
                 "device-group-id": "starbucks-seattle-cameras-store",
-                "ip-domain": "starbucks-seattle",
+                "ip-domain": "starbucks-seattle-2",
                 "device": [
                   {
                     "device-id": "seattle-store-camera-1",
@@ -459,7 +459,7 @@
               {
                 "display-name": "Seattle POS Tills",
                 "device-group-id": "starbucks-seattle-pos-tills",
-                "ip-domain": "starbucks-seattle",
+                "ip-domain": "starbucks-seattle-3",
                 "device": [
                   {
                     "device-id": "till-1",
@@ -476,12 +476,34 @@
             "ip-domain": [
               {
                 "admin-status": "ENABLE",
-                "description": "Seattle IP Domain",
-                "display-name": "Seattle",
+                "description": "Seattle IP Domain 1",
+                "display-name": "Seattle 1",
                 "dns-primary": "8.8.8.3",
                 "dns-secondary": "8.8.8.3",
-                "dnn": "dnnsbsea",
-                "ip-domain-id": "starbucks-seattle",
+                "dnn": "dnn-sb-sea-1",
+                "ip-domain-id": "starbucks-seattle-1",
+                "mtu": 12690,
+                "subnet": "196.5.91.0/31"
+              },
+              {
+                "admin-status": "ENABLE",
+                "description": "Seattle IP Domain 2",
+                "display-name": "Seattle 2",
+                "dns-primary": "8.8.8.3",
+                "dns-secondary": "8.8.8.3",
+                "dnn": "dnn-sb-sea-1",
+                "ip-domain-id": "starbucks-seattle-2",
+                "mtu": 12690,
+                "subnet": "196.5.91.0/31"
+              },
+              {
+                "admin-status": "ENABLE",
+                "description": "Seattle IP Domain 3",
+                "display-name": "Seattle 3",
+                "dns-primary": "8.8.8.3",
+                "dns-secondary": "8.8.8.3",
+                "dnn": "dnn-sb-sea-3",
+                "ip-domain-id": "starbucks-seattle-3",
                 "mtu": 12690,
                 "subnet": "196.5.91.0/31"
               }
@@ -560,6 +582,31 @@
                   "uplink": "10000000",
                   "uplink-burst-size": 600000
                 }
+              },
+              {
+                "filter": [
+                  {
+                    "allow": false,
+                    "application": "starbucks-nvr"
+                  }
+                ],
+                "default-behavior": "DENY-ALL",
+                "description": "Seattle Tills",
+                "device-group": [
+                  {
+                    "enable": true,
+                    "device-group": "starbucks-seattle-pos-tills"
+                  }
+                ],
+                "display-name": "Seattle Tills Slice",
+                "slice-id": "starbucks-seattle-tills",
+                "sd": 2973987,
+                "sst": 79,
+                "upf": "starbucks-seattle-pool-entry2",
+                "mbr": {
+                  "uplink": "10000000",
+                  "uplink-burst-size": 600000
+                }
               }
             ],
             "device": [
@@ -600,7 +647,7 @@
                     "enable": true
                   }
                 ],
-                "ip-domain": "starbucks-newyork",
+                "ip-domain": "starbucks-newyork-1",
                 "mbr": {
                   "uplink": "1000000"
                 },
@@ -615,7 +662,7 @@
                     "enable": true
                   }
                 ],
-                "ip-domain": "starbucks-newyork",
+                "ip-domain": "starbucks-newyork-2",
                 "mbr": {
                   "uplink": "1000000"
                 },
@@ -634,7 +681,7 @@
                     "enable": true
                   }
                 ],
-                "ip-domain": "starbucks-newyork",
+                "ip-domain": "starbucks-newyork-1",
                 "mbr": {
                   "downlink": "1000000"
                 },
@@ -644,12 +691,23 @@
             "ip-domain": [
               {
                 "admin-status": "ENABLE",
-                "description": "New York IP Domain",
-                "display-name": "New York",
+                "description": "New York IP Domain 1",
+                "display-name": "New York 1",
                 "dns-primary": "8.8.8.1",
                 "dns-secondary": "8.8.8.2",
-                "dnn": "dnnsbny",
-                "ip-domain-id": "starbucks-newyork",
+                "dnn": "dnn-sb-ny-1",
+                "ip-domain-id": "starbucks-newyork-1",
+                "mtu": 57600,
+                "subnet": "254.186.117.251/31"
+              },
+              {
+                "admin-status": "ENABLE",
+                "description": "New York IP Domain 2",
+                "display-name": "New York 2",
+                "dns-primary": "8.8.8.1",
+                "dns-secondary": "8.8.8.2",
+                "dnn": "dnn-sb-ny-2",
+                "ip-domain-id": "starbucks-newyork-2",
                 "mtu": 57600,
                 "subnet": "254.186.117.251/31"
               }

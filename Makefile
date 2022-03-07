@@ -6,7 +6,7 @@ SHELL 			  		= bash -e -o pipefail
 KIND_CLUSTER_NAME 		?= kind
 DOCKER_USER       		?=
 DOCKER_PASSWORD   		?=
-MODEL_COMPILER_VERSION  ?= v0.9.13
+MODEL_COMPILER_VERSION  ?= v0.9.15
 
 .PHONY: models
 
@@ -38,7 +38,7 @@ kind-load: # @HELP Load Docker containers for all the models in a kind cluster (
 
 yang-lint: # @HELP Lint the yang models
 yang-lint: pyang-tool
-	@cd models && for model in *; do echo -e "Linting YANG files for: $$model"; pyang --lint $$model/yang/*.yang; done
+	@cd models && for model in *; do echo -e "Linting YANG files for: $$model"; pyang --lint --ignore-error=XPATH_FUNCTION $$model/yang/*.yang; done
 
 pyang-tool: # @HELP Install the Pyang tool if needed
 	pyang --version || python -m pip install pyang==2.5.2

@@ -70,10 +70,30 @@
                 "device-group": [
                   {
                     "enable": true,
-                    "device-group": "acme-chicago-production-robots"
+                    "device-group": "acme-chicago-default"
+                  },
+                  {
+                    "enable": true,
+                    "device-group": "acme-dallas-extra"
                   }
                 ],
                 "slice-id": "acme-chicago-robots",
+                "sd": 2973238,
+                "sst": 79
+              },
+              {
+                "default-behavior": "DENY-ALL",
+                "device-group": [
+                  {
+                    "enable": true,
+                    "device-group": "acme-dallas-extra"
+                  },
+                  {
+                    "enable": true,
+                    "device-group": "acme-dallas-more"
+                  }
+                ],
+                "slice-id": "acme-dallas-robots",
                 "sd": 2973238,
                 "sst": 79
               }
