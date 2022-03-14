@@ -25,8 +25,8 @@ func main() {
 	description := "TODO add a description field in Metadata.yaml?"
 	settings := openapi_gen.ApiGenSettings{
 		ModelType:    "aether",
-		ModelVersion: "4.0.18",
-		Title:        "aether-4.0.18",
+		ModelVersion: "4.0.19-dev",
+		Title:        "aether-4.0.19-dev",
 		Description:  string(description),
 	}
 
@@ -44,7 +44,7 @@ func main() {
 
 	license := []byte(`# SPDX-FileCopyrightText: 2021-present Open Networking Foundation <info@opennetworking.org>
 #
-# SPDX-License-Identifier: LicenseRef-ONF-Member-1.0
+# SPDX-License-Identifier: Apache-2.0
 `)
 
 	licensedYaml := append(license, yaml...)

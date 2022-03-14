@@ -111,8 +111,8 @@ github.com/PuerkitoBio/purell v1.1.0/go.mod h1:c11w/QuzBsJSee3cPx9rAFu61PvFxuPbt
 github.com/PuerkitoBio/purell v1.1.1/go.mod h1:c11w/QuzBsJSee3cPx9rAFu61PvFxuPbtSwDGJws/X0=
 github.com/PuerkitoBio/urlesc v0.0.0-20160726150825-5bd2802263f2/go.mod h1:uGdkoq3SwY9Y+13GIhn11/XLaGBb4BfwItxLd5jeuXE=
 github.com/PuerkitoBio/urlesc v0.0.0-20170810143723-de5bf2ad4578/go.mod h1:uGdkoq3SwY9Y+13GIhn11/XLaGBb4BfwItxLd5jeuXE=
-github.com/SeanCondon/xpath v0.0.0-20220221181849-c19b784b9842 h1:VdFZ8hGAFNVJNpPT9bll81+1iIn8a6Otn1Pae/96ZHg=
-github.com/SeanCondon/xpath v0.0.0-20220221181849-c19b784b9842/go.mod h1:Eq2Xc+fS1NsmRIB3orQMESBU3JZ1koIwYycgDgtYqZo=
+github.com/SeanCondon/xpath v0.0.0-20220225125014-419de017925c h1:x9Q0oS4/vC4/k9XVi71yv4EFsSxZ8hRt7/GHwODcGYc=
+github.com/SeanCondon/xpath v0.0.0-20220225125014-419de017925c/go.mod h1:Eq2Xc+fS1NsmRIB3orQMESBU3JZ1koIwYycgDgtYqZo=
 github.com/Shopify/logrus-bugsnag v0.0.0-20171204204709-577dee27f20d/go.mod h1:HI8ITrYtUY+O+ZhtlqUnD8+KwNPOyugEhfP9fdUIaEQ=
 github.com/Shopify/sarama v1.26.1/go.mod h1:NbSGBSSndYaIhRcBtY9V0U7AyH+x71bG668AuWys/yU=
 github.com/Shopify/sarama v1.29.1 h1:wBAacXbYVLmWieEA/0X/JagDdCZ8NVFOfS6l6+2u5S0=
@@ -882,8 +882,8 @@ github.com/oklog/ulid v1.3.1/go.mod h1:CirwcVhetQ6Lv90oh/F+FBtV6XMibvdAFo93nm5qn
 github.com/olekukonko/tablewriter v0.0.0-20170122224234-a0225b3f23b5/go.mod h1:vsDQFd/mU46D+Z4whnwzcISnGGzXWMclvtLoiIKAKIo=
 github.com/olekukonko/tablewriter v0.0.4/go.mod h1:zq6QwlOf5SlnkVbMSr5EoBv3636FWnp+qbPhuoO21uA=
 github.com/olekukonko/tablewriter v0.0.5/go.mod h1:hPp6KlRPjbx+hW8ykQs1w3UBbZlj6HuIJcUGPhkA7kY=
-github.com/onosproject/config-models v0.0.0-20220224180004-32567adb595a h1:Dbq5glFWt5LhO4nPq0gSnOLM9KL8db9kaYKHU1/uzjM=
-github.com/onosproject/config-models v0.0.0-20220224180004-32567adb595a/go.mod h1:Jlp7wVg8kn03B7gYqAo5JREfI5Va58eTK1Nc72Q2v80=
+github.com/onosproject/config-models v0.9.15 h1:HxBw1Qs+JCR0Ap2Gf/5n0npYyo2gU5LHEde6XFaike4=
+github.com/onosproject/config-models v0.9.15/go.mod h1:7SwH/WcftMZ6FLEmf4B1BDdx7xJH6DA/OZcBb9J31XE=
 github.com/onosproject/config-models/modelplugin/devicesim-1.0.0 v0.8.8/go.mod h1:AGhBrLU9eQu0xoQ1GM0wI93/KNv33vmhTVWM8MQhKaw=
 github.com/onosproject/config-models/modelplugin/testdevice-1.0.0 v0.8.8/go.mod h1:qip+5nc2GBy/4nHTA1DXfQO0ibj+c0nURLtzS/Aus14=
 github.com/onosproject/config-models/modelplugin/testdevice-2.0.0 v0.8.8/go.mod h1:znr5lX3YnyyNstMb0D1fHH0yjMpJ3tu9LP9+qr6puMI=

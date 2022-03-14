@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 name: aether
-version: 4.0.18
+version: 4.0.19-dev
 artifactName: aether-4.x
 goPackage: github.com/onosproject/aether-models/models/aether-4.x
 modules:

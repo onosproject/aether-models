@@ -3,9 +3,9 @@
 # SPDX-License-Identifier: Apache-2.0
 
 name: aether
-version: 2.0.x
-artifactName: aether-2.0.x
-goPackage: github.com/onosproject/aether-models/models/aether-2.0.x
+version: 2.1.x
+artifactName: aether-2.1.x
+goPackage: github.com/onosproject/aether-models/models/aether-2.1.x
 modules:
   - name: onf-aether-connectivity-service
     organization: Open Networking Foundation

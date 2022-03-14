@@ -4,7 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"github.com/ghodss/yaml"
-	"github.com/onosproject/aether-models/models/aether-2.0.x/api"
+	"github.com/onosproject/aether-models/models/aether-2.1.x/api"
 	openapi_gen "github.com/onosproject/config-models/pkg/openapi-gen"
 	"io/ioutil"
 	"os"
@@ -25,8 +25,8 @@ func main() {
 	description := "TODO add a description field in Metadata.yaml?"
 	settings := openapi_gen.ApiGenSettings{
 		ModelType:    "aether",
-		ModelVersion: "2.0.x",
-		Title:        "aether-2.0.x",
+		ModelVersion: "2.1.x",
+		Title:        "aether-2.1.x",
 		Description:  string(description),
 	}
 
@@ -44,7 +44,7 @@ func main() {
 
 	license := []byte(`# SPDX-FileCopyrightText: 2021-present Open Networking Foundation <info@opennetworking.org>
 #
-# SPDX-License-Identifier: LicenseRef-ONF-Member-1.0
+# SPDX-License-Identifier: Apache-2.0
 `)
 
 	licensedYaml := append(license, yaml...)

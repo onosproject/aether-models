@@ -1,11 +1,11 @@
-module github.com/onosproject/aether-models/models/aether-2.0.x
+module github.com/onosproject/aether-models/models/aether-2.1.x
 
 go 1.16
 
 require (
-	github.com/SeanCondon/xpath v0.0.0-20220221181849-c19b784b9842
+	github.com/SeanCondon/xpath v0.0.0-20220225125014-419de017925c
 	github.com/ghodss/yaml v1.0.0
-	github.com/onosproject/config-models v0.0.0-20220224180004-32567adb595a
+	github.com/onosproject/config-models v0.9.15
 	github.com/onosproject/onos-api/go v0.8.36
 	github.com/onosproject/onos-config v0.10.12
 	github.com/onosproject/onos-lib-go v0.8.1

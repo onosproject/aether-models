@@ -21,7 +21,7 @@ ARG org_opencord_vcs_dirty=unknown
 
 LABEL \
 org.label-schema.schema-version=1.0 \
-org.label-schema.name=aether-2.0.x \
+org.label-schema.name=aether-2.1.x \
 org.label-schema.version=$org_label_schema_version \
 org.label-schema.vcs-url=$org_label_schema_vcs_url \
 org.label-schema.vcs-ref=$org_label_schema_vcs_ref \

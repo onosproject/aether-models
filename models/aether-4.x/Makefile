@@ -3,7 +3,7 @@
 SHELL = bash -e -o pipefail
 DOCKER_REPOSITORY ?= onosproject/
 BASE_VERSION ?= $(shell cat ./VERSION)
-VERSION           ?= ${BASE_VERSION}-aether-4.0.18
+VERSION           ?= ${BASE_VERSION}-aether-4.0.19-dev
 LATEST_VERSION           ?= ${BASE_VERSION}-aether-latest
 KIND_CLUSTER_NAME ?= kind
 HAS_CHANGED=$(shell git --no-pager diff HEAD~1 HEAD . | wc -l) # check if the content of this folder is different than the parent commit
