@@ -6,7 +6,7 @@ SHELL 			  		= bash -e -o pipefail
 KIND_CLUSTER_NAME 		?= kind
 DOCKER_USER       		?=
 DOCKER_PASSWORD   		?=
-MODEL_COMPILER_VERSION  ?= v0.9.15
+MODEL_COMPILER_VERSION  ?= v0.9.18
 
 .PHONY: models
 
@@ -49,6 +49,7 @@ clean:	# @HELP Removes the generated code
 test: yang-lint models models-openapi# @HELP Make sure the generated code has been committed
 	@bash test/generated.sh
 	cd models/aether-2.0.x && make test
+	cd models/aether-2.1.x && make test
 	cd models/aether-4.x && make test
 
 docker-login:

@@ -1,0 +1,112 @@
+// SPDX-FileCopyrightText: 2021 Open Networking Foundation
+//
+// SPDX-License-Identifier: Apache-2.0
+
+submodule onf-priority-traffic-rule {
+  belongs-to onf-enterprise { prefix ent; }
+
+  import onf-aether-types{ prefix at; }
+  include onf-device;
+  include onf-traffic-class;
+  include onf-application;
+
+  organization "Open Networking Foundation.";
+  contact "Scott Baker";
+  description
+    "The aether traffic class associates qos constants
+     with a named class of service";
+
+  revision "2022-01-19" {
+    description "An Aether Priority Traffic Rule";
+    reference "RFC 6087";
+  }
+
+  typedef priority-traffic-rule-id {
+    type at:aether-identifier;
+    description "The typedef for priority traffic rule id";
+  }
+
+  grouping priority-traffic-rule {
+    description "The top level container";
+
+    list priority-traffic-rule {
+      key "priority-traffic-rule-id";
+      unique "device endpoint";
+      description
+        "List of priority traffic rules";
+
+      leaf priority-traffic-rule-id {
+        type priority-traffic-rule-id;
+        description "ID for this priority traffic class.";
+      }
+
+      uses at:desc-display-name;
+
+      leaf device {
+        type leafref {
+          path "../../../device/device-id";
+        }
+        mandatory true;
+        description
+          "Link to device";
+      }
+
+      leaf application {
+        type leafref {
+          path "../../../../application/application-id";
+        }
+        mandatory true;
+        description
+          "Link to application";
+      }
+
+      leaf endpoint {
+        type leafref {
+          path "../../../../application/endpoint/endpoint-id";
+        }
+        mandatory true;
+        description
+          "Link to endpoint in application";
+      }
+
+      choice bitrate {
+        description "Either an GBR or an MBR can be specified, but not both";
+        case mbr-case {
+          container mbr {
+            description "Per-Device per-Application MBR (Maximum BitRate) in bps";
+            uses bitrate;
+          }
+        }
+        case gbr-case {
+          container gbr {
+            description "Per-Device per-Application GBR (Guaranteed BitRate) in bps";
+            uses bitrate;
+          }
+        }
+      }
+
+      leaf traffic-class {
+        type leafref {
+          path "../../../../traffic-class/traffic-class-id";
+        }
+        description
+          "Link to traffic class";
+      }
+    }
+  }
+
+  grouping bitrate {
+      description "uplink and downlink leafs for GBR and MBR";
+      leaf uplink {
+        type at:bitrate;
+        units bps;
+        description "Per-Device per-Application uplink data rate in bps";
+      }
+
+      leaf downlink {
+        type at:bitrate;
+        units bps;
+        description "Per-Device per application downlink data rate in bps";
+      }
+  }
+}

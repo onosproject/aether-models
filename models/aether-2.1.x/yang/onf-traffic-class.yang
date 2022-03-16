@@ -1,0 +1,67 @@
+// SPDX-FileCopyrightText: 2021 Open Networking Foundation
+//
+// SPDX-License-Identifier: Apache-2.0
+
+submodule onf-traffic-class {
+  belongs-to onf-enterprise { prefix ent; }
+
+  import onf-aether-types{ prefix at; }
+
+  organization "Open Networking Foundation.";
+  contact "Scott Baker";
+  description
+    "The aether traffic class associates qos constants
+     with a named class of service";
+
+  revision "2022-01-14" {
+    description "Refactored as submodule";
+    reference "RFC 6020";
+  }
+
+  revision "2021-09-10" {
+    description "An Aether Traffic Class";
+    reference "RFC 6087";
+  }
+
+  typedef traffic-class-id {
+    type at:aether-identifier;
+    description "The typedef for traffic-class-id";
+  }
+
+  grouping traffic-class {
+    description "The traffic-class grouping";
+
+    list traffic-class {
+      key "traffic-class-id";
+      description
+        "List of traffic class";
+
+      leaf traffic-class-id {
+        type traffic-class-id;
+        description "ID for this traffic class.";
+      }
+
+      uses at:desc-display-name;
+
+      leaf arp {
+        type at:arp;
+        description "Allocation and Retention Priority. 1 is the highest. 15 is the lowest.";
+      }
+
+      leaf qci {
+        type at:qci;
+        description "QOS Class Identifier";
+      }
+
+      leaf pelr {
+        type at:pelr;
+        description "PELR exponent";
+      }
+
+      leaf pdb {
+        type at:pdb;
+        description "PDB";
+      }
+    }
+  }
+}

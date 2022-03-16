@@ -4,7 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"github.com/ghodss/yaml"
-	"github.com/onosproject/aether-models/models/aether-4.x/api"
+	"github.com/onosproject/aether-models/models/aether-2.1.x/api"
 	openapi_gen "github.com/onosproject/config-models/pkg/openapi-gen"
 	"io/ioutil"
 	"os"
@@ -25,8 +25,8 @@ func main() {
 	description := "TODO add a description field in Metadata.yaml?"
 	settings := openapi_gen.ApiGenSettings{
 		ModelType:    "aether",
-		ModelVersion: "4.0.18",
-		Title:        "aether-4.0.18",
+		ModelVersion: "2.1.x",
+		Title:        "aether-2.1.x",
 		Description:  string(description),
 	}
 
