@@ -1,6 +1,6 @@
 # SPDX-FileCopyrightText: 2021-present Open Networking Foundation <info@opennetworking.org>
 #
-# SPDX-License-Identifier: LicenseRef-ONF-Member-1.0
+# SPDX-License-Identifier: Apache-2.0
 components:
   parameters:
     target:
@@ -297,10 +297,14 @@ components:
           $ref: '#/components/schemas/Application_Application_Endpoint_Mbr'
         port-end:
           description: Last port in range
+          maximum: 65535
+          minimum: 0
           title: port-end
           type: integer
         port-start:
           description: First port in range
+          maximum: 65535
+          minimum: 0
           title: port-start
           type: integer
         protocol:
@@ -319,21 +323,33 @@ components:
       required:
       - endpoint-id
       type: object
+    Application_Application_Endpoint_List:
+      items:
+        $ref: '#/components/schemas/Application_Application_Endpoint'
+      type: array
+      x-list-multiple: true
     Application_Application_Endpoint_Mbr:
       description: Maximum bitrate
       properties:
         downlink:
           description: Per-Device per application MBR downlink data rate in bps
           format: int64
+          minimum: 0
           title: downlink
           type: integer
         uplink:
           description: Per-Device per-Application MBR uplink data rate in bps
           format: int64
+          minimum: 0
           title: uplink
           type: integer
       title: Application_Application_Endpoint_Mbr
       type: object
+    Application_Application_List:
+      items:
+        $ref: '#/components/schemas/Application_Application'
+      type: array
+      x-list-multiple: true
     Connectivity-service:
       additionalProperties:
         $ref: '#/components/schemas/AdditionalPropertyTarget'
@@ -382,6 +398,11 @@ components:
       required:
       - id
       type: object
+    Connectivity-service_Connectivity-service_List:
+      items:
+        $ref: '#/components/schemas/Connectivity-service_Connectivity-service'
+      type: array
+      x-list-multiple: true
     Device-group:
       additionalProperties:
         $ref: '#/components/schemas/AdditionalPropertyTarget'
@@ -474,11 +495,13 @@ components:
         downlink:
           description: Per-device MBR downlink data rate in bps
           format: int64
+          minimum: 0
           title: downlink
           type: integer
         uplink:
           description: Per-device MBR uplink data rate in bps
           format: int64
+          minimum: 0
           title: uplink
           type: integer
       required:
@@ -504,16 +527,28 @@ components:
         imsi-range-from:
           description: value of imsi-range-from
           format: int64
+          minimum: 0
           title: imsi-range-from
           type: integer
         imsi-range-to:
           description: value of imsi-range-to
           format: int64
+          minimum: 0
           title: imsi-range-to
           type: integer
       required:
       - imsi-id
       type: object
+    Device-group_Device-group_Imsis_List:
+      items:
+        $ref: '#/components/schemas/Device-group_Device-group_Imsis'
+      type: array
+      x-list-multiple: true
+    Device-group_Device-group_List:
+      items:
+        $ref: '#/components/schemas/Device-group_Device-group'
+      type: array
+      x-list-multiple: true
     Enterprise:
       additionalProperties:
         $ref: '#/components/schemas/AdditionalPropertyTarget'
@@ -579,6 +614,16 @@ components:
       required:
       - connectivity-service
       type: object
+    Enterprise_Enterprise_Connectivity-service_List:
+      items:
+        $ref: '#/components/schemas/Enterprise_Enterprise_Connectivity-service'
+      type: array
+      x-list-multiple: true
+    Enterprise_Enterprise_List:
+      items:
+        $ref: '#/components/schemas/Enterprise_Enterprise'
+      type: array
+      x-list-multiple: true
     Ip-domain:
       additionalProperties:
         $ref: '#/components/schemas/AdditionalPropertyTarget'
@@ -647,6 +692,8 @@ components:
         mtu:
           default: 1492
           description: maximum transmission unit
+          maximum: 65535
+          minimum: 0
           title: mtu
           type: integer
         subnet:
@@ -660,6 +707,11 @@ components:
       - id
       - subnet
       type: object
+    Ip-domain_Ip-domain_List:
+      items:
+        $ref: '#/components/schemas/Ip-domain_Ip-domain'
+      type: array
+      x-list-multiple: true
     Site:
       additionalProperties:
         $ref: '#/components/schemas/AdditionalPropertyTarget'
@@ -730,6 +782,7 @@ components:
           description: enterprise-specific identifier
           format: int32
           maximum: 999
+          minimum: 0
           title: enterprise
           type: integer
         format:
@@ -756,6 +809,11 @@ components:
       - mnc
       title: Site_Site_Imsi-definition
       type: object
+    Site_Site_List:
+      items:
+        $ref: '#/components/schemas/Site_Site'
+      type: array
+      x-list-multiple: true
     Site_Site_Monitoring:
       description: container for monitoring
       properties:
@@ -802,6 +860,11 @@ components:
       required:
       - edge-device-id
       type: object
+    Site_Site_Monitoring_Edge-device_List:
+      items:
+        $ref: '#/components/schemas/Site_Site_Monitoring_Edge-device'
+      type: array
+      x-list-multiple: true
     Site_Site_Small-cell:
       additionalProperties:
         $ref: '#/components/schemas/AdditionalPropertyUnchanged'
@@ -839,6 +902,11 @@ components:
       - small-cell-id
       - tac
       type: object
+    Site_Site_Small-cell_List:
+      items:
+        $ref: '#/components/schemas/Site_Site_Small-cell'
+      type: array
+      x-list-multiple: true
     Template:
       additionalProperties:
         $ref: '#/components/schemas/AdditionalPropertyTarget'
@@ -888,12 +956,14 @@ components:
           description: Slice differentiator
           format: int32
           maximum: 16777215
+          minimum: 0
           title: sd
           type: integer
         slice:
           $ref: '#/components/schemas/Template_Template_Slice'
         sst:
           description: Slice/Service type
+          maximum: 255
           minimum: 1
           title: sst
           type: integer
@@ -901,6 +971,11 @@ components:
       - default-behavior
       - id
       type: object
+    Template_Template_List:
+      items:
+        $ref: '#/components/schemas/Template_Template'
+      type: array
+      x-list-multiple: true
     Template_Template_Slice:
       description: Per-Slice QOS Settings
       properties:
@@ -914,23 +989,27 @@ components:
         downlink:
           description: Per-Slice MBR downlink data rate in bps
           format: int64
+          minimum: 0
           title: downlink
           type: integer
         downlink-burst-size:
           default: 625000
           description: Per-Slice Downlink burst size
           format: int32
+          minimum: 0
           title: downlink-burst-size
           type: integer
         uplink:
           description: Per-Slice MBR uplink data rate in bps
           format: int64
+          minimum: 0
           title: uplink
           type: integer
         uplink-burst-size:
           default: 625000
           description: Per-Slice Uplink burst size
           format: int32
+          minimum: 0
           title: uplink-burst-size
           type: integer
       title: Template_Template_Slice_Mbr
@@ -982,6 +1061,7 @@ components:
         pdb:
           description: PDB
           maximum: 1000
+          minimum: 0
           title: pdb
           type: integer
         pelr:
@@ -999,6 +1079,11 @@ components:
       required:
       - id
       type: object
+    Traffic-class_Traffic-class_List:
+      items:
+        $ref: '#/components/schemas/Traffic-class_Traffic-class'
+      type: array
+      x-list-multiple: true
     Upf:
       additionalProperties:
         $ref: '#/components/schemas/AdditionalPropertyTarget'
@@ -1053,6 +1138,8 @@ components:
           type: string
         port:
           description: Port for UPF
+          maximum: 65535
+          minimum: 0
           title: port
           type: integer
         site:
@@ -1067,6 +1154,11 @@ components:
       - port
       - site
       type: object
+    Upf_Upf_List:
+      items:
+        $ref: '#/components/schemas/Upf_Upf'
+      type: array
+      x-list-multiple: true
     Vcs:
       additionalProperties:
         $ref: '#/components/schemas/AdditionalPropertyTarget'
@@ -1144,6 +1236,7 @@ components:
           description: Slice differentiator. Immutable.
           format: int32
           maximum: 16777215
+          minimum: 0
           title: sd
           type: integer
         site:
@@ -1155,6 +1248,7 @@ components:
           $ref: '#/components/schemas/Vcs_Vcs_Slice'
         sst:
           description: Slice/Service type. Immutable.
+          maximum: 255
           minimum: 1
           title: sst
           type: integer
@@ -1186,6 +1280,11 @@ components:
       required:
       - device-group
       type: object
+    Vcs_Vcs_Device-group_List:
+      items:
+        $ref: '#/components/schemas/Vcs_Vcs_Device-group'
+      type: array
+      x-list-multiple: true
     Vcs_Vcs_Filter:
       properties:
         allow:
@@ -1201,11 +1300,22 @@ components:
         priority:
           description: Priority of this application
           maximum: 200
+          minimum: 0
           title: priority
           type: integer
       required:
       - application
       type: object
+    Vcs_Vcs_Filter_List:
+      items:
+        $ref: '#/components/schemas/Vcs_Vcs_Filter'
+      type: array
+      x-list-multiple: true
+    Vcs_Vcs_List:
+      items:
+        $ref: '#/components/schemas/Vcs_Vcs'
+      type: array
+      x-list-multiple: true
     Vcs_Vcs_Slice:
       description: Per-Slice QOS Settings
       properties:
@@ -1219,23 +1329,27 @@ components:
         downlink:
           description: Per-Slice MBR downlink data rate in bps
           format: int64
+          minimum: 0
           title: downlink
           type: integer
         downlink-burst-size:
           default: 625000
           description: Per-Slice Downlink burst size
           format: int32
+          minimum: 0
           title: downlink-burst-size
           type: integer
         uplink:
           description: Per-Slice MBR uplink data rate in bps
           format: int64
+          minimum: 0
           title: uplink
           type: integer
         uplink-burst-size:
           default: 625000
           description: Per-Slice Uplink burst size
           format: int32
+          minimum: 0
           title: uplink-burst-size
           type: integer
       title: Vcs_Vcs_Slice_Mbr
@@ -1247,23 +1361,22 @@ info:
     url: https://opennetworking.org
   description: TODO add a description field in Metadata.yaml?
   license:
-    name: LicenseRef-ONF-Member-1.0
-    url: https://opennetworking.org/wp-content/uploads/2020/06/ONF-Member-Only-Software-License-v1.0.pdf
-  termsOfService: https://opennetworking.org/wp-content/uploads/2019/02/ONF-Licensing-and-IPR-FAQ-2020-06.pdf
+    name: Apache-2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
   title: aether-4.0.18
   version: 4.0.18
 openapi: 3.0.0
 paths:
   /aether/v4.0.18/{target}/application:
     delete:
-      operationId: deleteApplication
+      operationId: deleteApplication_Container
       responses:
-        default:
-          description: ""
+        "200":
+          description: DELETE 200 OK
       summary: DELETE /application
     description: The top level container
     get:
-      operationId: getApplication
+      operationId: getApplication_Container
       responses:
         "200":
           content:
@@ -1271,9 +1384,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/Application'
           description: GET OK 200
-      summary: GET /application
+      summary: GET /application Container
       tags:
       - ""
+      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     post:
@@ -1284,16 +1398,35 @@ paths:
         "201":
           description: created
       summary: POST /application
+  /aether/v4.0.18/{target}/application/application:
+    description: List of applications
+    get:
+      operationId: getApplication_Application_List
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Application_Application_List'
+                type: array
+          description: GET OK 200
+      summary: GET /application/application List
+      tags:
+      - Application_Application
+      - List
+    parameters:
+    - $ref: '#/components/parameters/target'
   /aether/v4.0.18/{target}/application/application/{id}:
     delete:
-      operationId: deleteApplication_Application
+      operationId: deleteApplication_Application_Container
       responses:
-        default:
-          description: ""
+        "200":
+          description: DELETE 200 OK
       summary: DELETE /application/application
     description: List of applications
     get:
-      operationId: getApplication_Application
+      operationId: getApplication_Application_Container
       responses:
         "200":
           content:
@@ -1301,9 +1434,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/Application_Application'
           description: GET OK 200
-      summary: GET /application/application
+      summary: GET /application/application Container
       tags:
       - Application_Application
+      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -1322,16 +1456,43 @@ paths:
         "201":
           description: created
       summary: POST /application/application
+  /aether/v4.0.18/{target}/application/application/{id}/endpoint:
+    description: list for endpoint
+    get:
+      operationId: getApplication_Application_Endpoint_List
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Application_Application_Endpoint_List'
+                type: array
+          description: GET OK 200
+      summary: GET /application/application/{id}/endpoint List
+      tags:
+      - Application_Application_Endpoint
+      - List
+    parameters:
+    - $ref: '#/components/parameters/target'
+    - content:
+        text/plain; charset=utf-8:
+          schema:
+            type: string
+      description: key {id}
+      in: path
+      name: id
+      required: true
   /aether/v4.0.18/{target}/application/application/{id}/endpoint/{endpoint-id}:
     delete:
-      operationId: deleteApplication_Application_Endpoint
+      operationId: deleteApplication_Application_Endpoint_Container
       responses:
-        default:
-          description: ""
+        "200":
+          description: DELETE 200 OK
       summary: DELETE /application/application/{id}/endpoint
     description: list for endpoint
     get:
-      operationId: getApplication_Application_Endpoint
+      operationId: getApplication_Application_Endpoint_Container
       responses:
         "200":
           content:
@@ -1339,9 +1500,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/Application_Application_Endpoint'
           description: GET OK 200
-      summary: GET /application/application/{id}/endpoint
+      summary: GET /application/application/{id}/endpoint Container
       tags:
       - Application_Application_Endpoint
+      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -1370,14 +1532,14 @@ paths:
       summary: POST /application/application/{id}/endpoint
   /aether/v4.0.18/{target}/application/application/{id}/endpoint/{endpoint-id}/mbr:
     delete:
-      operationId: deleteApplication_Application_Endpoint_Mbr
+      operationId: deleteApplication_Application_Endpoint_Mbr_Container
       responses:
-        default:
-          description: ""
+        "200":
+          description: DELETE 200 OK
       summary: DELETE /application/application/{id}/endpoint/{endpoint-id}/mbr
     description: Maximum bitrate
     get:
-      operationId: getApplication_Application_Endpoint_Mbr
+      operationId: getApplication_Application_Endpoint_Mbr_Container
       responses:
         "200":
           content:
@@ -1385,9 +1547,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/Application_Application_Endpoint_Mbr'
           description: GET OK 200
-      summary: GET /application/application/{id}/endpoint/{endpoint-id}/mbr
+      summary: GET /application/application/{id}/endpoint/{endpoint-id}/mbr Container
       tags:
       - Application_Application_Endpoint
+      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -1416,14 +1579,14 @@ paths:
       summary: POST /application/application/{id}/endpoint/{endpoint-id}/mbr
   /aether/v4.0.18/{target}/connectivity-service:
     delete:
-      operationId: deleteConnectivity-service
+      operationId: deleteConnectivity-service_Container
       responses:
-        default:
-          description: ""
+        "200":
+          description: DELETE 200 OK
       summary: DELETE /connectivity-service
     description: The top level container
     get:
-      operationId: getConnectivity-service
+      operationId: getConnectivity-service_Container
       responses:
         "200":
           content:
@@ -1431,9 +1594,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/Connectivity-service'
           description: GET OK 200
-      summary: GET /connectivity-service
+      summary: GET /connectivity-service Container
       tags:
       - ""
+      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     post:
@@ -1444,16 +1608,35 @@ paths:
         "201":
           description: created
       summary: POST /connectivity-service
+  /aether/v4.0.18/{target}/connectivity-service/connectivity-service:
+    description: List of connectivity services
+    get:
+      operationId: getConnectivity-service_Connectivity-service_List
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Connectivity-service_Connectivity-service_List'
+                type: array
+          description: GET OK 200
+      summary: GET /connectivity-service/connectivity-service List
+      tags:
+      - Connectivity-service_Connectivity-service
+      - List
+    parameters:
+    - $ref: '#/components/parameters/target'
   /aether/v4.0.18/{target}/connectivity-service/connectivity-service/{id}:
     delete:
-      operationId: deleteConnectivity-service_Connectivity-service
+      operationId: deleteConnectivity-service_Connectivity-service_Container
       responses:
-        default:
-          description: ""
+        "200":
+          description: DELETE 200 OK
       summary: DELETE /connectivity-service/connectivity-service
     description: List of connectivity services
     get:
-      operationId: getConnectivity-service_Connectivity-service
+      operationId: getConnectivity-service_Connectivity-service_Container
       responses:
         "200":
           content:
@@ -1461,9 +1644,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/Connectivity-service_Connectivity-service'
           description: GET OK 200
-      summary: GET /connectivity-service/connectivity-service
+      summary: GET /connectivity-service/connectivity-service Container
       tags:
       - Connectivity-service_Connectivity-service
+      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -1484,14 +1668,14 @@ paths:
       summary: POST /connectivity-service/connectivity-service
   /aether/v4.0.18/{target}/device-group:
     delete:
-      operationId: deleteDevice-group
+      operationId: deleteDevice-group_Container
       responses:
-        default:
-          description: ""
+        "200":
+          description: DELETE 200 OK
       summary: DELETE /device-group
     description: The top level container
     get:
-      operationId: getDevice-group
+      operationId: getDevice-group_Container
       responses:
         "200":
           content:
@@ -1499,9 +1683,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/Device-group'
           description: GET OK 200
-      summary: GET /device-group
+      summary: GET /device-group Container
       tags:
       - ""
+      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     post:
@@ -1512,16 +1697,35 @@ paths:
         "201":
           description: created
       summary: POST /device-group
+  /aether/v4.0.18/{target}/device-group/device-group:
+    description: List of device groups
+    get:
+      operationId: getDevice-group_Device-group_List
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Device-group_Device-group_List'
+                type: array
+          description: GET OK 200
+      summary: GET /device-group/device-group List
+      tags:
+      - Device-group_Device-group
+      - List
+    parameters:
+    - $ref: '#/components/parameters/target'
   /aether/v4.0.18/{target}/device-group/device-group/{id}:
     delete:
-      operationId: deleteDevice-group_Device-group
+      operationId: deleteDevice-group_Device-group_Container
       responses:
-        default:
-          description: ""
+        "200":
+          description: DELETE 200 OK
       summary: DELETE /device-group/device-group
     description: List of device groups
     get:
-      operationId: getDevice-group_Device-group
+      operationId: getDevice-group_Device-group_Container
       responses:
         "200":
           content:
@@ -1529,9 +1733,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/Device-group_Device-group'
           description: GET OK 200
-      summary: GET /device-group/device-group
+      summary: GET /device-group/device-group Container
       tags:
       - Device-group_Device-group
+      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -1552,14 +1757,14 @@ paths:
       summary: POST /device-group/device-group
   /aether/v4.0.18/{target}/device-group/device-group/{id}/device:
     delete:
-      operationId: deleteDevice-group_Device-group_Device
+      operationId: deleteDevice-group_Device-group_Device_Container
       responses:
-        default:
-          description: ""
+        "200":
+          description: DELETE 200 OK
       summary: DELETE /device-group/device-group/{id}/device
     description: Per-device QOS Settings
     get:
-      operationId: getDevice-group_Device-group_Device
+      operationId: getDevice-group_Device-group_Device_Container
       responses:
         "200":
           content:
@@ -1567,9 +1772,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/Device-group_Device-group_Device'
           description: GET OK 200
-      summary: GET /device-group/device-group/{id}/device
+      summary: GET /device-group/device-group/{id}/device Container
       tags:
       - Device-group_Device-group
+      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -1590,14 +1796,14 @@ paths:
       summary: POST /device-group/device-group/{id}/device
   /aether/v4.0.18/{target}/device-group/device-group/{id}/device/mbr:
     delete:
-      operationId: deleteDevice-group_Device-group_Device_Mbr
+      operationId: deleteDevice-group_Device-group_Device_Mbr_Container
       responses:
-        default:
-          description: ""
+        "200":
+          description: DELETE 200 OK
       summary: DELETE /device-group/device-group/{id}/device/mbr
     description: Maximum bitrate
     get:
-      operationId: getDevice-group_Device-group_Device_Mbr
+      operationId: getDevice-group_Device-group_Device_Mbr_Container
       responses:
         "200":
           content:
@@ -1605,9 +1811,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/Device-group_Device-group_Device_Mbr'
           description: GET OK 200
-      summary: GET /device-group/device-group/{id}/device/mbr
+      summary: GET /device-group/device-group/{id}/device/mbr Container
       tags:
       - Device-group_Device-group_Device
+      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -1626,18 +1833,47 @@ paths:
         "201":
           description: created
       summary: POST /device-group/device-group/{id}/device/mbr
+  /aether/v4.0.18/{target}/device-group/device-group/{id}/imsis:
+    description: |-
+      List of imsi ranges that comprise this group. It's acceptable for
+      a range to degenerate to being a singleton
+    get:
+      operationId: getDevice-group_Device-group_Imsis_List
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Device-group_Device-group_Imsis_List'
+                type: array
+          description: GET OK 200
+      summary: GET /device-group/device-group/{id}/imsis List
+      tags:
+      - Device-group_Device-group_Imsis
+      - List
+    parameters:
+    - $ref: '#/components/parameters/target'
+    - content:
+        text/plain; charset=utf-8:
+          schema:
+            type: string
+      description: key {id}
+      in: path
+      name: id
+      required: true
   /aether/v4.0.18/{target}/device-group/device-group/{id}/imsis/{imsi-id}:
     delete:
-      operationId: deleteDevice-group_Device-group_Imsis
+      operationId: deleteDevice-group_Device-group_Imsis_Container
       responses:
-        default:
-          description: ""
+        "200":
+          description: DELETE 200 OK
       summary: DELETE /device-group/device-group/{id}/imsis
     description: |-
       List of imsi ranges that comprise this group. It's acceptable for
       a range to degenerate to being a singleton
     get:
-      operationId: getDevice-group_Device-group_Imsis
+      operationId: getDevice-group_Device-group_Imsis_Container
       responses:
         "200":
           content:
@@ -1645,9 +1881,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/Device-group_Device-group_Imsis'
           description: GET OK 200
-      summary: GET /device-group/device-group/{id}/imsis
+      summary: GET /device-group/device-group/{id}/imsis Container
       tags:
       - Device-group_Device-group_Imsis
+      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -1676,14 +1913,14 @@ paths:
       summary: POST /device-group/device-group/{id}/imsis
   /aether/v4.0.18/{target}/enterprise:
     delete:
-      operationId: deleteEnterprise
+      operationId: deleteEnterprise_Container
       responses:
-        default:
-          description: ""
+        "200":
+          description: DELETE 200 OK
       summary: DELETE /enterprise
     description: The top level container
     get:
-      operationId: getEnterprise
+      operationId: getEnterprise_Container
       responses:
         "200":
           content:
@@ -1691,9 +1928,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/Enterprise'
           description: GET OK 200
-      summary: GET /enterprise
+      summary: GET /enterprise Container
       tags:
       - ""
+      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     post:
@@ -1704,16 +1942,35 @@ paths:
         "201":
           description: created
       summary: POST /enterprise
+  /aether/v4.0.18/{target}/enterprise/enterprise:
+    description: List of enterprises
+    get:
+      operationId: getEnterprise_Enterprise_List
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Enterprise_Enterprise_List'
+                type: array
+          description: GET OK 200
+      summary: GET /enterprise/enterprise List
+      tags:
+      - Enterprise_Enterprise
+      - List
+    parameters:
+    - $ref: '#/components/parameters/target'
   /aether/v4.0.18/{target}/enterprise/enterprise/{id}:
     delete:
-      operationId: deleteEnterprise_Enterprise
+      operationId: deleteEnterprise_Enterprise_Container
       responses:
-        default:
-          description: ""
+        "200":
+          description: DELETE 200 OK
       summary: DELETE /enterprise/enterprise
     description: List of enterprises
     get:
-      operationId: getEnterprise_Enterprise
+      operationId: getEnterprise_Enterprise_Container
       responses:
         "200":
           content:
@@ -1721,9 +1978,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/Enterprise_Enterprise'
           description: GET OK 200
-      summary: GET /enterprise/enterprise
+      summary: GET /enterprise/enterprise Container
       tags:
       - Enterprise_Enterprise
+      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -1742,16 +2000,43 @@ paths:
         "201":
           description: created
       summary: POST /enterprise/enterprise
+  /aether/v4.0.18/{target}/enterprise/enterprise/{id}/connectivity-service:
+    description: The list for connectivity-service
+    get:
+      operationId: getEnterprise_Enterprise_Connectivity-service_List
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Enterprise_Enterprise_Connectivity-service_List'
+                type: array
+          description: GET OK 200
+      summary: GET /enterprise/enterprise/{id}/connectivity-service List
+      tags:
+      - Enterprise_Enterprise_Connectivity-service
+      - List
+    parameters:
+    - $ref: '#/components/parameters/target'
+    - content:
+        text/plain; charset=utf-8:
+          schema:
+            type: string
+      description: key {id}
+      in: path
+      name: id
+      required: true
   /aether/v4.0.18/{target}/enterprise/enterprise/{id}/connectivity-service/{connectivity-service}:
     delete:
-      operationId: deleteEnterprise_Enterprise_Connectivity-service
+      operationId: deleteEnterprise_Enterprise_Connectivity-service_Container
       responses:
-        default:
-          description: ""
+        "200":
+          description: DELETE 200 OK
       summary: DELETE /enterprise/enterprise/{id}/connectivity-service
     description: The list for connectivity-service
     get:
-      operationId: getEnterprise_Enterprise_Connectivity-service
+      operationId: getEnterprise_Enterprise_Connectivity-service_Container
       responses:
         "200":
           content:
@@ -1759,9 +2044,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/Enterprise_Enterprise_Connectivity-service'
           description: GET OK 200
-      summary: GET /enterprise/enterprise/{id}/connectivity-service
+      summary: GET /enterprise/enterprise/{id}/connectivity-service Container
       tags:
       - Enterprise_Enterprise_Connectivity-service
+      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -1790,14 +2076,14 @@ paths:
       summary: POST /enterprise/enterprise/{id}/connectivity-service
   /aether/v4.0.18/{target}/ip-domain:
     delete:
-      operationId: deleteIp-domain
+      operationId: deleteIp-domain_Container
       responses:
-        default:
-          description: ""
+        "200":
+          description: DELETE 200 OK
       summary: DELETE /ip-domain
     description: The top level container
     get:
-      operationId: getIp-domain
+      operationId: getIp-domain_Container
       responses:
         "200":
           content:
@@ -1805,9 +2091,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/Ip-domain'
           description: GET OK 200
-      summary: GET /ip-domain
+      summary: GET /ip-domain Container
       tags:
       - ""
+      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     post:
@@ -1818,16 +2105,35 @@ paths:
         "201":
           description: created
       summary: POST /ip-domain
+  /aether/v4.0.18/{target}/ip-domain/ip-domain:
+    description: List of ip domains
+    get:
+      operationId: getIp-domain_Ip-domain_List
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Ip-domain_Ip-domain_List'
+                type: array
+          description: GET OK 200
+      summary: GET /ip-domain/ip-domain List
+      tags:
+      - Ip-domain_Ip-domain
+      - List
+    parameters:
+    - $ref: '#/components/parameters/target'
   /aether/v4.0.18/{target}/ip-domain/ip-domain/{id}:
     delete:
-      operationId: deleteIp-domain_Ip-domain
+      operationId: deleteIp-domain_Ip-domain_Container
       responses:
-        default:
-          description: ""
+        "200":
+          description: DELETE 200 OK
       summary: DELETE /ip-domain/ip-domain
     description: List of ip domains
     get:
-      operationId: getIp-domain_Ip-domain
+      operationId: getIp-domain_Ip-domain_Container
       responses:
         "200":
           content:
@@ -1835,9 +2141,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/Ip-domain_Ip-domain'
           description: GET OK 200
-      summary: GET /ip-domain/ip-domain
+      summary: GET /ip-domain/ip-domain Container
       tags:
       - Ip-domain_Ip-domain
+      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -1858,14 +2165,14 @@ paths:
       summary: POST /ip-domain/ip-domain
   /aether/v4.0.18/{target}/site:
     delete:
-      operationId: deleteSite
+      operationId: deleteSite_Container
       responses:
-        default:
-          description: ""
+        "200":
+          description: DELETE 200 OK
       summary: DELETE /site
     description: The top level container
     get:
-      operationId: getSite
+      operationId: getSite_Container
       responses:
         "200":
           content:
@@ -1873,9 +2180,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/Site'
           description: GET OK 200
-      summary: GET /site
+      summary: GET /site Container
       tags:
       - ""
+      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     post:
@@ -1886,16 +2194,35 @@ paths:
         "201":
           description: created
       summary: POST /site
+  /aether/v4.0.18/{target}/site/site:
+    description: List of site
+    get:
+      operationId: getSite_Site_List
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Site_Site_List'
+                type: array
+          description: GET OK 200
+      summary: GET /site/site List
+      tags:
+      - Site_Site
+      - List
+    parameters:
+    - $ref: '#/components/parameters/target'
   /aether/v4.0.18/{target}/site/site/{id}:
     delete:
-      operationId: deleteSite_Site
+      operationId: deleteSite_Site_Container
       responses:
-        default:
-          description: ""
+        "200":
+          description: DELETE 200 OK
       summary: DELETE /site/site
     description: List of site
     get:
-      operationId: getSite_Site
+      operationId: getSite_Site_Container
       responses:
         "200":
           content:
@@ -1903,9 +2230,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/Site_Site'
           description: GET OK 200
-      summary: GET /site/site
+      summary: GET /site/site Container
       tags:
       - Site_Site
+      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -1926,14 +2254,14 @@ paths:
       summary: POST /site/site
   /aether/v4.0.18/{target}/site/site/{id}/imsi-definition:
     delete:
-      operationId: deleteSite_Site_Imsi-definition
+      operationId: deleteSite_Site_Imsi-definition_Container
       responses:
-        default:
-          description: ""
+        "200":
+          description: DELETE 200 OK
       summary: DELETE /site/site/{id}/imsi-definition
     description: container for imsi-defination
     get:
-      operationId: getSite_Site_Imsi-definition
+      operationId: getSite_Site_Imsi-definition_Container
       responses:
         "200":
           content:
@@ -1941,9 +2269,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/Site_Site_Imsi-definition'
           description: GET OK 200
-      summary: GET /site/site/{id}/imsi-definition
+      summary: GET /site/site/{id}/imsi-definition Container
       tags:
       - Site_Site
+      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -1964,14 +2293,14 @@ paths:
       summary: POST /site/site/{id}/imsi-definition
   /aether/v4.0.18/{target}/site/site/{id}/monitoring:
     delete:
-      operationId: deleteSite_Site_Monitoring
+      operationId: deleteSite_Site_Monitoring_Container
       responses:
-        default:
-          description: ""
+        "200":
+          description: DELETE 200 OK
       summary: DELETE /site/site/{id}/monitoring
     description: container for monitoring
     get:
-      operationId: getSite_Site_Monitoring
+      operationId: getSite_Site_Monitoring_Container
       responses:
         "200":
           content:
@@ -1979,9 +2308,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/Site_Site_Monitoring'
           description: GET OK 200
-      summary: GET /site/site/{id}/monitoring
+      summary: GET /site/site/{id}/monitoring Container
       tags:
       - Site_Site
+      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -2000,16 +2330,43 @@ paths:
         "201":
           description: created
       summary: POST /site/site/{id}/monitoring
+  /aether/v4.0.18/{target}/site/site/{id}/monitoring/edge-device:
+    description: List of edge monitoring devices
+    get:
+      operationId: getSite_Site_Monitoring_Edge-device_List
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Site_Site_Monitoring_Edge-device_List'
+                type: array
+          description: GET OK 200
+      summary: GET /site/site/{id}/monitoring/edge-device List
+      tags:
+      - Site_Site_Monitoring_Edge-device
+      - List
+    parameters:
+    - $ref: '#/components/parameters/target'
+    - content:
+        text/plain; charset=utf-8:
+          schema:
+            type: string
+      description: key {id}
+      in: path
+      name: id
+      required: true
   /aether/v4.0.18/{target}/site/site/{id}/monitoring/edge-device/{edge-device-id}:
     delete:
-      operationId: deleteSite_Site_Monitoring_Edge-device
+      operationId: deleteSite_Site_Monitoring_Edge-device_Container
       responses:
-        default:
-          description: ""
+        "200":
+          description: DELETE 200 OK
       summary: DELETE /site/site/{id}/monitoring/edge-device
     description: List of edge monitoring devices
     get:
-      operationId: getSite_Site_Monitoring_Edge-device
+      operationId: getSite_Site_Monitoring_Edge-device_Container
       responses:
         "200":
           content:
@@ -2017,9 +2374,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/Site_Site_Monitoring_Edge-device'
           description: GET OK 200
-      summary: GET /site/site/{id}/monitoring/edge-device
+      summary: GET /site/site/{id}/monitoring/edge-device Container
       tags:
       - Site_Site_Monitoring_Edge-device
+      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -2046,16 +2404,43 @@ paths:
         "201":
           description: created
       summary: POST /site/site/{id}/monitoring/edge-device
+  /aether/v4.0.18/{target}/site/site/{id}/small-cell:
+    description: List of small cell addresses
+    get:
+      operationId: getSite_Site_Small-cell_List
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Site_Site_Small-cell_List'
+                type: array
+          description: GET OK 200
+      summary: GET /site/site/{id}/small-cell List
+      tags:
+      - Site_Site_Small-cell
+      - List
+    parameters:
+    - $ref: '#/components/parameters/target'
+    - content:
+        text/plain; charset=utf-8:
+          schema:
+            type: string
+      description: key {id}
+      in: path
+      name: id
+      required: true
   /aether/v4.0.18/{target}/site/site/{id}/small-cell/{small-cell-id}:
     delete:
-      operationId: deleteSite_Site_Small-cell
+      operationId: deleteSite_Site_Small-cell_Container
       responses:
-        default:
-          description: ""
+        "200":
+          description: DELETE 200 OK
       summary: DELETE /site/site/{id}/small-cell
     description: List of small cell addresses
     get:
-      operationId: getSite_Site_Small-cell
+      operationId: getSite_Site_Small-cell_Container
       responses:
         "200":
           content:
@@ -2063,9 +2448,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/Site_Site_Small-cell'
           description: GET OK 200
-      summary: GET /site/site/{id}/small-cell
+      summary: GET /site/site/{id}/small-cell Container
       tags:
       - Site_Site_Small-cell
+      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -2094,14 +2480,14 @@ paths:
       summary: POST /site/site/{id}/small-cell
   /aether/v4.0.18/{target}/template:
     delete:
-      operationId: deleteTemplate
+      operationId: deleteTemplate_Container
       responses:
-        default:
-          description: ""
+        "200":
+          description: DELETE 200 OK
       summary: DELETE /template
     description: The top level container
     get:
-      operationId: getTemplate
+      operationId: getTemplate_Container
       responses:
         "200":
           content:
@@ -2109,9 +2495,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/Template'
           description: GET OK 200
-      summary: GET /template
+      summary: GET /template Container
       tags:
       - ""
+      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     post:
@@ -2122,16 +2509,35 @@ paths:
         "201":
           description: created
       summary: POST /template
+  /aether/v4.0.18/{target}/template/template:
+    description: List of vcs templates
+    get:
+      operationId: getTemplate_Template_List
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Template_Template_List'
+                type: array
+          description: GET OK 200
+      summary: GET /template/template List
+      tags:
+      - Template_Template
+      - List
+    parameters:
+    - $ref: '#/components/parameters/target'
   /aether/v4.0.18/{target}/template/template/{id}:
     delete:
-      operationId: deleteTemplate_Template
+      operationId: deleteTemplate_Template_Container
       responses:
-        default:
-          description: ""
+        "200":
+          description: DELETE 200 OK
       summary: DELETE /template/template
     description: List of vcs templates
     get:
-      operationId: getTemplate_Template
+      operationId: getTemplate_Template_Container
       responses:
         "200":
           content:
@@ -2139,9 +2545,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/Template_Template'
           description: GET OK 200
-      summary: GET /template/template
+      summary: GET /template/template Container
       tags:
       - Template_Template
+      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -2162,14 +2569,14 @@ paths:
       summary: POST /template/template
   /aether/v4.0.18/{target}/template/template/{id}/slice:
     delete:
-      operationId: deleteTemplate_Template_Slice
+      operationId: deleteTemplate_Template_Slice_Container
       responses:
-        default:
-          description: ""
+        "200":
+          description: DELETE 200 OK
       summary: DELETE /template/template/{id}/slice
     description: Per-Slice QOS Settings
     get:
-      operationId: getTemplate_Template_Slice
+      operationId: getTemplate_Template_Slice_Container
       responses:
         "200":
           content:
@@ -2177,9 +2584,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/Template_Template_Slice'
           description: GET OK 200
-      summary: GET /template/template/{id}/slice
+      summary: GET /template/template/{id}/slice Container
       tags:
       - Template_Template
+      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -2200,14 +2608,14 @@ paths:
       summary: POST /template/template/{id}/slice
   /aether/v4.0.18/{target}/template/template/{id}/slice/mbr:
     delete:
-      operationId: deleteTemplate_Template_Slice_Mbr
+      operationId: deleteTemplate_Template_Slice_Mbr_Container
       responses:
-        default:
-          description: ""
+        "200":
+          description: DELETE 200 OK
       summary: DELETE /template/template/{id}/slice/mbr
     description: Maximum bitrate
     get:
-      operationId: getTemplate_Template_Slice_Mbr
+      operationId: getTemplate_Template_Slice_Mbr_Container
       responses:
         "200":
           content:
@@ -2215,9 +2623,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/Template_Template_Slice_Mbr'
           description: GET OK 200
-      summary: GET /template/template/{id}/slice/mbr
+      summary: GET /template/template/{id}/slice/mbr Container
       tags:
       - Template_Template_Slice
+      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -2238,14 +2647,14 @@ paths:
       summary: POST /template/template/{id}/slice/mbr
   /aether/v4.0.18/{target}/traffic-class:
     delete:
-      operationId: deleteTraffic-class
+      operationId: deleteTraffic-class_Container
       responses:
-        default:
-          description: ""
+        "200":
+          description: DELETE 200 OK
       summary: DELETE /traffic-class
     description: The top level container
     get:
-      operationId: getTraffic-class
+      operationId: getTraffic-class_Container
       responses:
         "200":
           content:
@@ -2253,9 +2662,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/Traffic-class'
           description: GET OK 200
-      summary: GET /traffic-class
+      summary: GET /traffic-class Container
       tags:
       - ""
+      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     post:
@@ -2266,16 +2676,35 @@ paths:
         "201":
           description: created
       summary: POST /traffic-class
+  /aether/v4.0.18/{target}/traffic-class/traffic-class:
+    description: List of traffic class
+    get:
+      operationId: getTraffic-class_Traffic-class_List
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Traffic-class_Traffic-class_List'
+                type: array
+          description: GET OK 200
+      summary: GET /traffic-class/traffic-class List
+      tags:
+      - Traffic-class_Traffic-class
+      - List
+    parameters:
+    - $ref: '#/components/parameters/target'
   /aether/v4.0.18/{target}/traffic-class/traffic-class/{id}:
     delete:
-      operationId: deleteTraffic-class_Traffic-class
+      operationId: deleteTraffic-class_Traffic-class_Container
       responses:
-        default:
-          description: ""
+        "200":
+          description: DELETE 200 OK
       summary: DELETE /traffic-class/traffic-class
     description: List of traffic class
     get:
-      operationId: getTraffic-class_Traffic-class
+      operationId: getTraffic-class_Traffic-class_Container
       responses:
         "200":
           content:
@@ -2283,9 +2712,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/Traffic-class_Traffic-class'
           description: GET OK 200
-      summary: GET /traffic-class/traffic-class
+      summary: GET /traffic-class/traffic-class Container
       tags:
       - Traffic-class_Traffic-class
+      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -2306,14 +2736,14 @@ paths:
       summary: POST /traffic-class/traffic-class
   /aether/v4.0.18/{target}/upf:
     delete:
-      operationId: deleteUpf
+      operationId: deleteUpf_Container
       responses:
-        default:
-          description: ""
+        "200":
+          description: DELETE 200 OK
       summary: DELETE /upf
     description: The top level container
     get:
-      operationId: getUpf
+      operationId: getUpf_Container
       responses:
         "200":
           content:
@@ -2321,9 +2751,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/Upf'
           description: GET OK 200
-      summary: GET /upf
+      summary: GET /upf Container
       tags:
       - ""
+      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     post:
@@ -2334,16 +2765,35 @@ paths:
         "201":
           description: created
       summary: POST /upf
+  /aether/v4.0.18/{target}/upf/upf:
+    description: A list of named upfs.
+    get:
+      operationId: getUpf_Upf_List
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Upf_Upf_List'
+                type: array
+          description: GET OK 200
+      summary: GET /upf/upf List
+      tags:
+      - Upf_Upf
+      - List
+    parameters:
+    - $ref: '#/components/parameters/target'
   /aether/v4.0.18/{target}/upf/upf/{id}:
     delete:
-      operationId: deleteUpf_Upf
+      operationId: deleteUpf_Upf_Container
       responses:
-        default:
-          description: ""
+        "200":
+          description: DELETE 200 OK
       summary: DELETE /upf/upf
     description: A list of named upfs.
     get:
-      operationId: getUpf_Upf
+      operationId: getUpf_Upf_Container
       responses:
         "200":
           content:
@@ -2351,9 +2801,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/Upf_Upf'
           description: GET OK 200
-      summary: GET /upf/upf
+      summary: GET /upf/upf Container
       tags:
       - Upf_Upf
+      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -2374,14 +2825,14 @@ paths:
       summary: POST /upf/upf
   /aether/v4.0.18/{target}/vcs:
     delete:
-      operationId: deleteVcs
+      operationId: deleteVcs_Container
       responses:
-        default:
-          description: ""
+        "200":
+          description: DELETE 200 OK
       summary: DELETE /vcs
     description: The top level container
     get:
-      operationId: getVcs
+      operationId: getVcs_Container
       responses:
         "200":
           content:
@@ -2389,9 +2840,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/Vcs'
           description: GET OK 200
-      summary: GET /vcs
+      summary: GET /vcs Container
       tags:
       - ""
+      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     post:
@@ -2402,16 +2854,35 @@ paths:
         "201":
           description: created
       summary: POST /vcs
+  /aether/v4.0.18/{target}/vcs/vcs:
+    description: List of virtual cellular services
+    get:
+      operationId: getVcs_Vcs_List
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Vcs_Vcs_List'
+                type: array
+          description: GET OK 200
+      summary: GET /vcs/vcs List
+      tags:
+      - Vcs_Vcs
+      - List
+    parameters:
+    - $ref: '#/components/parameters/target'
   /aether/v4.0.18/{target}/vcs/vcs/{id}:
     delete:
-      operationId: deleteVcs_Vcs
+      operationId: deleteVcs_Vcs_Container
       responses:
-        default:
-          description: ""
+        "200":
+          description: DELETE 200 OK
       summary: DELETE /vcs/vcs
     description: List of virtual cellular services
     get:
-      operationId: getVcs_Vcs
+      operationId: getVcs_Vcs_Container
       responses:
         "200":
           content:
@@ -2419,9 +2890,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/Vcs_Vcs'
           description: GET OK 200
-      summary: GET /vcs/vcs
+      summary: GET /vcs/vcs Container
       tags:
       - Vcs_Vcs
+      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -2440,18 +2912,47 @@ paths:
         "201":
           description: created
       summary: POST /vcs/vcs
+  /aether/v4.0.18/{target}/vcs/vcs/{id}/device-group:
+    description: |-
+      A list of device groups. Groups will only participate in
+      the VCS if the enable field is set to True
+    get:
+      operationId: getVcs_Vcs_Device-group_List
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Vcs_Vcs_Device-group_List'
+                type: array
+          description: GET OK 200
+      summary: GET /vcs/vcs/{id}/device-group List
+      tags:
+      - Vcs_Vcs_Device-group
+      - List
+    parameters:
+    - $ref: '#/components/parameters/target'
+    - content:
+        text/plain; charset=utf-8:
+          schema:
+            type: string
+      description: key {id}
+      in: path
+      name: id
+      required: true
   /aether/v4.0.18/{target}/vcs/vcs/{id}/device-group/{device-group}:
     delete:
-      operationId: deleteVcs_Vcs_Device-group
+      operationId: deleteVcs_Vcs_Device-group_Container
       responses:
-        default:
-          description: ""
+        "200":
+          description: DELETE 200 OK
       summary: DELETE /vcs/vcs/{id}/device-group
     description: |-
       A list of device groups. Groups will only participate in
       the VCS if the enable field is set to True
     get:
-      operationId: getVcs_Vcs_Device-group
+      operationId: getVcs_Vcs_Device-group_Container
       responses:
         "200":
           content:
@@ -2459,9 +2960,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/Vcs_Vcs_Device-group'
           description: GET OK 200
-      summary: GET /vcs/vcs/{id}/device-group
+      summary: GET /vcs/vcs/{id}/device-group Container
       tags:
       - Vcs_Vcs_Device-group
+      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -2488,19 +2990,49 @@ paths:
         "201":
           description: created
       summary: POST /vcs/vcs/{id}/device-group
+  /aether/v4.0.18/{target}/vcs/vcs/{id}/filter:
+    description: |-
+      A list of applications to allow and/or deny. Rules are executed in
+      priority order. The first rule to match will determine the fate
+      of the packet.
+    get:
+      operationId: getVcs_Vcs_Filter_List
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Vcs_Vcs_Filter_List'
+                type: array
+          description: GET OK 200
+      summary: GET /vcs/vcs/{id}/filter List
+      tags:
+      - Vcs_Vcs_Filter
+      - List
+    parameters:
+    - $ref: '#/components/parameters/target'
+    - content:
+        text/plain; charset=utf-8:
+          schema:
+            type: string
+      description: key {id}
+      in: path
+      name: id
+      required: true
   /aether/v4.0.18/{target}/vcs/vcs/{id}/filter/{application}:
     delete:
-      operationId: deleteVcs_Vcs_Filter
+      operationId: deleteVcs_Vcs_Filter_Container
       responses:
-        default:
-          description: ""
+        "200":
+          description: DELETE 200 OK
       summary: DELETE /vcs/vcs/{id}/filter
     description: |-
       A list of applications to allow and/or deny. Rules are executed in
       priority order. The first rule to match will determine the fate
       of the packet.
     get:
-      operationId: getVcs_Vcs_Filter
+      operationId: getVcs_Vcs_Filter_Container
       responses:
         "200":
           content:
@@ -2508,9 +3040,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/Vcs_Vcs_Filter'
           description: GET OK 200
-      summary: GET /vcs/vcs/{id}/filter
+      summary: GET /vcs/vcs/{id}/filter Container
       tags:
       - Vcs_Vcs_Filter
+      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -2539,14 +3072,14 @@ paths:
       summary: POST /vcs/vcs/{id}/filter
   /aether/v4.0.18/{target}/vcs/vcs/{id}/slice:
     delete:
-      operationId: deleteVcs_Vcs_Slice
+      operationId: deleteVcs_Vcs_Slice_Container
       responses:
-        default:
-          description: ""
+        "200":
+          description: DELETE 200 OK
       summary: DELETE /vcs/vcs/{id}/slice
     description: Per-Slice QOS Settings
     get:
-      operationId: getVcs_Vcs_Slice
+      operationId: getVcs_Vcs_Slice_Container
       responses:
         "200":
           content:
@@ -2554,9 +3087,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/Vcs_Vcs_Slice'
           description: GET OK 200
-      summary: GET /vcs/vcs/{id}/slice
+      summary: GET /vcs/vcs/{id}/slice Container
       tags:
       - Vcs_Vcs
+      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -2577,14 +3111,14 @@ paths:
       summary: POST /vcs/vcs/{id}/slice
   /aether/v4.0.18/{target}/vcs/vcs/{id}/slice/mbr:
     delete:
-      operationId: deleteVcs_Vcs_Slice_Mbr
+      operationId: deleteVcs_Vcs_Slice_Mbr_Container
       responses:
-        default:
-          description: ""
+        "200":
+          description: DELETE 200 OK
       summary: DELETE /vcs/vcs/{id}/slice/mbr
     description: Maximum bitrate
     get:
-      operationId: getVcs_Vcs_Slice_Mbr
+      operationId: getVcs_Vcs_Slice_Mbr_Container
       responses:
         "200":
           content:
@@ -2592,9 +3126,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/Vcs_Vcs_Slice_Mbr'
           description: GET OK 200
-      summary: GET /vcs/vcs/{id}/slice/mbr
+      summary: GET /vcs/vcs/{id}/slice/mbr Container
       tags:
       - Vcs_Vcs_Slice
+      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     - content:

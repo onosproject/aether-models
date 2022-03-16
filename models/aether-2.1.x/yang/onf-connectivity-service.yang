@@ -1,0 +1,60 @@
+// SPDX-FileCopyrightText: 2021 Open Networking Foundation
+//
+// SPDX-License-Identifier: Apache-2.0
+
+module onf-connectivity-service {
+  namespace "http://opennetworking.org/aether/connectivity-service";
+  prefix cs;
+
+  import ietf-inet-types { prefix inet; }
+  import onf-aether-types { prefix at; }
+
+  organization "Open Networking Foundation.";
+  contact "Scott Baker";
+  description
+    "An Aether Connectivity service is the linkage between the
+     ROC and a core that provides connectivity.";
+
+  revision "2022-01-14" {
+    description "Renamed top level container as plural";
+    reference "RFC 6020";
+  }
+
+  revision "2021-10-21" {
+    description "An Aether Connectivity Service. Specifies the endpoints where the sdcore-adapter should push configuration to. A single connectivity service may be attached to multiple Enterprises.";
+    reference "RFC 6087";
+  }
+
+  typedef connectivity-service-id {
+    type at:aether-identifier;
+    description "The typedef for connectivity-service-id";
+  }
+
+  container connectivity-services {
+    description "The connectivity-services top level container";
+
+    list connectivity-service {
+      key "connectivity-service-id";
+      description
+        "List of connectivity services";
+
+      leaf connectivity-service-id {
+        type connectivity-service-id;
+        description "ID for this connectivity service.";
+      }
+
+      uses at:desc-display-name;
+
+      leaf core-5g-endpoint {
+        type inet:uri;
+        description "url of the 5g core";
+      }
+
+      leaf acc-prometheus-url {
+          type inet:uri;
+          description
+            "URL of ACC prometheus";
+      }
+    }
+  }
+}

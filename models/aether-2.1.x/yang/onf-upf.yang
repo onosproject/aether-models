@@ -1,0 +1,65 @@
+// SPDX-FileCopyrightText: 2021 Open Networking Foundation
+//
+// SPDX-License-Identifier: Apache-2.0
+
+submodule onf-upf {
+  belongs-to onf-enterprise { prefix ent; }
+
+  import ietf-inet-types { prefix inet; }
+  import onf-aether-types { prefix at; }
+
+  organization "Open Networking Foundation.";
+  contact "Scott Baker";
+  description "A Aether UPF List is a named User Plane Function.";
+
+  revision "2022-01-14" {
+    description "Refactored as submodule";
+    reference "RFC 6020";
+  }
+
+  revision "2021-09-16" {
+    description "An Aether User Plane Function";
+    reference "RFC 6087";
+  }
+
+  typedef upf-id {
+    type at:aether-identifier;
+    description "The typedef for upf-id";
+  }
+
+  grouping upf {
+    description "The upf grouping";
+
+    list upf {
+      key "upf-id";
+      description
+        "A list of named upfs.";
+
+      leaf upf-id {
+        type upf-id;
+        description "ID for this upf.";
+      }
+
+      uses at:desc-display-name;
+
+      leaf address {
+        type inet:host;
+        mandatory true;
+        description
+          "Address of UPF";
+      }
+
+      leaf port {
+        type inet:port-number;
+        mandatory true;
+        description
+            "Port for UPF";
+      }
+
+      leaf config-endpoint {
+        type inet:uri;
+        description "url for configuring the UPF";
+      }
+    }
+  }
+}

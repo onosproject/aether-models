@@ -1,0 +1,17 @@
+# SPDX-FileCopyrightText: 2019-present Open Networking Foundation <info@opennetworking.org>
+#
+# SPDX-License-Identifier: Apache-2.0
+
+name: aether
+version: 2.1.x
+artifactName: aether-2.1.x
+goPackage: github.com/onosproject/aether-models/models/aether-2.1.x
+modules:
+  - name: onf-aether-connectivity-service
+    organization: Open Networking Foundation
+    revision: 2022-01-14
+    file: onf-connectivity-service.yang
+  - name: onf-aether-enterprise
+    organization: Open Networking Foundation
+    revision: 2022-01-14
+    file: onf-enterprise.yang
