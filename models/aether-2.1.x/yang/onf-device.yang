@@ -5,6 +5,7 @@
 submodule onf-device {
   belongs-to onf-enterprise { prefix ent; }
 
+  import ietf-yang-types { prefix yang; }
   import onf-aether-types { prefix at; }
   include onf-sim-card;
 
@@ -53,6 +54,28 @@ submodule onf-device {
         }
         description
           "Link to simcard";
+      }
+
+      container state {
+        config false;
+        description "read only attributes of device";
+
+        leaf ip-address {
+          type string;
+          description "the ip address assigned to the device";
+        }
+
+        leaf connected {
+          type string {
+            pattern "Yes|No|Idle";
+          }
+          description "the connected status (Yes|No|Idle)";
+        }
+
+        leaf last-connected {
+          type yang:date-and-time;
+          description "The time in UTC that the device was last connected";
+        }
       }
     }
   }
