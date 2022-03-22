@@ -708,12 +708,18 @@ components:
       description: read only attributes of device
       properties:
         connected:
-          description: the connected status (Yes/No)
+          description: the connected status (Yes|No|Idle)
+          pattern: Yes|No|Idle
           title: connected
           type: string
         ip-address:
           description: the ip address assigned to the device
           title: ip-address
+          type: string
+        last-connected:
+          description: The time in UTC that the device was last connected
+          pattern: \d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?(Z|[\+\-]\d{2}:\d{2})
+          title: last-connected
           type: string
       title: Enterprises_Enterprise_Site_Device_State
       type: object

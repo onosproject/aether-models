@@ -5,6 +5,7 @@
 submodule onf-device {
   belongs-to onf-enterprise { prefix ent; }
 
+  import ietf-yang-types { prefix yang; }
   import onf-aether-types { prefix at; }
   include onf-sim-card;
 
@@ -65,8 +66,15 @@ submodule onf-device {
         }
 
         leaf connected {
-          type string;
-          description "the connected status (Yes/No)";
+          type string {
+            pattern "Yes|No|Idle";
+          }
+          description "the connected status (Yes|No|Idle)";
+        }
+
+        leaf last-connected {
+          type yang:date-and-time;
+          description "The time in UTC that the device was last connected";
         }
       }
     }

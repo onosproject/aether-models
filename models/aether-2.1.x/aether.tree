@@ -82,8 +82,9 @@ module: onf-enterprise
            |  +--rw imei?           at:imei
            |  +--rw sim-card?       -> ../../sim-card/sim-id
            |  +--ro state
-           |     +--ro ip-address?   string
-           |     +--ro connected?    string
+           |     +--ro ip-address?       string
+           |     +--ro connected?        string
+           |     +--ro last-connected?   yang:date-and-time
            +--rw sim-card* [sim-id]
            |  +--rw sim-id          sim-card-id
            |  +--rw display-name?   string
