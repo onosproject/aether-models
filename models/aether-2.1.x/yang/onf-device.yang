@@ -54,6 +54,21 @@ submodule onf-device {
         description
           "Link to simcard";
       }
+
+      container state {
+        config false;
+        description "read only attributes of device";
+
+        leaf ip-address {
+          type string;
+          description "the ip address assigned to the device";
+        }
+
+        leaf connected {
+          type string;
+          description "the connected status (Yes/No)";
+        }
+      }
     }
   }
 }

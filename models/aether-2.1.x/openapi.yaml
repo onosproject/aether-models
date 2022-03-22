@@ -78,6 +78,11 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Enterprises_Enterprise_Site_Device-group_Mbr'
+    RequestBody_Enterprises_Enterprise_Site_Device_State:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Enterprises_Enterprise_Site_Device_State'
     RequestBody_Enterprises_Enterprise_Site_Imsi-definition:
       content:
         application/json:
@@ -592,6 +597,8 @@ components:
           title: sim-card
           type: string
           x-leafref: ../../sim-card/sim-id
+        state:
+          $ref: '#/components/schemas/Enterprises_Enterprise_Site_Device_State'
       required:
       - device-id
       type: object
@@ -697,6 +704,19 @@ components:
         $ref: '#/components/schemas/Enterprises_Enterprise_Site_Device'
       type: array
       x-list-multiple: true
+    Enterprises_Enterprise_Site_Device_State:
+      description: read only attributes of device
+      properties:
+        connected:
+          description: the connected status (Yes/No)
+          title: connected
+          type: string
+        ip-address:
+          description: the ip address assigned to the device
+          title: ip-address
+          type: string
+      title: Enterprises_Enterprise_Site_Device_State
+      type: object
     Enterprises_Enterprise_Site_Imsi-definition:
       additionalProperties:
         $ref: '#/components/schemas/AdditionalPropertyUnchanged'
@@ -2299,6 +2319,48 @@ paths:
         "201":
           description: created
       summary: POST /enterprises/enterprise/{enterprise-id}/site/{site-id}/device
+  /aether/v2.1.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/device/{device-id}/state:
+    description: read only attributes of device
+    get:
+      operationId: getEnterprises_Enterprise_Site_Device_State_Container
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Enterprises_Enterprise_Site_Device_State'
+          description: GET OK 200
+      summary: GET /enterprises/enterprise/{enterprise-id}/site/{site-id}/device/{device-id}/state
+        Container
+      tags:
+      - Enterprises_Enterprise_Site_Device
+      - Container
+    parameters:
+    - $ref: '#/components/parameters/target'
+    - content:
+        text/plain; charset=utf-8:
+          schema:
+            type: string
+      description: key {enterprise-id}
+      in: path
+      name: enterprise-id
+      required: true
+    - content:
+        text/plain; charset=utf-8:
+          schema:
+            type: string
+      description: key {site-id}
+      in: path
+      name: site-id
+      required: true
+    - content:
+        text/plain; charset=utf-8:
+          schema:
+            type: string
+      description: key {device-id}
+      in: path
+      name: device-id
+      required: true
   /aether/v2.1.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/imsi-definition:
     delete:
       operationId: deleteEnterprises_Enterprise_Site_Imsi-definition_Container
