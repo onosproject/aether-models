@@ -1376,7 +1376,7 @@ paths:
       summary: DELETE /application
     description: The top level container
     get:
-      operationId: getApplication_Container
+      operationId: getApplication
       responses:
         "200":
           content:
@@ -1426,7 +1426,7 @@ paths:
       summary: DELETE /application/application
     description: List of applications
     get:
-      operationId: getApplication_Application_Container
+      operationId: getApplication_Application
       responses:
         "200":
           content:
@@ -1492,7 +1492,7 @@ paths:
       summary: DELETE /application/application/{id}/endpoint
     description: list for endpoint
     get:
-      operationId: getApplication_Application_Endpoint_Container
+      operationId: getApplication_Application_Endpoint
       responses:
         "200":
           content:
@@ -1539,7 +1539,7 @@ paths:
       summary: DELETE /application/application/{id}/endpoint/{endpoint-id}/mbr
     description: Maximum bitrate
     get:
-      operationId: getApplication_Application_Endpoint_Mbr_Container
+      operationId: getApplication_Application_Endpoint_Mbr
       responses:
         "200":
           content:
@@ -1586,7 +1586,7 @@ paths:
       summary: DELETE /connectivity-service
     description: The top level container
     get:
-      operationId: getConnectivity-service_Container
+      operationId: getConnectivity-service
       responses:
         "200":
           content:
@@ -1636,7 +1636,7 @@ paths:
       summary: DELETE /connectivity-service/connectivity-service
     description: List of connectivity services
     get:
-      operationId: getConnectivity-service_Connectivity-service_Container
+      operationId: getConnectivity-service_Connectivity-service
       responses:
         "200":
           content:
@@ -1675,7 +1675,7 @@ paths:
       summary: DELETE /device-group
     description: The top level container
     get:
-      operationId: getDevice-group_Container
+      operationId: getDevice-group
       responses:
         "200":
           content:
@@ -1725,7 +1725,7 @@ paths:
       summary: DELETE /device-group/device-group
     description: List of device groups
     get:
-      operationId: getDevice-group_Device-group_Container
+      operationId: getDevice-group_Device-group
       responses:
         "200":
           content:
@@ -1764,7 +1764,7 @@ paths:
       summary: DELETE /device-group/device-group/{id}/device
     description: Per-device QOS Settings
     get:
-      operationId: getDevice-group_Device-group_Device_Container
+      operationId: getDevice-group_Device-group_Device
       responses:
         "200":
           content:
@@ -1803,7 +1803,7 @@ paths:
       summary: DELETE /device-group/device-group/{id}/device/mbr
     description: Maximum bitrate
     get:
-      operationId: getDevice-group_Device-group_Device_Mbr_Container
+      operationId: getDevice-group_Device-group_Device_Mbr
       responses:
         "200":
           content:
@@ -1873,7 +1873,7 @@ paths:
       List of imsi ranges that comprise this group. It's acceptable for
       a range to degenerate to being a singleton
     get:
-      operationId: getDevice-group_Device-group_Imsis_Container
+      operationId: getDevice-group_Device-group_Imsis
       responses:
         "200":
           content:
@@ -1920,7 +1920,7 @@ paths:
       summary: DELETE /enterprise
     description: The top level container
     get:
-      operationId: getEnterprise_Container
+      operationId: getEnterprise
       responses:
         "200":
           content:
@@ -1970,7 +1970,7 @@ paths:
       summary: DELETE /enterprise/enterprise
     description: List of enterprises
     get:
-      operationId: getEnterprise_Enterprise_Container
+      operationId: getEnterprise_Enterprise
       responses:
         "200":
           content:
@@ -2036,7 +2036,7 @@ paths:
       summary: DELETE /enterprise/enterprise/{id}/connectivity-service
     description: The list for connectivity-service
     get:
-      operationId: getEnterprise_Enterprise_Connectivity-service_Container
+      operationId: getEnterprise_Enterprise_Connectivity-service
       responses:
         "200":
           content:
@@ -2083,7 +2083,7 @@ paths:
       summary: DELETE /ip-domain
     description: The top level container
     get:
-      operationId: getIp-domain_Container
+      operationId: getIp-domain
       responses:
         "200":
           content:
@@ -2133,7 +2133,7 @@ paths:
       summary: DELETE /ip-domain/ip-domain
     description: List of ip domains
     get:
-      operationId: getIp-domain_Ip-domain_Container
+      operationId: getIp-domain_Ip-domain
       responses:
         "200":
           content:
@@ -2172,7 +2172,7 @@ paths:
       summary: DELETE /site
     description: The top level container
     get:
-      operationId: getSite_Container
+      operationId: getSite
       responses:
         "200":
           content:
@@ -2222,7 +2222,7 @@ paths:
       summary: DELETE /site/site
     description: List of site
     get:
-      operationId: getSite_Site_Container
+      operationId: getSite_Site
       responses:
         "200":
           content:
@@ -2261,7 +2261,7 @@ paths:
       summary: DELETE /site/site/{id}/imsi-definition
     description: container for imsi-defination
     get:
-      operationId: getSite_Site_Imsi-definition_Container
+      operationId: getSite_Site_Imsi-definition
       responses:
         "200":
           content:
@@ -2300,7 +2300,7 @@ paths:
       summary: DELETE /site/site/{id}/monitoring
     description: container for monitoring
     get:
-      operationId: getSite_Site_Monitoring_Container
+      operationId: getSite_Site_Monitoring
       responses:
         "200":
           content:
@@ -2366,7 +2366,7 @@ paths:
       summary: DELETE /site/site/{id}/monitoring/edge-device
     description: List of edge monitoring devices
     get:
-      operationId: getSite_Site_Monitoring_Edge-device_Container
+      operationId: getSite_Site_Monitoring_Edge-device
       responses:
         "200":
           content:
@@ -2440,7 +2440,7 @@ paths:
       summary: DELETE /site/site/{id}/small-cell
     description: List of small cell addresses
     get:
-      operationId: getSite_Site_Small-cell_Container
+      operationId: getSite_Site_Small-cell
       responses:
         "200":
           content:
@@ -2487,7 +2487,7 @@ paths:
       summary: DELETE /template
     description: The top level container
     get:
-      operationId: getTemplate_Container
+      operationId: getTemplate
       responses:
         "200":
           content:
@@ -2537,7 +2537,7 @@ paths:
       summary: DELETE /template/template
     description: List of vcs templates
     get:
-      operationId: getTemplate_Template_Container
+      operationId: getTemplate_Template
       responses:
         "200":
           content:
@@ -2576,7 +2576,7 @@ paths:
       summary: DELETE /template/template/{id}/slice
     description: Per-Slice QOS Settings
     get:
-      operationId: getTemplate_Template_Slice_Container
+      operationId: getTemplate_Template_Slice
       responses:
         "200":
           content:
@@ -2615,7 +2615,7 @@ paths:
       summary: DELETE /template/template/{id}/slice/mbr
     description: Maximum bitrate
     get:
-      operationId: getTemplate_Template_Slice_Mbr_Container
+      operationId: getTemplate_Template_Slice_Mbr
       responses:
         "200":
           content:
@@ -2654,7 +2654,7 @@ paths:
       summary: DELETE /traffic-class
     description: The top level container
     get:
-      operationId: getTraffic-class_Container
+      operationId: getTraffic-class
       responses:
         "200":
           content:
@@ -2704,7 +2704,7 @@ paths:
       summary: DELETE /traffic-class/traffic-class
     description: List of traffic class
     get:
-      operationId: getTraffic-class_Traffic-class_Container
+      operationId: getTraffic-class_Traffic-class
       responses:
         "200":
           content:
@@ -2743,7 +2743,7 @@ paths:
       summary: DELETE /upf
     description: The top level container
     get:
-      operationId: getUpf_Container
+      operationId: getUpf
       responses:
         "200":
           content:
@@ -2793,7 +2793,7 @@ paths:
       summary: DELETE /upf/upf
     description: A list of named upfs.
     get:
-      operationId: getUpf_Upf_Container
+      operationId: getUpf_Upf
       responses:
         "200":
           content:
@@ -2832,7 +2832,7 @@ paths:
       summary: DELETE /vcs
     description: The top level container
     get:
-      operationId: getVcs_Container
+      operationId: getVcs
       responses:
         "200":
           content:
@@ -2882,7 +2882,7 @@ paths:
       summary: DELETE /vcs/vcs
     description: List of virtual cellular services
     get:
-      operationId: getVcs_Vcs_Container
+      operationId: getVcs_Vcs
       responses:
         "200":
           content:
@@ -2952,7 +2952,7 @@ paths:
       A list of device groups. Groups will only participate in
       the VCS if the enable field is set to True
     get:
-      operationId: getVcs_Vcs_Device-group_Container
+      operationId: getVcs_Vcs_Device-group
       responses:
         "200":
           content:
@@ -3032,7 +3032,7 @@ paths:
       priority order. The first rule to match will determine the fate
       of the packet.
     get:
-      operationId: getVcs_Vcs_Filter_Container
+      operationId: getVcs_Vcs_Filter
       responses:
         "200":
           content:
@@ -3079,7 +3079,7 @@ paths:
       summary: DELETE /vcs/vcs/{id}/slice
     description: Per-Slice QOS Settings
     get:
-      operationId: getVcs_Vcs_Slice_Container
+      operationId: getVcs_Vcs_Slice
       responses:
         "200":
           content:
@@ -3118,7 +3118,7 @@ paths:
       summary: DELETE /vcs/vcs/{id}/slice/mbr
     description: Maximum bitrate
     get:
-      operationId: getVcs_Vcs_Slice_Mbr_Container
+      operationId: getVcs_Vcs_Slice_Mbr
       responses:
         "200":
           content:

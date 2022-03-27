@@ -1440,7 +1440,7 @@ paths:
       summary: DELETE /connectivity-services
     description: The connectivity-services top level container
     get:
-      operationId: getConnectivity-services_Container
+      operationId: getConnectivity-services
       responses:
         "200":
           content:
@@ -1490,7 +1490,7 @@ paths:
       summary: DELETE /connectivity-services/connectivity-service
     description: List of connectivity services
     get:
-      operationId: getConnectivity-services_Connectivity-service_Container
+      operationId: getConnectivity-services_Connectivity-service
       responses:
         "200":
           content:
@@ -1529,7 +1529,7 @@ paths:
       summary: DELETE /enterprises
     description: The top level enterprises container
     get:
-      operationId: getEnterprises_Container
+      operationId: getEnterprises
       responses:
         "200":
           content:
@@ -1579,7 +1579,7 @@ paths:
       summary: DELETE /enterprises/enterprise
     description: List of enterprises
     get:
-      operationId: getEnterprises_Enterprise_Container
+      operationId: getEnterprises_Enterprise
       responses:
         "200":
           content:
@@ -1645,7 +1645,7 @@ paths:
       summary: DELETE /enterprises/enterprise/{enterprise-id}/application
     description: List of applications
     get:
-      operationId: getEnterprises_Enterprise_Application_Container
+      operationId: getEnterprises_Enterprise_Application
       responses:
         "200":
           content:
@@ -1728,7 +1728,7 @@ paths:
       summary: DELETE /enterprises/enterprise/{enterprise-id}/application/{application-id}/endpoint
     description: list for endpoint
     get:
-      operationId: getEnterprises_Enterprise_Application_Endpoint_Container
+      operationId: getEnterprises_Enterprise_Application_Endpoint
       responses:
         "200":
           content:
@@ -1784,7 +1784,7 @@ paths:
       summary: DELETE /enterprises/enterprise/{enterprise-id}/application/{application-id}/endpoint/{endpoint-id}/mbr
     description: Maximum bitrate
     get:
-      operationId: getEnterprises_Enterprise_Application_Endpoint_Mbr_Container
+      operationId: getEnterprises_Enterprise_Application_Endpoint_Mbr
       responses:
         "200":
           content:
@@ -1867,7 +1867,7 @@ paths:
       summary: DELETE /enterprises/enterprise/{enterprise-id}/connectivity-service
     description: The list for connectivity-service
     get:
-      operationId: getEnterprises_Enterprise_Connectivity-service_Container
+      operationId: getEnterprises_Enterprise_Connectivity-service
       responses:
         "200":
           content:
@@ -1941,7 +1941,7 @@ paths:
       summary: DELETE /enterprises/enterprise/{enterprise-id}/site
     description: List of site
     get:
-      operationId: getEnterprises_Enterprise_Site_Container
+      operationId: getEnterprises_Enterprise_Site
       responses:
         "200":
           content:
@@ -2059,7 +2059,7 @@ paths:
       summary: DELETE /enterprises/enterprise/{enterprise-id}/site/{site-id}/device-group
     description: List of device groups
     get:
-      operationId: getEnterprises_Enterprise_Site_Device-group_Container
+      operationId: getEnterprises_Enterprise_Site_Device-group
       responses:
         "200":
           content:
@@ -2159,7 +2159,7 @@ paths:
       summary: DELETE /enterprises/enterprise/{enterprise-id}/site/{site-id}/device-group/{device-group-id}/device
     description: list of devices in this device-group
     get:
-      operationId: getEnterprises_Enterprise_Site_Device-group_Device_Container
+      operationId: getEnterprises_Enterprise_Site_Device-group_Device
       responses:
         "200":
           content:
@@ -2223,7 +2223,7 @@ paths:
       summary: DELETE /enterprises/enterprise/{enterprise-id}/site/{site-id}/device-group/{device-group-id}/mbr
     description: Maximum bitrate
     get:
-      operationId: getEnterprises_Enterprise_Site_Device-group_Mbr_Container
+      operationId: getEnterprises_Enterprise_Site_Device-group_Mbr
       responses:
         "200":
           content:
@@ -2279,7 +2279,7 @@ paths:
       summary: DELETE /enterprises/enterprise/{enterprise-id}/site/{site-id}/device
     description: List of devices
     get:
-      operationId: getEnterprises_Enterprise_Site_Device_Container
+      operationId: getEnterprises_Enterprise_Site_Device
       responses:
         "200":
           content:
@@ -2328,7 +2328,7 @@ paths:
   /aether/v2.1.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/device/{device-id}/state:
     description: read only attributes of device
     get:
-      operationId: getEnterprises_Enterprise_Site_Device_State_Container
+      operationId: getEnterprises_Enterprise_Site_Device_State
       responses:
         "200":
           content:
@@ -2376,7 +2376,7 @@ paths:
       summary: DELETE /enterprises/enterprise/{enterprise-id}/site/{site-id}/imsi-definition
     description: container for imsi-defination
     get:
-      operationId: getEnterprises_Enterprise_Site_Imsi-definition_Container
+      operationId: getEnterprises_Enterprise_Site_Imsi-definition
       responses:
         "200":
           content:
@@ -2460,7 +2460,7 @@ paths:
       summary: DELETE /enterprises/enterprise/{enterprise-id}/site/{site-id}/ip-domain
     description: List of ip domains
     get:
-      operationId: getEnterprises_Enterprise_Site_Ip-domain_Container
+      operationId: getEnterprises_Enterprise_Site_Ip-domain
       responses:
         "200":
           content:
@@ -2516,7 +2516,7 @@ paths:
       summary: DELETE /enterprises/enterprise/{enterprise-id}/site/{site-id}/monitoring
     description: container for monitoring
     get:
-      operationId: getEnterprises_Enterprise_Site_Monitoring_Container
+      operationId: getEnterprises_Enterprise_Site_Monitoring
       responses:
         "200":
           content:
@@ -2600,7 +2600,7 @@ paths:
       summary: DELETE /enterprises/enterprise/{enterprise-id}/site/{site-id}/monitoring/edge-device
     description: List of edge monitoring devices
     get:
-      operationId: getEnterprises_Enterprise_Site_Monitoring_Edge-device_Container
+      operationId: getEnterprises_Enterprise_Site_Monitoring_Edge-device
       responses:
         "200":
           content:
@@ -2692,7 +2692,7 @@ paths:
       summary: DELETE /enterprises/enterprise/{enterprise-id}/site/{site-id}/sim-card
     description: List of sim cards
     get:
-      operationId: getEnterprises_Enterprise_Site_Sim-card_Container
+      operationId: getEnterprises_Enterprise_Site_Sim-card
       responses:
         "200":
           content:
@@ -2783,7 +2783,7 @@ paths:
       summary: DELETE /enterprises/enterprise/{enterprise-id}/site/{site-id}/slice
     description: List of Slices
     get:
-      operationId: getEnterprises_Enterprise_Site_Slice_Container
+      operationId: getEnterprises_Enterprise_Site_Slice
       responses:
         "200":
           content:
@@ -2886,7 +2886,7 @@ paths:
       A list of device groups. Groups will only participate in
       the Slice if the enable field is set to True
     get:
-      operationId: getEnterprises_Enterprise_Site_Slice_Device-group_Container
+      operationId: getEnterprises_Enterprise_Site_Slice_Device-group
       responses:
         "200":
           content:
@@ -3000,7 +3000,7 @@ paths:
       priority order. The first rule to match will determine the fate
       of the packet.
     get:
-      operationId: getEnterprises_Enterprise_Site_Slice_Filter_Container
+      operationId: getEnterprises_Enterprise_Site_Slice_Filter
       responses:
         "200":
           content:
@@ -3064,7 +3064,7 @@ paths:
       summary: DELETE /enterprises/enterprise/{enterprise-id}/site/{site-id}/slice/{slice-id}/mbr
     description: Per slice Maximum Bit Rate
     get:
-      operationId: getEnterprises_Enterprise_Site_Slice_Mbr_Container
+      operationId: getEnterprises_Enterprise_Site_Slice_Mbr
       responses:
         "200":
           content:
@@ -3164,7 +3164,7 @@ paths:
       summary: DELETE /enterprises/enterprise/{enterprise-id}/site/{site-id}/slice/{slice-id}/priority-traffic-rule
     description: List of priority traffic rules
     get:
-      operationId: getEnterprises_Enterprise_Site_Slice_Priority-traffic-rule_Container
+      operationId: getEnterprises_Enterprise_Site_Slice_Priority-traffic-rule
       responses:
         "200":
           content:
@@ -3264,7 +3264,7 @@ paths:
       summary: DELETE /enterprises/enterprise/{enterprise-id}/site/{site-id}/small-cell
     description: List of small cell addresses
     get:
-      operationId: getEnterprises_Enterprise_Site_Small-cell_Container
+      operationId: getEnterprises_Enterprise_Site_Small-cell
       responses:
         "200":
           content:
@@ -3355,7 +3355,7 @@ paths:
       summary: DELETE /enterprises/enterprise/{enterprise-id}/site/{site-id}/upf
     description: A list of named upfs.
     get:
-      operationId: getEnterprises_Enterprise_Site_Upf_Container
+      operationId: getEnterprises_Enterprise_Site_Upf
       responses:
         "200":
           content:
@@ -3437,7 +3437,7 @@ paths:
       summary: DELETE /enterprises/enterprise/{enterprise-id}/template
     description: List of slice templates
     get:
-      operationId: getEnterprises_Enterprise_Template_Container
+      operationId: getEnterprises_Enterprise_Template
       responses:
         "200":
           content:
@@ -3484,7 +3484,7 @@ paths:
       summary: DELETE /enterprises/enterprise/{enterprise-id}/template/{template-id}/mbr
     description: Per-Slice QOS Settings Maximum Bit Rate
     get:
-      operationId: getEnterprises_Enterprise_Template_Mbr_Container
+      operationId: getEnterprises_Enterprise_Template_Mbr
       responses:
         "200":
           content:
@@ -3559,7 +3559,7 @@ paths:
       summary: DELETE /enterprises/enterprise/{enterprise-id}/traffic-class
     description: List of traffic class
     get:
-      operationId: getEnterprises_Enterprise_Traffic-class_Container
+      operationId: getEnterprises_Enterprise_Traffic-class
       responses:
         "200":
           content:
