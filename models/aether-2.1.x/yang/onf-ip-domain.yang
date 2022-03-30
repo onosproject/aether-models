@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 submodule onf-ip-domain {
-  belongs-to onf-enterprise { prefix ent; }
+  belongs-to onf-site { prefix site; }
 
   import ietf-inet-types { prefix inet; }
   import onf-aether-types { prefix at; }

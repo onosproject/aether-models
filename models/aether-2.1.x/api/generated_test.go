@@ -15,7 +15,7 @@ func aStr(s string) *string {
 }
 
 func TestApplicationAddress(t *testing.T) {
-	app := OnfEnterprise_Enterprises_Enterprise_Application{}
+	app := OnfApplication_Applications_Application{}
 
 	app.Address = aStr("my.host.name")
 	err := app.Validate()
@@ -60,7 +60,7 @@ func TestApplicationAddress(t *testing.T) {
 }
 
 func TestSimCard(t *testing.T) {
-	sim := OnfEnterprise_Enterprises_Enterprise_Site_SimCard{}
+	sim := OnfSite_Sites_Site_SimCard{}
 
 	// 18 digit, starts with 0
 	sim.Iccid = aStr("023456789012345678F")
@@ -109,7 +109,7 @@ func TestSimCard(t *testing.T) {
 }
 
 func TestDevice(t *testing.T) {
-	dev := OnfEnterprise_Enterprises_Enterprise_Site_Device{}
+	dev := OnfSite_Sites_Site_Device{}
 
 	// 14 digit, starts with 0
 	dev.Imei = aStr("02345678901234")
@@ -148,68 +148,68 @@ func TestDevice(t *testing.T) {
 }
 
 func TestIdentifier(t *testing.T) {
-	ent := OnfEnterprise_Enterprises_Enterprise{}
+	ent := OnfSite_Sites_Site{}
 
-	ent.EnterpriseId = aStr("test")
+	ent.SiteId = aStr("test")
 	err := ent.Validate()
 	assert.Nil(t, err)
 
 	// Minimum length
-	ent.EnterpriseId = aStr("a")
+	ent.SiteId = aStr("a")
 	err = ent.Validate()
 	assert.Nil(t, err)
 
 	// Maximum length
-	ent.EnterpriseId = aStr("a12345678901234567890123456789012345678901234567890123456789012")
+	ent.SiteId = aStr("a12345678901234567890123456789012345678901234567890123456789012")
 	err = ent.Validate()
 	assert.Nil(t, err)
 
-	ent.EnterpriseId = aStr("test-1")
+	ent.SiteId = aStr("test-1")
 	err = ent.Validate()
 	assert.Nil(t, err)
 
 	// Two non-consecutive dashes are fine
-	ent.EnterpriseId = aStr("test-test-1")
+	ent.SiteId = aStr("test-test-1")
 	err = ent.Validate()
 	assert.Nil(t, err)
 
 	// Two consecutive dashes are not allow
-	ent.EnterpriseId = aStr("test--1")
+	ent.SiteId = aStr("test--1")
 	err = ent.Validate()
 	assert.Error(t, err)
 
 	// Uppercase is not allowed
-	ent.EnterpriseId = aStr("Uppercase")
+	ent.SiteId = aStr("Uppercase")
 	err = ent.Validate()
 	assert.Error(t, err)
 
 	// Uppercase is not allowed, even if you hide it in the middle
-	ent.EnterpriseId = aStr("upperCase")
+	ent.SiteId = aStr("upperCase")
 	err = ent.Validate()
 	assert.Error(t, err)
 
 	// Starts with a number is not allowed
-	ent.EnterpriseId = aStr("1-test")
+	ent.SiteId = aStr("1-test")
 	err = ent.Validate()
 	assert.Error(t, err)
 
 	// Empty string is not allowed
-	ent.EnterpriseId = aStr("")
+	ent.SiteId = aStr("")
 	err = ent.Validate()
 	assert.Error(t, err)
 
 	// Too Long
-	ent.EnterpriseId = aStr("a123456789012345678901234567890123456789012345678901234567890123")
+	ent.SiteId = aStr("a123456789012345678901234567890123456789012345678901234567890123")
 	err = ent.Validate()
 	assert.Error(t, err)
 
 	// No periods
-	ent.EnterpriseId = aStr("test.two")
+	ent.SiteId = aStr("test.two")
 	err = ent.Validate()
 	assert.Error(t, err)
 
 	// No spaces
-	ent.EnterpriseId = aStr("test two")
+	ent.SiteId = aStr("test two")
 	err = ent.Validate()
 	assert.Error(t, err)
 }

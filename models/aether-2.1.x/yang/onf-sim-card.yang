@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 submodule onf-sim-card {
-  belongs-to onf-enterprise { prefix ent; }
+  belongs-to onf-site { prefix site; }
 
   import onf-aether-types { prefix at; }
 

@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 submodule onf-device {
-  belongs-to onf-enterprise { prefix ent; }
+  belongs-to onf-site { prefix site; }
 
   import ietf-yang-types { prefix yang; }
   import onf-aether-types { prefix at; }

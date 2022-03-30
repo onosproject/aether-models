@@ -11,8 +11,10 @@ import (
 )
 
 var modelData = []*gnmi.ModelData{
-	{Name: "onf-aether-connectivity-service", Organization: "Open Networking Foundation", Version: "2022-01-14"},
-	{Name: "onf-aether-enterprise", Organization: "Open Networking Foundation", Version: "2022-01-14"},
+	{Name: "onf-aether-site", Organization: "Open Networking Foundation", Version: "2022-04-01"},
+	{Name: "onf-aether-application", Organization: "Open Networking Foundation", Version: "2022-04-01"},
+	{Name: "onf-aether-traffic-class", Organization: "Open Networking Foundation", Version: "2022-04-01"},
+	{Name: "onf-aether-template", Organization: "Open Networking Foundation", Version: "2022-04-01"},
 }
 
 var encodings = []gnmi.Encoding{gnmi.Encoding_JSON_IETF}

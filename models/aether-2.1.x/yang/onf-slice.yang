@@ -3,13 +3,13 @@
 // SPDX-License-Identifier: Apache-2.0
 
 submodule onf-slice {
-  belongs-to onf-enterprise { prefix ent; }
+  belongs-to onf-site { prefix site; }
 
   import onf-aether-types{ prefix at; }
+  import onf-application{ prefix app; }
 
   include onf-upf;
   include onf-device-group;
-  include onf-application;
   include onf-priority-traffic-rule;
 
   organization "Open Networking Foundation.";
@@ -79,7 +79,7 @@ submodule onf-slice {
         key "application";
         leaf application {
           type leafref {
-            path "../../../../application/application-id";
+            path "/app:applications/app:application/app:application-id";
           }
           mandatory true;
           description
@@ -122,6 +122,21 @@ submodule onf-slice {
         type at:sd;
         mandatory true;
         description "Slice differentiator. Immutable.";
+      }
+
+      leaf connectivity-service {
+        type enumeration {
+          enum 4g {
+            value "4";
+            description "Use the 4g connectivity service";
+          }
+          enum 5g {
+            value "5";
+            description "Use the 5g connectivity service";
+          }
+        }
+        default 5g;
+        description "The type of connectivity service 4g/5g to use with the slice";
       }
 
       container mbr {

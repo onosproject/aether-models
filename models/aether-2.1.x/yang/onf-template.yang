@@ -2,8 +2,9 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-submodule onf-template {
-  belongs-to onf-enterprise { prefix ent; }
+module onf-template {
+  namespace "http://opennetworking.org/aether/template";
+  prefix tpl;
 
   import onf-aether-types{ prefix at; }
 
@@ -13,6 +14,11 @@ submodule onf-template {
     "The aether slice-template holds common parameters used
      by a Slice. Templates are used to
      populate a Slice.";
+
+  revision "2022-04-01" {
+    description "Brought back up to top level since enterprise moved out";
+    reference "RFC 6020";
+  }
 
   revision "2022-01-14" {
     description "Refactored as submodule";
@@ -29,7 +35,7 @@ submodule onf-template {
     description "The typedef for template-id";
   }
 
-  grouping template {
+  container templates {
     description "The template grouping";
 
     list template {

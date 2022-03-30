@@ -2,8 +2,9 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-submodule onf-site {
-  belongs-to onf-enterprise { prefix ent; }
+module onf-site {
+  namespace "http://opennetworking.org/aether/site";
+  prefix site;
 
   import ietf-inet-types { prefix inet; }
   import onf-aether-types{ prefix at; }
@@ -12,13 +13,20 @@ submodule onf-site {
   include onf-sim-card;
   include onf-upf;
   include onf-slice;
+  include onf-upf;
   include onf-device-group;
   include onf-ip-domain;
+  include onf-priority-traffic-rule;
 
   organization "Open Networking Foundation.";
   contact "Scott Baker";
   description
     "An Aether site is a location where resources are deployed.";
+
+  revision "2022-04-01" {
+    description "Brought back up to top level since enterprise moved out";
+    reference "RFC 6020";
+  }
 
   revision "2022-01-14" {
     description "Refactored as submodule";
@@ -35,11 +43,11 @@ submodule onf-site {
     description "The typedef for site-id";
   }
 
-  grouping site {
+  container sites {
     description "The site grouping";
 
     list site {
-      must "count(ent:slice[set-contains(following-sibling::ent:slice/ent:device-group/@ent:device-group, ent:device-group/@ent:device-group)]/@ent:slice-id) = 0" {
+      must "count(site:slice[set-contains(following-sibling::site:slice/site:device-group/@site:device-group, site:device-group/@site:device-group)]/@site:slice-id) = 0" {
         error-message "a device group cannot be used in more than one slice in a site";
         description "device-group refers to ip-domain. the DNN in ip-domain cannot
                      be used by more than 1 slice";
@@ -148,6 +156,32 @@ submodule onf-site {
           //   5 digit subscriber ID
         }
         description "container for imsi-defination";
+      }
+
+      container connectivity-service {
+        container core-4g {
+          leaf endpoint {
+            type inet:uri;
+            description "Endpoint URL";
+          }
+          leaf acc-prometheus-url {
+            type inet:uri;
+            description "URL of ACC prometheus";
+          }
+          description "The 4g core endpoint";
+        }
+        container core-5g {
+          leaf endpoint {
+            type inet:uri;
+            description "Endpoint URL";
+          }
+          leaf acc-prometheus-url {
+            type inet:uri;
+            description "URL of ACC prometheus";
+          }
+          description "The 5g core endpoint";
+        }
+        description "Connectivity to the mobile core";
       }
 
       uses device;
