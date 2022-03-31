@@ -8,7 +8,7 @@ components:
         text/plain; charset=utf-8:
           schema:
             type: string
-      description: target (device in onos-config)
+      description: target (target in onos-config)
       in: path
       name: target
       required: true
@@ -194,12 +194,25 @@ components:
           schema:
             $ref: '#/components/schemas/Vcs_Vcs_Slice_Mbr'
   schemas:
+    AdditionalPropertiesUnchTarget:
+      description: both the additional property 'unchanged' and the 'target'
+      properties:
+        target:
+          description: an override of the target (target)
+          title: target
+          type: string
+        unchanged:
+          description: A comma seperated list of unchanged mandatory attribute names
+          title: unchanged
+          type: string
+      title: AdditionalPropertiesUnchTarget
+      type: object
     AdditionalPropertyTarget:
       description: Optionally specify a target other than the default (only on PATCH
         method)
       properties:
         target:
-          description: an override of the target (device)
+          description: an override of the target (target)
           title: target
           type: string
       title: AdditionalPropertyTarget
@@ -220,19 +233,13 @@ components:
       description: The top level container
       properties:
         application:
-          description: List of applications
-          items:
-            $ref: '#/components/schemas/Application_Application'
-          title: ItemApplication_Application
-          type: array
-          uniqueItems: true
-          x-keys:
-          - id
+          $ref: '#/components/schemas/Application_Application_List'
       title: Application
       type: object
     Application_Application:
       additionalProperties:
         $ref: '#/components/schemas/AdditionalPropertyUnchanged'
+      description: List of applications (single)
       properties:
         address:
           description: Address of this application. Either a hostname, an IP, or a
@@ -252,14 +259,7 @@ components:
           title: display-name
           type: string
         endpoint:
-          description: list for endpoint
-          items:
-            $ref: '#/components/schemas/Application_Application_Endpoint'
-          title: Endpoint
-          type: array
-          uniqueItems: true
-          x-keys:
-          - endpoint-id
+          $ref: '#/components/schemas/Application_Application_Endpoint_List'
         enterprise:
           description: Link to enterprise that owns this Application. May be set to
             None if the application is global to all Enterprises.
@@ -277,8 +277,11 @@ components:
       - address
       - enterprise
       - id
+      title: Application_Application
       type: object
+      x-list-multiple: true
     Application_Application_Endpoint:
+      description: list for endpoint (single)
       properties:
         display-name:
           description: display name to use in GUI or CLI
@@ -322,11 +325,17 @@ components:
           x-leafref: /tc:traffic-class/tc:traffic-class/tc:id
       required:
       - endpoint-id
+      title: Application_Application_Endpoint
       type: object
+      x-list-multiple: true
     Application_Application_Endpoint_List:
+      description: list for endpoint (list)
       items:
         $ref: '#/components/schemas/Application_Application_Endpoint'
       type: array
+      uniqueItems: true
+      x-keys:
+      - endpoint-id
       x-list-multiple: true
     Application_Application_Endpoint_Mbr:
       description: Maximum bitrate
@@ -346,9 +355,13 @@ components:
       title: Application_Application_Endpoint_Mbr
       type: object
     Application_Application_List:
+      description: List of applications (list)
       items:
         $ref: '#/components/schemas/Application_Application'
       type: array
+      uniqueItems: true
+      x-keys:
+      - id
       x-list-multiple: true
     Connectivity-service:
       additionalProperties:
@@ -356,17 +369,11 @@ components:
       description: The top level container
       properties:
         connectivity-service:
-          description: List of connectivity services
-          items:
-            $ref: '#/components/schemas/Connectivity-service_Connectivity-service'
-          title: ItemConnectivity-service_Connectivity-service
-          type: array
-          uniqueItems: true
-          x-keys:
-          - id
+          $ref: '#/components/schemas/Connectivity-service_Connectivity-service_List'
       title: Connectivity-service
       type: object
     Connectivity-service_Connectivity-service:
+      description: List of connectivity services (single)
       properties:
         acc-prometheus-url:
           description: URL of ACC prometheus
@@ -397,11 +404,17 @@ components:
           type: string
       required:
       - id
+      title: Connectivity-service_Connectivity-service
       type: object
+      x-list-multiple: true
     Connectivity-service_Connectivity-service_List:
+      description: List of connectivity services (list)
       items:
         $ref: '#/components/schemas/Connectivity-service_Connectivity-service'
       type: array
+      uniqueItems: true
+      x-keys:
+      - id
       x-list-multiple: true
     Device-group:
       additionalProperties:
@@ -409,19 +422,13 @@ components:
       description: The top level container
       properties:
         device-group:
-          description: List of device groups
-          items:
-            $ref: '#/components/schemas/Device-group_Device-group'
-          title: ItemDevice-group_Device-group
-          type: array
-          uniqueItems: true
-          x-keys:
-          - id
+          $ref: '#/components/schemas/Device-group_Device-group_List'
       title: Device-group
       type: object
     Device-group_Device-group:
       additionalProperties:
         $ref: '#/components/schemas/AdditionalPropertyUnchanged'
+      description: List of device groups (single)
       properties:
         description:
           description: description of this device group
@@ -445,16 +452,7 @@ components:
           title: id
           type: string
         imsis:
-          description: |-
-            List of imsi ranges that comprise this group. It's acceptable for
-            a range to degenerate to being a singleton
-          items:
-            $ref: '#/components/schemas/Device-group_Device-group_Imsis'
-          title: Imsis
-          type: array
-          uniqueItems: true
-          x-keys:
-          - imsi-id
+          $ref: '#/components/schemas/Device-group_Device-group_Imsis_List'
         ip-domain:
           description: |-
             Link to ip-domain settings that determine the pool of IP addresses,
@@ -470,7 +468,9 @@ components:
       required:
       - id
       - site
+      title: Device-group_Device-group
       type: object
+      x-list-multiple: true
     Device-group_Device-group_Device:
       additionalProperties:
         $ref: '#/components/schemas/AdditionalPropertyUnchanged'
@@ -510,6 +510,9 @@ components:
       title: Device-group_Device-group_Device_Mbr
       type: object
     Device-group_Device-group_Imsis:
+      description: |-
+        List of imsi ranges that comprise this group. It's acceptable for
+        a range to degenerate to being a singleton (single)
       properties:
         display-name:
           description: display name to use in GUI or CLI
@@ -538,16 +541,28 @@ components:
           type: integer
       required:
       - imsi-id
+      title: Device-group_Device-group_Imsis
       type: object
+      x-list-multiple: true
     Device-group_Device-group_Imsis_List:
+      description: |-
+        List of imsi ranges that comprise this group. It's acceptable for
+        a range to degenerate to being a singleton (list)
       items:
         $ref: '#/components/schemas/Device-group_Device-group_Imsis'
       type: array
+      uniqueItems: true
+      x-keys:
+      - imsi-id
       x-list-multiple: true
     Device-group_Device-group_List:
+      description: List of device groups (list)
       items:
         $ref: '#/components/schemas/Device-group_Device-group'
       type: array
+      uniqueItems: true
+      x-keys:
+      - id
       x-list-multiple: true
     Enterprise:
       additionalProperties:
@@ -555,27 +570,14 @@ components:
       description: The top level container
       properties:
         enterprise:
-          description: List of enterprises
-          items:
-            $ref: '#/components/schemas/Enterprise_Enterprise'
-          title: ItemEnterprise_Enterprise
-          type: array
-          uniqueItems: true
-          x-keys:
-          - id
+          $ref: '#/components/schemas/Enterprise_Enterprise_List'
       title: Enterprise
       type: object
     Enterprise_Enterprise:
+      description: List of enterprises (single)
       properties:
         connectivity-service:
-          description: The list for connectivity-service
-          items:
-            $ref: '#/components/schemas/Enterprise_Enterprise_Connectivity-service'
-          title: Connectivity-service
-          type: array
-          uniqueItems: true
-          x-keys:
-          - connectivity-service
+          $ref: '#/components/schemas/Enterprise_Enterprise_Connectivity-service_List'
         description:
           description: description of this enterprise
           maxLength: 1024
@@ -597,8 +599,11 @@ components:
           type: string
       required:
       - id
+      title: Enterprise_Enterprise
       type: object
+      x-list-multiple: true
     Enterprise_Enterprise_Connectivity-service:
+      description: The list for connectivity-service (single)
       properties:
         connectivity-service:
           description: Link to connectivity services where configuration should be
@@ -613,16 +618,26 @@ components:
           type: boolean
       required:
       - connectivity-service
+      title: Enterprise_Enterprise_Connectivity-service
       type: object
+      x-list-multiple: true
     Enterprise_Enterprise_Connectivity-service_List:
+      description: The list for connectivity-service (list)
       items:
         $ref: '#/components/schemas/Enterprise_Enterprise_Connectivity-service'
       type: array
+      uniqueItems: true
+      x-keys:
+      - connectivity-service
       x-list-multiple: true
     Enterprise_Enterprise_List:
+      description: List of enterprises (list)
       items:
         $ref: '#/components/schemas/Enterprise_Enterprise'
       type: array
+      uniqueItems: true
+      x-keys:
+      - id
       x-list-multiple: true
     Ip-domain:
       additionalProperties:
@@ -630,19 +645,13 @@ components:
       description: The top level container
       properties:
         ip-domain:
-          description: List of ip domains
-          items:
-            $ref: '#/components/schemas/Ip-domain_Ip-domain'
-          title: ItemIp-domain_Ip-domain
-          type: array
-          uniqueItems: true
-          x-keys:
-          - id
+          $ref: '#/components/schemas/Ip-domain_Ip-domain_List'
       title: Ip-domain
       type: object
     Ip-domain_Ip-domain:
       additionalProperties:
         $ref: '#/components/schemas/AdditionalPropertyUnchanged'
+      description: List of ip domains (single)
       properties:
         admin-status:
           default: ENABLE
@@ -706,11 +715,17 @@ components:
       - enterprise
       - id
       - subnet
+      title: Ip-domain_Ip-domain
       type: object
+      x-list-multiple: true
     Ip-domain_Ip-domain_List:
+      description: List of ip domains (list)
       items:
         $ref: '#/components/schemas/Ip-domain_Ip-domain'
       type: array
+      uniqueItems: true
+      x-keys:
+      - id
       x-list-multiple: true
     Site:
       additionalProperties:
@@ -718,19 +733,13 @@ components:
       description: The top level container
       properties:
         site:
-          description: List of site
-          items:
-            $ref: '#/components/schemas/Site_Site'
-          title: ItemSite_Site
-          type: array
-          uniqueItems: true
-          x-keys:
-          - id
+          $ref: '#/components/schemas/Site_Site_List'
       title: Site
       type: object
     Site_Site:
       additionalProperties:
         $ref: '#/components/schemas/AdditionalPropertyUnchanged'
+      description: List of site (single)
       properties:
         description:
           description: description of this site
@@ -761,18 +770,13 @@ components:
         monitoring:
           $ref: '#/components/schemas/Site_Site_Monitoring'
         small-cell:
-          description: List of small cell addresses
-          items:
-            $ref: '#/components/schemas/Site_Site_Small-cell'
-          title: Small-cell
-          type: array
-          uniqueItems: true
-          x-keys:
-          - small-cell-id
+          $ref: '#/components/schemas/Site_Site_Small-cell_List'
       required:
       - enterprise
       - id
+      title: Site_Site
       type: object
+      x-list-multiple: true
     Site_Site_Imsi-definition:
       additionalProperties:
         $ref: '#/components/schemas/AdditionalPropertyUnchanged'
@@ -810,9 +814,13 @@ components:
       title: Site_Site_Imsi-definition
       type: object
     Site_Site_List:
+      description: List of site (list)
       items:
         $ref: '#/components/schemas/Site_Site'
       type: array
+      uniqueItems: true
+      x-keys:
+      - id
       x-list-multiple: true
     Site_Site_Monitoring:
       description: container for monitoring
@@ -822,14 +830,7 @@ components:
           title: edge-cluster-prometheus-url
           type: string
         edge-device:
-          description: List of edge monitoring devices
-          items:
-            $ref: '#/components/schemas/Site_Site_Monitoring_Edge-device'
-          title: ItemSite_Site_Monitoring_Edge-device
-          type: array
-          uniqueItems: true
-          x-keys:
-          - edge-device-id
+          $ref: '#/components/schemas/Site_Site_Monitoring_Edge-device_List'
         edge-monitoring-prometheus-url:
           description: URL of monitoring prometheus
           title: edge-monitoring-prometheus-url
@@ -837,6 +838,7 @@ components:
       title: Site_Site_Monitoring
       type: object
     Site_Site_Monitoring_Edge-device:
+      description: List of edge monitoring devices (single)
       properties:
         description:
           description: description of this site
@@ -859,15 +861,22 @@ components:
           type: string
       required:
       - edge-device-id
+      title: Site_Site_Monitoring_Edge-device
       type: object
+      x-list-multiple: true
     Site_Site_Monitoring_Edge-device_List:
+      description: List of edge monitoring devices (list)
       items:
         $ref: '#/components/schemas/Site_Site_Monitoring_Edge-device'
       type: array
+      uniqueItems: true
+      x-keys:
+      - edge-device-id
       x-list-multiple: true
     Site_Site_Small-cell:
       additionalProperties:
         $ref: '#/components/schemas/AdditionalPropertyUnchanged'
+      description: List of small cell addresses (single)
       properties:
         address:
           description: Address of small cell
@@ -901,11 +910,17 @@ components:
       required:
       - small-cell-id
       - tac
+      title: Site_Site_Small-cell
       type: object
+      x-list-multiple: true
     Site_Site_Small-cell_List:
+      description: List of small cell addresses (list)
       items:
         $ref: '#/components/schemas/Site_Site_Small-cell'
       type: array
+      uniqueItems: true
+      x-keys:
+      - small-cell-id
       x-list-multiple: true
     Template:
       additionalProperties:
@@ -913,19 +928,13 @@ components:
       description: The top level container
       properties:
         template:
-          description: List of vcs templates
-          items:
-            $ref: '#/components/schemas/Template_Template'
-          title: ItemTemplate_Template
-          type: array
-          uniqueItems: true
-          x-keys:
-          - id
+          $ref: '#/components/schemas/Template_Template_List'
       title: Template
       type: object
     Template_Template:
       additionalProperties:
         $ref: '#/components/schemas/AdditionalPropertyUnchanged'
+      description: List of vcs templates (single)
       properties:
         default-behavior:
           description: Default behavior if no filter rules match
@@ -970,11 +979,17 @@ components:
       required:
       - default-behavior
       - id
+      title: Template_Template
       type: object
+      x-list-multiple: true
     Template_Template_List:
+      description: List of vcs templates (list)
       items:
         $ref: '#/components/schemas/Template_Template'
       type: array
+      uniqueItems: true
+      x-keys:
+      - id
       x-list-multiple: true
     Template_Template_Slice:
       description: Per-Slice QOS Settings
@@ -1020,17 +1035,11 @@ components:
       description: The top level container
       properties:
         traffic-class:
-          description: List of traffic class
-          items:
-            $ref: '#/components/schemas/Traffic-class_Traffic-class'
-          title: ItemTraffic-class_Traffic-class
-          type: array
-          uniqueItems: true
-          x-keys:
-          - id
+          $ref: '#/components/schemas/Traffic-class_Traffic-class_List'
       title: Traffic-class
       type: object
     Traffic-class_Traffic-class:
+      description: List of traffic class (single)
       properties:
         arp:
           description: Allocation and Retention Priority. 1 is the highest. 15 is
@@ -1078,11 +1087,17 @@ components:
           type: integer
       required:
       - id
+      title: Traffic-class_Traffic-class
       type: object
+      x-list-multiple: true
     Traffic-class_Traffic-class_List:
+      description: List of traffic class (list)
       items:
         $ref: '#/components/schemas/Traffic-class_Traffic-class'
       type: array
+      uniqueItems: true
+      x-keys:
+      - id
       x-list-multiple: true
     Upf:
       additionalProperties:
@@ -1090,19 +1105,13 @@ components:
       description: The top level container
       properties:
         upf:
-          description: A list of named upfs.
-          items:
-            $ref: '#/components/schemas/Upf_Upf'
-          title: ItemUpf_Upf
-          type: array
-          uniqueItems: true
-          x-keys:
-          - id
+          $ref: '#/components/schemas/Upf_Upf_List'
       title: Upf
       type: object
     Upf_Upf:
       additionalProperties:
         $ref: '#/components/schemas/AdditionalPropertyUnchanged'
+      description: A list of named upfs. (single)
       properties:
         address:
           description: Address of UPF
@@ -1153,11 +1162,17 @@ components:
       - id
       - port
       - site
+      title: Upf_Upf
       type: object
+      x-list-multiple: true
     Upf_Upf_List:
+      description: A list of named upfs. (list)
       items:
         $ref: '#/components/schemas/Upf_Upf'
       type: array
+      uniqueItems: true
+      x-keys:
+      - id
       x-list-multiple: true
     Vcs:
       additionalProperties:
@@ -1165,19 +1180,13 @@ components:
       description: The top level container
       properties:
         vcs:
-          description: List of virtual cellular services
-          items:
-            $ref: '#/components/schemas/Vcs_Vcs'
-          title: ItemVcs_Vcs
-          type: array
-          uniqueItems: true
-          x-keys:
-          - id
+          $ref: '#/components/schemas/Vcs_Vcs_List'
       title: Vcs
       type: object
     Vcs_Vcs:
       additionalProperties:
         $ref: '#/components/schemas/AdditionalPropertyUnchanged'
+      description: List of virtual cellular services (single)
       properties:
         default-behavior:
           description: Default behavior if no filter rules match
@@ -1192,16 +1201,7 @@ components:
           title: description
           type: string
         device-group:
-          description: |-
-            A list of device groups. Groups will only participate in
-            the VCS if the enable field is set to True
-          items:
-            $ref: '#/components/schemas/Vcs_Vcs_Device-group'
-          title: Device-group
-          type: array
-          uniqueItems: true
-          x-keys:
-          - device-group
+          $ref: '#/components/schemas/Vcs_Vcs_Device-group_List'
         display-name:
           description: display name to use in GUI or CLI
           maxLength: 80
@@ -1214,17 +1214,7 @@ components:
           type: string
           x-leafref: /ent:enterprise/ent:enterprise/ent:id
         filter:
-          description: |-
-            A list of applications to allow and/or deny. Rules are executed in
-            priority order. The first rule to match will determine the fate
-            of the packet.
-          items:
-            $ref: '#/components/schemas/Vcs_Vcs_Filter'
-          title: Filter
-          type: array
-          uniqueItems: true
-          x-keys:
-          - application
+          $ref: '#/components/schemas/Vcs_Vcs_Filter_List'
         id:
           description: ID for this vcs.
           maxLength: 32
@@ -1264,8 +1254,13 @@ components:
       - sd
       - site
       - sst
+      title: Vcs_Vcs
       type: object
+      x-list-multiple: true
     Vcs_Vcs_Device-group:
+      description: |-
+        A list of device groups. Groups will only participate in
+        the VCS if the enable field is set to True (single)
       properties:
         device-group:
           description: Link to device group
@@ -1279,13 +1274,25 @@ components:
           type: boolean
       required:
       - device-group
+      title: Vcs_Vcs_Device-group
       type: object
+      x-list-multiple: true
     Vcs_Vcs_Device-group_List:
+      description: |-
+        A list of device groups. Groups will only participate in
+        the VCS if the enable field is set to True (list)
       items:
         $ref: '#/components/schemas/Vcs_Vcs_Device-group'
       type: array
+      uniqueItems: true
+      x-keys:
+      - device-group
       x-list-multiple: true
     Vcs_Vcs_Filter:
+      description: |-
+        A list of applications to allow and/or deny. Rules are executed in
+        priority order. The first rule to match will determine the fate
+        of the packet. (single)
       properties:
         allow:
           default: true
@@ -1305,16 +1312,29 @@ components:
           type: integer
       required:
       - application
+      title: Vcs_Vcs_Filter
       type: object
+      x-list-multiple: true
     Vcs_Vcs_Filter_List:
+      description: |-
+        A list of applications to allow and/or deny. Rules are executed in
+        priority order. The first rule to match will determine the fate
+        of the packet. (list)
       items:
         $ref: '#/components/schemas/Vcs_Vcs_Filter'
       type: array
+      uniqueItems: true
+      x-keys:
+      - application
       x-list-multiple: true
     Vcs_Vcs_List:
+      description: List of virtual cellular services (list)
       items:
         $ref: '#/components/schemas/Vcs_Vcs'
       type: array
+      uniqueItems: true
+      x-keys:
+      - id
       x-list-multiple: true
     Vcs_Vcs_Slice:
       description: Per-Slice QOS Settings
@@ -1359,7 +1379,8 @@ info:
     email: info@opennetworking.org
     name: Open Networking Foundation
     url: https://opennetworking.org
-  description: TODO add a description field in Metadata.yaml?
+  description: This OpenAPI 3 specification is generated fromaether onos-config model
+    plugin
   license:
     name: Apache-2.0
     url: https://www.apache.org/licenses/LICENSE-2.0
@@ -1407,9 +1428,7 @@ paths:
           content:
             application/json:
               schema:
-                items:
-                  $ref: '#/components/schemas/Application_Application_List'
-                type: array
+                $ref: '#/components/schemas/Application_Application_List'
           description: GET OK 200
       summary: GET /application/application List
       tags:
@@ -1465,9 +1484,7 @@ paths:
           content:
             application/json:
               schema:
-                items:
-                  $ref: '#/components/schemas/Application_Application_Endpoint_List'
-                type: array
+                $ref: '#/components/schemas/Application_Application_Endpoint_List'
           description: GET OK 200
       summary: GET /application/application/{id}/endpoint List
       tags:
@@ -1617,9 +1634,7 @@ paths:
           content:
             application/json:
               schema:
-                items:
-                  $ref: '#/components/schemas/Connectivity-service_Connectivity-service_List'
-                type: array
+                $ref: '#/components/schemas/Connectivity-service_Connectivity-service_List'
           description: GET OK 200
       summary: GET /connectivity-service/connectivity-service List
       tags:
@@ -1706,9 +1721,7 @@ paths:
           content:
             application/json:
               schema:
-                items:
-                  $ref: '#/components/schemas/Device-group_Device-group_List'
-                type: array
+                $ref: '#/components/schemas/Device-group_Device-group_List'
           description: GET OK 200
       summary: GET /device-group/device-group List
       tags:
@@ -1844,9 +1857,7 @@ paths:
           content:
             application/json:
               schema:
-                items:
-                  $ref: '#/components/schemas/Device-group_Device-group_Imsis_List'
-                type: array
+                $ref: '#/components/schemas/Device-group_Device-group_Imsis_List'
           description: GET OK 200
       summary: GET /device-group/device-group/{id}/imsis List
       tags:
@@ -1951,9 +1962,7 @@ paths:
           content:
             application/json:
               schema:
-                items:
-                  $ref: '#/components/schemas/Enterprise_Enterprise_List'
-                type: array
+                $ref: '#/components/schemas/Enterprise_Enterprise_List'
           description: GET OK 200
       summary: GET /enterprise/enterprise List
       tags:
@@ -2009,9 +2018,7 @@ paths:
           content:
             application/json:
               schema:
-                items:
-                  $ref: '#/components/schemas/Enterprise_Enterprise_Connectivity-service_List'
-                type: array
+                $ref: '#/components/schemas/Enterprise_Enterprise_Connectivity-service_List'
           description: GET OK 200
       summary: GET /enterprise/enterprise/{id}/connectivity-service List
       tags:
@@ -2114,9 +2121,7 @@ paths:
           content:
             application/json:
               schema:
-                items:
-                  $ref: '#/components/schemas/Ip-domain_Ip-domain_List'
-                type: array
+                $ref: '#/components/schemas/Ip-domain_Ip-domain_List'
           description: GET OK 200
       summary: GET /ip-domain/ip-domain List
       tags:
@@ -2203,9 +2208,7 @@ paths:
           content:
             application/json:
               schema:
-                items:
-                  $ref: '#/components/schemas/Site_Site_List'
-                type: array
+                $ref: '#/components/schemas/Site_Site_List'
           description: GET OK 200
       summary: GET /site/site List
       tags:
@@ -2339,9 +2342,7 @@ paths:
           content:
             application/json:
               schema:
-                items:
-                  $ref: '#/components/schemas/Site_Site_Monitoring_Edge-device_List'
-                type: array
+                $ref: '#/components/schemas/Site_Site_Monitoring_Edge-device_List'
           description: GET OK 200
       summary: GET /site/site/{id}/monitoring/edge-device List
       tags:
@@ -2413,9 +2414,7 @@ paths:
           content:
             application/json:
               schema:
-                items:
-                  $ref: '#/components/schemas/Site_Site_Small-cell_List'
-                type: array
+                $ref: '#/components/schemas/Site_Site_Small-cell_List'
           description: GET OK 200
       summary: GET /site/site/{id}/small-cell List
       tags:
@@ -2518,9 +2517,7 @@ paths:
           content:
             application/json:
               schema:
-                items:
-                  $ref: '#/components/schemas/Template_Template_List'
-                type: array
+                $ref: '#/components/schemas/Template_Template_List'
           description: GET OK 200
       summary: GET /template/template List
       tags:
@@ -2685,9 +2682,7 @@ paths:
           content:
             application/json:
               schema:
-                items:
-                  $ref: '#/components/schemas/Traffic-class_Traffic-class_List'
-                type: array
+                $ref: '#/components/schemas/Traffic-class_Traffic-class_List'
           description: GET OK 200
       summary: GET /traffic-class/traffic-class List
       tags:
@@ -2774,9 +2769,7 @@ paths:
           content:
             application/json:
               schema:
-                items:
-                  $ref: '#/components/schemas/Upf_Upf_List'
-                type: array
+                $ref: '#/components/schemas/Upf_Upf_List'
           description: GET OK 200
       summary: GET /upf/upf List
       tags:
@@ -2863,9 +2856,7 @@ paths:
           content:
             application/json:
               schema:
-                items:
-                  $ref: '#/components/schemas/Vcs_Vcs_List'
-                type: array
+                $ref: '#/components/schemas/Vcs_Vcs_List'
           description: GET OK 200
       summary: GET /vcs/vcs List
       tags:
@@ -2923,9 +2914,7 @@ paths:
           content:
             application/json:
               schema:
-                items:
-                  $ref: '#/components/schemas/Vcs_Vcs_Device-group_List'
-                type: array
+                $ref: '#/components/schemas/Vcs_Vcs_Device-group_List'
           description: GET OK 200
       summary: GET /vcs/vcs/{id}/device-group List
       tags:
@@ -3002,9 +2991,7 @@ paths:
           content:
             application/json:
               schema:
-                items:
-                  $ref: '#/components/schemas/Vcs_Vcs_Filter_List'
-                type: array
+                $ref: '#/components/schemas/Vcs_Vcs_Filter_List'
           description: GET OK 200
       summary: GET /vcs/vcs/{id}/filter List
       tags:

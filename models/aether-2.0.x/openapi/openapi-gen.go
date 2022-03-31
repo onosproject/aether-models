@@ -24,14 +24,12 @@ func main() {
 		fmt.Println(err)
 		os.Exit(-1)
 	}
-	// description, err := ioutil.ReadFile("description.md") // From https://docs.aetherproject.org/master/_sources/developer/roc-api.rst.txt
 
-	description := "TODO add a description field in Metadata.yaml?"
 	settings := openapi_gen.ApiGenSettings{
 		ModelType:    "aether",
 		ModelVersion: "2.0.x",
 		Title:        "aether-2.0.x",
-		Description:  string(description),
+		TargetAlias:  "target",
 	}
 
 	schema, err := openapi_gen.BuildOpenapi(schemaMap, &settings)

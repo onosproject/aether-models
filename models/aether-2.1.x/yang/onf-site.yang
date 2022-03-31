@@ -43,106 +43,94 @@ module onf-site {
     description "The typedef for site-id";
   }
 
-  container sites {
-    description "The site grouping";
+  list site {
+    must "count(site:slice[set-contains(following-sibling::site:slice/site:device-group/@site:device-group, site:device-group/@site:device-group)]/@site:slice-id) = 0" {
+      error-message "a device group cannot be used in more than one slice in a site";
+      description "device-group refers to ip-domain. the DNN in ip-domain cannot
+                   be used by more than 1 slice";
+    }
+    key "site-id";
+    description
+      "List of site";
 
-    list site {
-      must "count(site:slice[set-contains(following-sibling::site:slice/site:device-group/@site:device-group, site:device-group/@site:device-group)]/@site:slice-id) = 0" {
-        error-message "a device group cannot be used in more than one slice in a site";
-        description "device-group refers to ip-domain. the DNN in ip-domain cannot
-                     be used by more than 1 slice";
-      }
-      key "site-id";
-      description
-        "List of site";
+    leaf site-id {
+      type site-id;
+      description "ID for this site.";
+    }
 
-      leaf site-id {
-        type site-id;
-        description "ID for this site.";
+    uses at:desc-display-name;
+
+    list small-cell {
+      key "small-cell-id";
+      leaf small-cell-id {
+        type at:aether-identifier;
+        description "Id of small cell";
       }
 
       uses at:desc-display-name;
 
-      list small-cell {
-        key "small-cell-id";
-        leaf small-cell-id {
-          type at:aether-identifier;
-          description
-            "Id of small cell";
-        }
+      leaf address {
+        type inet:host;
+        description "Address of small cell";
+      }
+      leaf tac {
+        type at:tac;
+        mandatory true;
+        description
+            "Type Allocation Code";
+      }
+      leaf enable {
+        type boolean;
+        default true;
+        description "Enable this small cell";
+      }
+      description "List of small cell addresses";
+    }
 
+    container monitoring {
+      leaf edge-cluster-prometheus-url {
+        type inet:uri;
+        description "URL of edge cluster prometheus";
+      }
+      leaf edge-monitoring-prometheus-url {
+        type inet:uri;
+        description "URL of monitoring prometheus";
+      }
+      list edge-device {
+        key "edge-device-id";
+        leaf edge-device-id {
+          type at:aether-identifier;
+          description "Id of edge monitoring device";
+        }
         uses at:desc-display-name;
 
-        leaf address {
-          type inet:host;
-          description
-            "Address of small cell";
-        }
-        leaf tac {
-          type at:tac;
-          mandatory true;
-          description
-              "Type Allocation Code";
-        }
-        leaf enable {
-          type boolean;
-          default true;
-          description
-            "Enable this small cell";
-        }
-        description
-          "List of small cell addresses";
+        description "List of edge monitoring devices";
       }
+      description "container for monitoring";
+    }
 
-      container monitoring {
-        leaf edge-cluster-prometheus-url {
-          type inet:uri;
-          description
-            "URL of edge cluster prometheus";
-        }
-        leaf edge-monitoring-prometheus-url {
-          type inet:uri;
-          description
-            "URL of monitoring prometheus";
-        }
-        list edge-device {
-          key "edge-device-id";
-          leaf edge-device-id {
-            type at:aether-identifier;
-            description
-              "Id of edge monitoring device";
-          }
-          uses at:desc-display-name;
-
-          description
-            "List of edge monitoring devices";
-        }
-        description
-            "container for monitoring";
+    container imsi-definition {
+      leaf mcc {
+        type at:mcc;
+        mandatory true;
+        description "mobile country code";
       }
-
-      container imsi-definition {
-        leaf mcc {
-          type at:mcc;
-          mandatory true;
-          description "mobile country code";
+      leaf mnc {
+        type at:mnc;
+        mandatory true;
+        description "mobile network code";
+      }
+      leaf enterprise {
+        type at:ent;
+        mandatory true;
+        description "enterprise-specific identifier";
+      }
+      leaf format {
+        type string {
+          length 15;
         }
-        leaf mnc {
-          type at:mnc;
-          mandatory true;
-          description "mobile network code";
-        }
-        leaf enterprise {
-          type at:ent;
-          mandatory true;
-          description "enterprise-specific identifier";
-        }
-        leaf format {
-          type string {
-            length 15;
-          }
-          mandatory true;
-          description "IMSI format specifier, describes how fields are packed into an IMSI. Must be exactly 15 characters long. For example, CCCNNNEEESSSSSS.";
+        mandatory true;
+        description "IMSI format specifier, describes how fields are packed into an IMSI. Must be exactly 15 characters long. For example, CCCNNNEEESSSSSS.";
           // Format specifiers:
           //   C = MCC
           //   N = MNC
@@ -154,47 +142,44 @@ module onf-site {
           //   3 digit MNC
           //   3 digit enterprise ID
           //   5 digit subscriber ID
-        }
-        description "container for imsi-defination";
       }
-
-      container connectivity-service {
-        container core-4g {
-          leaf endpoint {
-            type inet:uri;
-            description "Endpoint URL";
-          }
-          leaf acc-prometheus-url {
-            type inet:uri;
-            description "URL of ACC prometheus";
-          }
-          description "The 4g core endpoint";
-        }
-        container core-5g {
-          leaf endpoint {
-            type inet:uri;
-            description "Endpoint URL";
-          }
-          leaf acc-prometheus-url {
-            type inet:uri;
-            description "URL of ACC prometheus";
-          }
-          description "The 5g core endpoint";
-        }
-        description "Connectivity to the mobile core";
-      }
-
-      uses device;
-
-      uses sim-card;
-
-      uses upf;
-
-      uses slice;
-
-      uses device-group;
-
-      uses ip-domain;
+      description "container for imsi-defination";
     }
+
+    container connectivity-service {
+      container core-4g {
+        uses core-endpoint;
+        description "The 4g core endpoint";
+      }
+      container core-5g {
+        uses core-endpoint;
+        description "The 5g core endpoint";
+      }
+      description "Connectivity to the mobile core";
+    }
+
+    uses device;
+
+    uses sim-card;
+
+    uses upf;
+
+    uses slice;
+
+    uses device-group;
+
+    uses ip-domain;
+  }
+
+  grouping core-endpoint {
+    leaf endpoint {
+      type inet:uri;
+      description "Endpoint URL";
+    }
+    leaf acc-prometheus-url {
+      type inet:uri;
+      description "URL of ACC prometheus";
+    }
+    description "The attributes of a core endpoint";
   }
 }

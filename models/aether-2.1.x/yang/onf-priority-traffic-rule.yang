@@ -54,7 +54,7 @@ submodule onf-priority-traffic-rule {
 
       leaf application {
         type leafref {
-          path "/app:applications/app:application/app:application-id";
+          path "/app:application/app:application-id";
         }
         mandatory true;
         description
@@ -63,7 +63,7 @@ submodule onf-priority-traffic-rule {
 
       leaf endpoint {
         type leafref {
-          path "/app:applications/app:application/app:endpoint/app:endpoint-id";
+          path "/app:application/app:endpoint/app:endpoint-id";
         }
         mandatory true;
         description
@@ -88,7 +88,7 @@ submodule onf-priority-traffic-rule {
 
       leaf traffic-class {
         type leafref {
-          path "/tc:traffic-classes/tc:traffic-class/tc:traffic-class-id";
+          path "/tc:traffic-class/tc:traffic-class-id";
         }
         description
           "Link to traffic class";

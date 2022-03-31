@@ -15,7 +15,7 @@ func aStr(s string) *string {
 }
 
 func TestApplicationAddress(t *testing.T) {
-	app := OnfApplication_Applications_Application{}
+	app := OnfApplication_Application{}
 
 	app.Address = aStr("my.host.name")
 	err := app.Validate()
@@ -60,7 +60,7 @@ func TestApplicationAddress(t *testing.T) {
 }
 
 func TestSimCard(t *testing.T) {
-	sim := OnfSite_Sites_Site_SimCard{}
+	sim := OnfSite_Site_SimCard{}
 
 	// 18 digit, starts with 0
 	sim.Iccid = aStr("023456789012345678F")
@@ -109,7 +109,7 @@ func TestSimCard(t *testing.T) {
 }
 
 func TestDevice(t *testing.T) {
-	dev := OnfSite_Sites_Site_Device{}
+	dev := OnfSite_Site_Device{}
 
 	// 14 digit, starts with 0
 	dev.Imei = aStr("02345678901234")
@@ -148,7 +148,7 @@ func TestDevice(t *testing.T) {
 }
 
 func TestIdentifier(t *testing.T) {
-	ent := OnfSite_Sites_Site{}
+	ent := OnfSite_Site{}
 
 	ent.SiteId = aStr("test")
 	err := ent.Validate()

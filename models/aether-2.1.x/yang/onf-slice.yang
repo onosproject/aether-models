@@ -79,7 +79,7 @@ submodule onf-slice {
         key "application";
         leaf application {
           type leafref {
-            path "/app:applications/app:application/app:application-id";
+            path "/app:application/app:application-id";
           }
           mandatory true;
           description
@@ -127,11 +127,11 @@ submodule onf-slice {
       leaf connectivity-service {
         type enumeration {
           enum 4g {
-            value "4";
+            value 4;
             description "Use the 4g connectivity service";
           }
           enum 5g {
-            value "5";
+            value 5;
             description "Use the 5g connectivity service";
           }
         }
