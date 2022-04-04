@@ -2,13 +2,13 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-submodule onf-application {
-  belongs-to onf-enterprise { prefix ent; }
+module onf-application {
+  namespace "http://opennetworking.org/aether/application";
+  prefix app;
 
   import ietf-inet-types{ prefix ietf; }
   import onf-aether-types{ prefix at; }
-
-  include onf-traffic-class;
+  import onf-traffic-class{ prefix tc; }
 
   organization "Open Networking Foundation.";
   contact "Scott Baker";
@@ -16,6 +16,11 @@ submodule onf-application {
     "An Aether Application is an application that devices may
      connect to. Includes a set of endpoints where services are
      provided.";
+
+  revision "2022-04-01" {
+    description "Brought back up to top level since enterprise moved out";
+    reference "RFC 6020";
+  }
 
   revision "2022-01-14" {
     description "Refactored as submodule";
@@ -32,81 +37,72 @@ submodule onf-application {
     description "The typedef for application-id";
   }
 
-  grouping application {
-    description "The application grouping";
+  list application {
+    key "application-id";
+    description "List of applications";
 
-    list application {
-      key "application-id";
+    leaf application-id {
+      type application-id;
+      description "ID for this application.";
+    }
+
+    uses at:desc-display-name;
+
+    leaf address {
+      type at:host-or-network;
+      mandatory true;
       description
-        "List of applications";
+          "Address of this application. Either a hostname, an IP, or a subnet.";
+    }
 
-      leaf application-id {
-        type application-id;
-        description "ID for this application.";
+    list endpoint {
+      must "number(./app:port-start) <= number(./app:port-end)" {
+        error-message "port-start must be less than or equal to port-end";
+        description "prevent a port-start and -end having negative range";
+      }
+      key "endpoint-id";
+      leaf endpoint-id {
+        type at:aether-identifier;
+        description "Id of this endpoint";
       }
 
       uses at:desc-display-name;
 
-      leaf address {
-        type at:host-or-network;
-        mandatory true;
+      leaf port-start {
+        type ietf:port-number;
+        description "First port in range";
+      }
+      leaf port-end {
+        type ietf:port-number;
+        description "Last port in range";
+      }
+      leaf protocol {
+        type at:protocol;
+        description "Protocol of this endpoint";
+      }
+      container mbr {
+        description "Maximum bitrate";
+        leaf uplink {
+          type at:bitrate;
+          units bps;
+          description "Per-Device per-Application MBR uplink data rate in bps";
+        }
+
+        leaf downlink {
+          type at:bitrate;
+          units bps;
+          description "Per-Device per application MBR downlink data rate in bps";
+        }
+      }
+      leaf traffic-class {
+        type leafref {
+          path "/tc:traffic-class/tc:traffic-class-id";
+        }
         description
-            "Address of this application. Either a hostname, an IP, or a subnet.";
-      }
-
-      list endpoint {
-        must "number(./ent:port-start) <= number(./ent:port-end)" {
-          error-message "port-start must be less than or equal to port-end";
-          description "prevent a port-start and -end having negative range";
-        }
-        key "endpoint-id";
-        leaf endpoint-id {
-          type at:aether-identifier;
-          description
-              "Id of this endpoint";
+          "Link to traffic class";
         }
 
-        uses at:desc-display-name;
-
-        leaf port-start {
-          type ietf:port-number;
-          description
-              "First port in range";
-        }
-        leaf port-end {
-          type ietf:port-number;
-          description
-              "Last port in range";
-        }
-        leaf protocol {
-          type at:protocol;
-          description
-              "Protocol of this endpoint";
-        }
-        container mbr {
-          description "Maximum bitrate";
-          leaf uplink {
-            type at:bitrate;
-            units bps;
-            description "Per-Device per-Application MBR uplink data rate in bps";
-          }
-
-          leaf downlink {
-            type at:bitrate;
-            units bps;
-            description "Per-Device per application MBR downlink data rate in bps";
-          }
-        }
-        leaf traffic-class {
-          type leafref {
-            path "../../../traffic-class/traffic-class-id";
-          }
-          description
-            "Link to traffic class";
-        }
-
-        description "list for endpoint";
-      }
+      description "list for endpoint";
     }
   }
 }

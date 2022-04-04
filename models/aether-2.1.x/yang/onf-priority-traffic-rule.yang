@@ -3,12 +3,13 @@
 // SPDX-License-Identifier: Apache-2.0
 
 submodule onf-priority-traffic-rule {
-  belongs-to onf-enterprise { prefix ent; }
+  belongs-to onf-site { prefix site; }
 
   import onf-aether-types{ prefix at; }
+  import onf-traffic-class{ prefix tc; }
+  import onf-application{ prefix app; }
+
   include onf-device;
-  include onf-traffic-class;
-  include onf-application;
 
   organization "Open Networking Foundation.";
   contact "Scott Baker";
@@ -53,7 +54,7 @@ submodule onf-priority-traffic-rule {
 
       leaf application {
         type leafref {
-          path "../../../../application/application-id";
+          path "/app:application/app:application-id";
         }
         mandatory true;
         description
@@ -62,7 +63,7 @@ submodule onf-priority-traffic-rule {
 
       leaf endpoint {
         type leafref {
-          path "../../../../application/endpoint/endpoint-id";
+          path "/app:application/app:endpoint/app:endpoint-id";
         }
         mandatory true;
         description
@@ -87,7 +88,7 @@ submodule onf-priority-traffic-rule {
 
       leaf traffic-class {
         type leafref {
-          path "../../../../traffic-class/traffic-class-id";
+          path "/tc:traffic-class/tc:traffic-class-id";
         }
         description
           "Link to traffic class";

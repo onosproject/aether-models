@@ -2,8 +2,9 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-submodule onf-traffic-class {
-  belongs-to onf-enterprise { prefix ent; }
+module onf-traffic-class {
+  namespace "http://opennetworking.org/aether/traffic-class";
+  prefix tc;
 
   import onf-aether-types{ prefix at; }
 
@@ -12,6 +13,11 @@ submodule onf-traffic-class {
   description
     "The aether traffic class associates qos constants
      with a named class of service";
+
+  revision "2022-04-01" {
+    description "Brought back up to top level since enterprise moved out";
+    reference "RFC 6020";
+  }
 
   revision "2022-01-14" {
     description "Refactored as submodule";
@@ -28,40 +34,36 @@ submodule onf-traffic-class {
     description "The typedef for traffic-class-id";
   }
 
-  grouping traffic-class {
-    description "The traffic-class grouping";
+  list traffic-class {
+    key "traffic-class-id";
+    description
+      "List of traffic class";
 
-    list traffic-class {
-      key "traffic-class-id";
-      description
-        "List of traffic class";
+    leaf traffic-class-id {
+      type traffic-class-id;
+      description "ID for this traffic class.";
+    }
 
-      leaf traffic-class-id {
-        type traffic-class-id;
-        description "ID for this traffic class.";
-      }
+    uses at:desc-display-name;
 
-      uses at:desc-display-name;
+    leaf arp {
+      type at:arp;
+      description "Allocation and Retention Priority. 1 is the highest. 15 is the lowest.";
+    }
 
-      leaf arp {
-        type at:arp;
-        description "Allocation and Retention Priority. 1 is the highest. 15 is the lowest.";
-      }
+    leaf qci {
+      type at:qci;
+      description "QOS Class Identifier";
+    }
 
-      leaf qci {
-        type at:qci;
-        description "QOS Class Identifier";
-      }
+    leaf pelr {
+      type at:pelr;
+      description "PELR exponent";
+    }
 
-      leaf pelr {
-        type at:pelr;
-        description "PELR exponent";
-      }
-
-      leaf pdb {
-        type at:pdb;
-        description "PDB";
-      }
+    leaf pdb {
+      type at:pdb;
+      description "PDB";
     }
   }
 }

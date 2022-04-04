@@ -2,8 +2,9 @@
 //
 // SPDX-License-Identifier: Apache-2.0
 
-submodule onf-template {
-  belongs-to onf-enterprise { prefix ent; }
+module onf-template {
+  namespace "http://opennetworking.org/aether/template";
+  prefix tpl;
 
   import onf-aether-types{ prefix at; }
 
@@ -13,6 +14,11 @@ submodule onf-template {
     "The aether slice-template holds common parameters used
      by a Slice. Templates are used to
      populate a Slice.";
+
+  revision "2022-04-01" {
+    description "Brought back up to top level since enterprise moved out";
+    reference "RFC 6020";
+  }
 
   revision "2022-01-14" {
     description "Refactored as submodule";
@@ -29,64 +35,59 @@ submodule onf-template {
     description "The typedef for template-id";
   }
 
-  grouping template {
-    description "The template grouping";
+  list template {
+    key "template-id";
+    description "List of slice templates";
 
-    list template {
-      key "template-id";
+    leaf template-id {
+      type template-id;
+      description "ID for this slice template.";
+    }
+
+    uses at:desc-display-name;
+
+    leaf sst {
+      type at:sst;
+      description "Slice/Service type";
+    }
+
+    leaf sd {
+      type at:sd;
+      description "Slice differentiator";
+    }
+
+    container mbr {
+      description "Per-Slice QOS Settings Maximum Bit Rate";
+      leaf uplink {
+        type at:bitrate;
+        units bps;
+        description "Per-Slice MBR uplink data rate in bps";
+      }
+
+      leaf downlink {
+        type at:bitrate;
+        units bps;
+        description "Per-Slice MBR downlink data rate in bps";
+      }
+
+      leaf uplink-burst-size {
+        type at:burst;
+        units bytes;
+        description "Per-Slice Uplink burst size";
+      }
+
+      leaf downlink-burst-size {
+        type at:burst;
+        units bytes;
+        description "Per-Slice Downlink burst size";
+      }
+    }
+
+    leaf default-behavior {
+      type at:behavior;
+      mandatory true;
       description
-        "List of slice templates";
-
-      leaf template-id {
-        type template-id;
-        description "ID for this slice template.";
-      }
-
-      uses at:desc-display-name;
-
-      leaf sst {
-        type at:sst;
-        description "Slice/Service type";
-      }
-
-      leaf sd {
-        type at:sd;
-        description "Slice differentiator";
-      }
-
-      container mbr {
-        description "Per-Slice QOS Settings Maximum Bit Rate";
-        leaf uplink {
-          type at:bitrate;
-          units bps;
-          description "Per-Slice MBR uplink data rate in bps";
-        }
-
-        leaf downlink {
-          type at:bitrate;
-          units bps;
-          description "Per-Slice MBR downlink data rate in bps";
-        }
-
-        leaf uplink-burst-size {
-          type at:burst;
-          units bytes;
-          description "Per-Slice Uplink burst size";
-        }
-
-        leaf downlink-burst-size {
-          type at:burst;
-          units bytes;
-          description "Per-Slice Downlink burst size";
-        }
-      }
-
-      leaf default-behavior {
-        type at:behavior;
-        mandatory true;
-        description
-          "Default behavior if no filter rules match";
-      }
+        "Default behavior if no filter rules match";
     }
   }
 }
