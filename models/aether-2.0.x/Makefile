@@ -1,3 +1,4 @@
+# SPDX-FileCopyrightText: 2020-present Intel Corporation
 # SPDX-FileCopyrightText: 2020-present Open Networking Foundation <info@opennetworking.org>
 #
 # SPDX-License-Identifier: Apache-2.0
@@ -63,6 +64,8 @@ ifneq ("$(HAS_CHANGED)", "0 ")
 	NEW_VERSION=${VERSION} ../../build/build-tools/tag-collision-reject
 	git tag ${VERSION}
 	git push origin ${VERSION}
+	git tag v${VERSION}
+	git push origin v${VERSION}
 else
 	@echo "No changes, nothing to tag"
 endif
