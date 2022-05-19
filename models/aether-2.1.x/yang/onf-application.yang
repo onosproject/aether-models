@@ -1,3 +1,4 @@
+// SPDX-FileCopyrightText: 2022-present Intel Corporation
 // SPDX-FileCopyrightText: 2021 Open Networking Foundation
 //
 // SPDX-License-Identifier: Apache-2.0
@@ -6,12 +7,12 @@ module onf-application {
   namespace "http://opennetworking.org/aether/application";
   prefix app;
 
-  import ietf-inet-types{ prefix ietf; }
+  import ietf-inet-types{ prefix inet; }
   import onf-aether-types{ prefix at; }
   import onf-traffic-class{ prefix tc; }
 
   organization "Open Networking Foundation.";
-  contact "Scott Baker";
+  contact "ROC Engineering";
   description
     "An Aether Application is an application that devices may
      connect to. Includes a set of endpoints where services are
@@ -49,10 +50,10 @@ module onf-application {
     uses at:desc-display-name;
 
     leaf address {
-      type at:host-or-network;
+      type inet:ip-prefix;
       mandatory true;
       description
-          "Address of this application. Either a hostname, an IP, or a subnet.";
+          "Address of this application. An IP address with subnet (IPv4 or IPv6)";
     }
 
     list endpoint {
@@ -69,11 +70,12 @@ module onf-application {
       uses at:desc-display-name;
 
       leaf port-start {
-        type ietf:port-number;
+        type inet:port-number;
+        mandatory true;
         description "First port in range";
       }
       leaf port-end {
-        type ietf:port-number;
+        type inet:port-number;
         description "Last port in range";
       }
       leaf protocol {

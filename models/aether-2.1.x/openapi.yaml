@@ -188,8 +188,8 @@ components:
       description: List of applications (single)
       properties:
         address:
-          description: Address of this application. Either a hostname, an IP, or a
-            subnet.
+          description: Address of this application. An IP address with subnet (IPv4
+            or IPv6)
           title: address
           type: string
         application-id:
@@ -220,6 +220,8 @@ components:
       type: object
       x-list-multiple: true
     Application_Endpoint:
+      additionalProperties:
+        $ref: '#/components/schemas/AdditionalPropertyUnchanged'
       description: list for endpoint (single)
       properties:
         description:
@@ -270,6 +272,7 @@ components:
           x-leafref: /tc:traffic-class/tc:traffic-class-id
       required:
       - endpoint-id
+      - port-start
       title: Application_Endpoint
       type: object
       x-list-multiple: true

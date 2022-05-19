@@ -19,11 +19,11 @@ func TestApplicationAddress(t *testing.T) {
 
 	app.Address = aStr("my.host.name")
 	err := app.Validate()
-	assert.Nil(t, err)
+	assert.Error(t, err)
 
 	app.Address = aStr("1.2.3.4")
 	err = app.Validate()
-	assert.Nil(t, err)
+	assert.Error(t, err)
 
 	app.Address = aStr("1.2.3.4/1")
 	err = app.Validate()

@@ -6,7 +6,7 @@ SHELL 			  		= bash -e -o pipefail
 KIND_CLUSTER_NAME 		?= kind
 DOCKER_USER       		?=
 DOCKER_PASSWORD   		?=
-MODEL_COMPILER_VERSION  ?= v0.9.25
+MODEL_COMPILER_VERSION  ?= v0.9.26
 
 .PHONY: models
 
@@ -25,10 +25,10 @@ models: clean# @HELP Generate Golang code for all the models
 	@cd models && for model in *; do echo -e "Generating $$model:\n"; docker run -v $$(pwd)/$$model:/config-model onosproject/model-compiler:${MODEL_COMPILER_VERSION}; echo -e "\n\n"; done
 
 models-openapi: # @HELP generates the openapi specs for the models
-	@cd models && for model in *; do echo -e "Buildind OpenApi Specs for $$model:\n"; pushd $$model; make openapi; popd; echo -e "\n\n"; done
+	@cd models && for model in *; do echo -e "Building OpenApi Specs for $$model:\n"; pushd $$model; make openapi; popd; echo -e "\n\n"; done
 
 docker-build: models models-openapi # @HELP Build Docker containers for all the models
-	@cd models && for model in *; do echo -e "Buildind container for $$model:\n"; pushd $$model; make image; popd; echo -e "\n\n"; done
+	@cd models && for model in *; do echo -e "Building container for $$model:\n"; pushd $$model; make image; popd; echo -e "\n\n"; done
 
 docker-push: # @HELP Publish Docker containers for all the models
 	@cd models && for model in *; do pushd $$model; make publish; popd; done
