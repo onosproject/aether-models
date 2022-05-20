@@ -1,3 +1,4 @@
+// SPDX-FileCopyrightText: 2022-present Intel Corporation
 // SPDX-FileCopyrightText: 2021 Open Networking Foundation
 //
 // SPDX-License-Identifier: Apache-2.0
@@ -9,7 +10,7 @@ module onf-template {
   import onf-aether-types{ prefix at; }
 
   organization "Open Networking Foundation.";
-  contact "Scott Baker";
+  contact "ROC Engineering";
   description
     "The aether slice-template holds common parameters used
      by a Slice. Templates are used to

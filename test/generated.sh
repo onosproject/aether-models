@@ -13,7 +13,7 @@ RESET="\e[0m"
 
 echo -e "Making sure generated code is committed."
 
-MODIFIED_FILES=$(git status ./models --porcelain | wc -l)
+MODIFIED_FILES=$(git status ./models --porcelain | wc -l | sed 's/^ *//')
 
 if [[ "${MODIFIED_FILES}" != "0" ]]; then
   echo -e "${RED}Some generated files have not been committed:${RESET}"

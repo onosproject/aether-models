@@ -210,6 +210,7 @@ components:
           pattern: '[a-z]([a-z0-9-]?[a-z0-9])*'
           title: connectivity-service-id
           type: string
+          x-go-type: ListKey
         core-5g-endpoint:
           description: url of the 5g core
           title: core-5g-endpoint
@@ -275,6 +276,7 @@ components:
           pattern: '[a-z]([a-z0-9-]?[a-z0-9])*'
           title: enterprise-id
           type: string
+          x-go-type: ListKey
         site:
           $ref: '#/components/schemas/Enterprises_Enterprise_Site_List'
         template:
@@ -303,6 +305,7 @@ components:
           pattern: '[a-z]([a-z0-9-]?[a-z0-9])*'
           title: application-id
           type: string
+          x-go-type: ListKey
         description:
           description: long description field
           maxLength: 1024
@@ -345,6 +348,7 @@ components:
           pattern: '[a-z]([a-z0-9-]?[a-z0-9])*'
           title: endpoint-id
           type: string
+          x-go-type: ListKey
         mbr:
           $ref: '#/components/schemas/Enterprises_Enterprise_Application_Endpoint_Mbr'
         port-end:
@@ -424,6 +428,7 @@ components:
             pushed for this enterprise's devices
           title: connectivity-service
           type: string
+          x-go-type: ListKey
           x-leafref: /cs:connectivity-services/cs:connectivity-service/cs:connectivity-service-id
         enabled:
           default: true
@@ -487,6 +492,7 @@ components:
           pattern: '[a-z]([a-z0-9-]?[a-z0-9])*'
           title: site-id
           type: string
+          x-go-type: ListKey
         slice:
           $ref: '#/components/schemas/Enterprises_Enterprise_Site_Slice_List'
         small-cell:
@@ -519,6 +525,7 @@ components:
           pattern: '[a-z]([a-z0-9-]?[a-z0-9])*'
           title: device-id
           type: string
+          x-go-type: ListKey
         display-name:
           description: display name to use in GUI or CLI
           maxLength: 80
@@ -563,6 +570,7 @@ components:
           pattern: '[a-z]([a-z0-9-]?[a-z0-9])*'
           title: device-group-id
           type: string
+          x-go-type: ListKey
         display-name:
           description: display name to use in GUI or CLI
           maxLength: 80
@@ -596,6 +604,7 @@ components:
           description: Link to device
           title: device-id
           type: string
+          x-go-type: ListKey
           x-leafref: ../../../device/device-id
         enable:
           default: true
@@ -737,6 +746,7 @@ components:
           pattern: '[a-z]([a-z0-9-]?[a-z0-9])*'
           title: ip-domain-id
           type: string
+          x-go-type: ListKey
         mtu:
           default: 1492
           description: maximum transmission unit
@@ -811,6 +821,7 @@ components:
           pattern: '[a-z]([a-z0-9-]?[a-z0-9])*'
           title: edge-device-id
           type: string
+          x-go-type: ListKey
       required:
       - edge-device-id
       title: Enterprises_Enterprise_Site_Monitoring_Edge-device
@@ -860,6 +871,7 @@ components:
           pattern: '[a-z]([a-z0-9-]?[a-z0-9])*'
           title: sim-id
           type: string
+          x-go-type: ListKey
       required:
       - sim-id
       title: Enterprises_Enterprise_Site_Sim-card
@@ -920,6 +932,7 @@ components:
           pattern: '[a-z]([a-z0-9-]?[a-z0-9])*'
           title: slice-id
           type: string
+          x-go-type: ListKey
         sst:
           description: Slice/Service type. Immutable.
           maximum: 255
@@ -948,6 +961,7 @@ components:
           description: Link to device group
           title: device-group
           type: string
+          x-go-type: ListKey
           x-leafref: ../../../device-group/device-group-id
         enable:
           default: true
@@ -985,6 +999,7 @@ components:
           description: Link to application
           title: application
           type: string
+          x-go-type: ListKey
           x-leafref: ../../../../application/application-id
         priority:
           description: Priority of this application
@@ -1092,6 +1107,7 @@ components:
           pattern: '[a-z]([a-z0-9-]?[a-z0-9])*'
           title: priority-traffic-rule-id
           type: string
+          x-go-type: ListKey
         traffic-class:
           description: Link to traffic class
           title: traffic-class
@@ -1182,6 +1198,7 @@ components:
           pattern: '[a-z]([a-z0-9-]?[a-z0-9])*'
           title: small-cell-id
           type: string
+          x-go-type: ListKey
         tac:
           description: Type Allocation Code
           maxLength: 8
@@ -1242,6 +1259,7 @@ components:
           pattern: '[a-z]([a-z0-9-]?[a-z0-9])*'
           title: upf-id
           type: string
+          x-go-type: ListKey
       required:
       - address
       - port
@@ -1303,6 +1321,7 @@ components:
           pattern: '[a-z]([a-z0-9-]?[a-z0-9])*'
           title: template-id
           type: string
+          x-go-type: ListKey
       required:
       - default-behavior
       - template-id
@@ -1396,6 +1415,7 @@ components:
           pattern: '[a-z]([a-z0-9-]?[a-z0-9])*'
           title: traffic-class-id
           type: string
+          x-go-type: ListKey
       required:
       - traffic-class-id
       title: Enterprises_Enterprise_Traffic-class
@@ -1415,7 +1435,7 @@ info:
     email: info@opennetworking.org
     name: Open Networking Foundation
     url: https://opennetworking.org
-  description: This OpenAPI 3 specification is generated fromaether onos-config model
+  description: OpenAPI 3 specification is generated from aether onos-config model
     plugin
   license:
     name: Apache-2.0
@@ -1426,7 +1446,7 @@ openapi: 3.0.0
 paths:
   /aether/v2.0.x/{target}/connectivity-services:
     delete:
-      operationId: deleteConnectivity-services_Container
+      operationId: deleteConnectivity-services
       responses:
         "200":
           description: DELETE 200 OK
@@ -1474,7 +1494,7 @@ paths:
     - $ref: '#/components/parameters/target'
   /aether/v2.0.x/{target}/connectivity-services/connectivity-service/{connectivity-service-id}:
     delete:
-      operationId: deleteConnectivity-services_Connectivity-service_Container
+      operationId: deleteConnectivity-services_Connectivity-service
       responses:
         "200":
           description: DELETE 200 OK
@@ -1513,7 +1533,7 @@ paths:
       summary: POST /connectivity-services/connectivity-service
   /aether/v2.0.x/{target}/enterprises:
     delete:
-      operationId: deleteEnterprises_Container
+      operationId: deleteEnterprises
       responses:
         "200":
           description: DELETE 200 OK
@@ -1561,7 +1581,7 @@ paths:
     - $ref: '#/components/parameters/target'
   /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}:
     delete:
-      operationId: deleteEnterprises_Enterprise_Container
+      operationId: deleteEnterprises_Enterprise
       responses:
         "200":
           description: DELETE 200 OK
@@ -1625,7 +1645,7 @@ paths:
       required: true
   /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/application/{application-id}:
     delete:
-      operationId: deleteEnterprises_Enterprise_Application_Container
+      operationId: deleteEnterprises_Enterprise_Application
       responses:
         "200":
           description: DELETE 200 OK
@@ -1706,7 +1726,7 @@ paths:
       required: true
   /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/application/{application-id}/endpoint/{endpoint-id}:
     delete:
-      operationId: deleteEnterprises_Enterprise_Application_Endpoint_Container
+      operationId: deleteEnterprises_Enterprise_Application_Endpoint
       responses:
         "200":
           description: DELETE 200 OK
@@ -1762,7 +1782,7 @@ paths:
       summary: POST /enterprises/enterprise/{enterprise-id}/application/{application-id}/endpoint
   /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/application/{application-id}/endpoint/{endpoint-id}/mbr:
     delete:
-      operationId: deleteEnterprises_Enterprise_Application_Endpoint_Mbr_Container
+      operationId: deleteEnterprises_Enterprise_Application_Endpoint_Mbr
       responses:
         "200":
           description: DELETE 200 OK
@@ -1843,7 +1863,7 @@ paths:
       required: true
   /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/connectivity-service/{connectivity-service}:
     delete:
-      operationId: deleteEnterprises_Enterprise_Connectivity-service_Container
+      operationId: deleteEnterprises_Enterprise_Connectivity-service
       responses:
         "200":
           description: DELETE 200 OK
@@ -1915,7 +1935,7 @@ paths:
       required: true
   /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}:
     delete:
-      operationId: deleteEnterprises_Enterprise_Site_Container
+      operationId: deleteEnterprises_Enterprise_Site
       responses:
         "200":
           description: DELETE 200 OK
@@ -2029,7 +2049,7 @@ paths:
       required: true
   /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/device-group/{device-group-id}:
     delete:
-      operationId: deleteEnterprises_Enterprise_Site_Device-group_Container
+      operationId: deleteEnterprises_Enterprise_Site_Device-group
       responses:
         "200":
           description: DELETE 200 OK
@@ -2127,7 +2147,7 @@ paths:
       required: true
   /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/device-group/{device-group-id}/device/{device-id}:
     delete:
-      operationId: deleteEnterprises_Enterprise_Site_Device-group_Device_Container
+      operationId: deleteEnterprises_Enterprise_Site_Device-group_Device
       responses:
         "200":
           description: DELETE 200 OK
@@ -2191,7 +2211,7 @@ paths:
       summary: POST /enterprises/enterprise/{enterprise-id}/site/{site-id}/device-group/{device-group-id}/device
   /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/device-group/{device-group-id}/mbr:
     delete:
-      operationId: deleteEnterprises_Enterprise_Site_Device-group_Mbr_Container
+      operationId: deleteEnterprises_Enterprise_Site_Device-group_Mbr
       responses:
         "200":
           description: DELETE 200 OK
@@ -2247,7 +2267,7 @@ paths:
       summary: POST /enterprises/enterprise/{enterprise-id}/site/{site-id}/device-group/{device-group-id}/mbr
   /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/device/{device-id}:
     delete:
-      operationId: deleteEnterprises_Enterprise_Site_Device_Container
+      operationId: deleteEnterprises_Enterprise_Site_Device
       responses:
         "200":
           description: DELETE 200 OK
@@ -2302,7 +2322,7 @@ paths:
       summary: POST /enterprises/enterprise/{enterprise-id}/site/{site-id}/device
   /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/imsi-definition:
     delete:
-      operationId: deleteEnterprises_Enterprise_Site_Imsi-definition_Container
+      operationId: deleteEnterprises_Enterprise_Site_Imsi-definition
       responses:
         "200":
           description: DELETE 200 OK
@@ -2384,7 +2404,7 @@ paths:
       required: true
   /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/ip-domain/{ip-domain-id}:
     delete:
-      operationId: deleteEnterprises_Enterprise_Site_Ip-domain_Container
+      operationId: deleteEnterprises_Enterprise_Site_Ip-domain
       responses:
         "200":
           description: DELETE 200 OK
@@ -2440,7 +2460,7 @@ paths:
       summary: POST /enterprises/enterprise/{enterprise-id}/site/{site-id}/ip-domain
   /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/monitoring:
     delete:
-      operationId: deleteEnterprises_Enterprise_Site_Monitoring_Container
+      operationId: deleteEnterprises_Enterprise_Site_Monitoring
       responses:
         "200":
           description: DELETE 200 OK
@@ -2522,7 +2542,7 @@ paths:
       required: true
   /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/monitoring/edge-device/{edge-device-id}:
     delete:
-      operationId: deleteEnterprises_Enterprise_Site_Monitoring_Edge-device_Container
+      operationId: deleteEnterprises_Enterprise_Site_Monitoring_Edge-device
       responses:
         "200":
           description: DELETE 200 OK
@@ -2612,7 +2632,7 @@ paths:
       required: true
   /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/sim-card/{sim-id}:
     delete:
-      operationId: deleteEnterprises_Enterprise_Site_Sim-card_Container
+      operationId: deleteEnterprises_Enterprise_Site_Sim-card
       responses:
         "200":
           description: DELETE 200 OK
@@ -2701,7 +2721,7 @@ paths:
       required: true
   /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/slice/{slice-id}:
     delete:
-      operationId: deleteEnterprises_Enterprise_Site_Slice_Container
+      operationId: deleteEnterprises_Enterprise_Site_Slice
       responses:
         "200":
           description: DELETE 200 OK
@@ -2800,7 +2820,7 @@ paths:
       required: true
   /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/slice/{slice-id}/device-group/{device-group}:
     delete:
-      operationId: deleteEnterprises_Enterprise_Site_Slice_Device-group_Container
+      operationId: deleteEnterprises_Enterprise_Site_Slice_Device-group
       responses:
         "200":
           description: DELETE 200 OK
@@ -2911,7 +2931,7 @@ paths:
       required: true
   /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/slice/{slice-id}/filter/{application}:
     delete:
-      operationId: deleteEnterprises_Enterprise_Site_Slice_Filter_Container
+      operationId: deleteEnterprises_Enterprise_Site_Slice_Filter
       responses:
         "200":
           description: DELETE 200 OK
@@ -2978,7 +2998,7 @@ paths:
       summary: POST /enterprises/enterprise/{enterprise-id}/site/{site-id}/slice/{slice-id}/filter
   /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/slice/{slice-id}/mbr:
     delete:
-      operationId: deleteEnterprises_Enterprise_Site_Slice_Mbr_Container
+      operationId: deleteEnterprises_Enterprise_Site_Slice_Mbr
       responses:
         "200":
           description: DELETE 200 OK
@@ -3076,7 +3096,7 @@ paths:
       required: true
   ? /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/slice/{slice-id}/priority-traffic-rule/{priority-traffic-rule-id}
   : delete:
-      operationId: deleteEnterprises_Enterprise_Site_Slice_Priority-traffic-rule_Container
+      operationId: deleteEnterprises_Enterprise_Site_Slice_Priority-traffic-rule
       responses:
         "200":
           description: DELETE 200 OK
@@ -3174,7 +3194,7 @@ paths:
       required: true
   /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/small-cell/{small-cell-id}:
     delete:
-      operationId: deleteEnterprises_Enterprise_Site_Small-cell_Container
+      operationId: deleteEnterprises_Enterprise_Site_Small-cell
       responses:
         "200":
           description: DELETE 200 OK
@@ -3263,7 +3283,7 @@ paths:
       required: true
   /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/upf/{upf-id}:
     delete:
-      operationId: deleteEnterprises_Enterprise_Site_Upf_Container
+      operationId: deleteEnterprises_Enterprise_Site_Upf
       responses:
         "200":
           description: DELETE 200 OK
@@ -3343,7 +3363,7 @@ paths:
       required: true
   /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/template/{template-id}:
     delete:
-      operationId: deleteEnterprises_Enterprise_Template_Container
+      operationId: deleteEnterprises_Enterprise_Template
       responses:
         "200":
           description: DELETE 200 OK
@@ -3390,7 +3410,7 @@ paths:
       summary: POST /enterprises/enterprise/{enterprise-id}/template
   /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/template/{template-id}/mbr:
     delete:
-      operationId: deleteEnterprises_Enterprise_Template_Mbr_Container
+      operationId: deleteEnterprises_Enterprise_Template_Mbr
       responses:
         "200":
           description: DELETE 200 OK
@@ -3463,7 +3483,7 @@ paths:
       required: true
   /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/traffic-class/{traffic-class-id}:
     delete:
-      operationId: deleteEnterprises_Enterprise_Traffic-class_Container
+      operationId: deleteEnterprises_Enterprise_Traffic-class
       responses:
         "200":
           description: DELETE 200 OK

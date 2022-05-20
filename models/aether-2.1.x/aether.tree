@@ -118,13 +118,13 @@ module: onf-application
      +--rw application-id    application-id
      +--rw display-name?     string
      +--rw description?      description
-     +--rw address           at:host-or-network
+     +--rw address           inet:ip-prefix
      +--rw endpoint* [endpoint-id]
         +--rw endpoint-id      at:aether-identifier
         +--rw display-name?    string
         +--rw description?     description
-        +--rw port-start?      ietf:port-number
-        +--rw port-end?        ietf:port-number
+        +--rw port-start       inet:port-number
+        +--rw port-end?        inet:port-number
         +--rw protocol?        at:protocol
         +--rw mbr
         |  +--rw uplink?     at:bitrate

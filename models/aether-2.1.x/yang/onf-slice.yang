@@ -1,3 +1,4 @@
+// SPDX-FileCopyrightText: 2022-present Intel Corporation
 // SPDX-FileCopyrightText: 2021 Open Networking Foundation
 //
 // SPDX-License-Identifier: Apache-2.0
@@ -13,7 +14,7 @@ submodule onf-slice {
   include onf-priority-traffic-rule;
 
   organization "Open Networking Foundation.";
-  contact "Scott Baker";
+  contact "ROC Engineering";
   description
     "An Aether Slice is
      used to connect devices with applications";

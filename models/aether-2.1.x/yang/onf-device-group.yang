@@ -1,3 +1,4 @@
+// SPDX-FileCopyrightText: 2022-present Intel Corporation
 // SPDX-FileCopyrightText: 2021 Open Networking Foundation
 //
 // SPDX-License-Identifier: Apache-2.0
@@ -12,7 +13,7 @@ submodule onf-device-group {
   include onf-device;
 
   organization "Open Networking Foundation.";
-  contact "Scott Baker";
+  contact "ROC Engineering";
   description
     "An aether device group represents a list of device IMSIS.
      This list is expressed as a set of ranges,
