@@ -10,8 +10,8 @@ DOCKER_REPOSITORY ?= onosproject/
 BASE_VERSION ?= $(shell cat ./VERSION)
 VERSION           ?= ${BASE_VERSION}-aether-2.1.x
 LATEST_VERSION           ?= ${BASE_VERSION}-aether-latest
+GO_TAG ?= models/aether-2.1.x/v${BASE_VERSION}
 KIND_CLUSTER_NAME ?= kind
-HAS_CHANGED=$(shell git --no-pager diff HEAD~1 HEAD . | wc -l) # check if the content of this folder is different than the parent commit
 IS_RELEASED_VERSION=$(shell MY_STRING="${BASE_VERSION}"; MY_REGEX='^([0-9]+)\.([0-9]+)\.([0-9]+)$$'; if [[ $$MY_STRING =~ $$MY_REGEX ]]; then echo true; else echo false; fi)
 
 ## Docker labels. Only set ref and commit date if committed
@@ -47,7 +47,7 @@ mod-update: # @HELP Download the dependencies to the vendor folder
 	go mod tidy
 	go mod vendor
 
-image: mod-update openapi # @HELP Build the docker image (available parameters: DOCKER_REPOSITORY, VERSION)
+image: mod-update openapi gnmi-gen # @HELP Build the docker image (available parameters: DOCKER_REPOSITORY, VERSION)
 	docker build $(DOCKER_BUILD_ARGS) -t ${DOCKER_REPOSITORY}aether-2.1.x:${VERSION} .
 	docker tag ${DOCKER_REPOSITORY}aether-2.1.x:${VERSION} ${DOCKER_REPOSITORY}aether-2.1.x:${LATEST_VERSION}
 
@@ -55,32 +55,36 @@ image: mod-update openapi # @HELP Build the docker image (available parameters: 
 openapi: mod-update # @HELP Generate OpenApi specs
 	go run openapi/openapi-gen.go -o openapi.yaml
 
+.PHONY: gnmi-gen
+gnmi-gen: mod-update # @HELP Generate gNMI Client
+	go run gnmi-gen/gnmi-gen.go
+
 test: mod-update # @HELP Run the unit tests
 	go test ./...
 
 repo-tag:
 ifeq ($(IS_RELEASED_VERSION), true)
-ifneq ("$(HAS_CHANGED)", "0 ")
-	NEW_VERSION=${VERSION} ../../build/build-tools/tag-collision-reject
-	git tag ${VERSION}
-	git push origin ${VERSION}
-	git tag v${VERSION}
-	git push origin v${VERSION}
+	git tag ${GO_TAG}
+	git push origin ${GO_TAG}
 else
-	@echo "No changes, nothing to tag"
+	@echo "aether-2.1.x: Not a released version, skip tagging"
 endif
+
+check-tag:
+ifeq ($(IS_RELEASED_VERSION), true)
+	@echo "Checking that tag ${GO_TAG} is not already used"
+	@if [ "$(shell git tag | cat | grep ${GO_TAG})" != "" ]; then \
+		echo "ERROR: Duplicate tag: ${GO_TAG}"; \
+		exit 2; \
+	fi
 else
-	@echo "Not a released version, skip tagging"
+	@echo "aether-2.1.x: Not a released version, skip tag check"
 endif
 
 
 publish: image repo-tag # @HELP Builds and publish the docker image (available parameters: DOCKER_REPOSITORY, VERSION)
-ifneq ("$(HAS_CHANGED)", "0 ")
 	docker push ${DOCKER_REPOSITORY}aether-2.1.x:${VERSION}
 	docker push ${DOCKER_REPOSITORY}aether-2.1.x:${LATEST_VERSION}
-else
-	@echo "No changes, nothing to push"
-endif
 
 kind-only: # @HELP Loads the docker image into the kind cluster  (available parameters: KIND_CLUSTER_NAME, DOCKER_REPOSITORY, VERSION)
 	@if [ "`kind get clusters`" = '' ]; then echo "no kind cluster found" && exit 1; fi

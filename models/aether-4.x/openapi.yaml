@@ -292,7 +292,7 @@ components:
           type: string
         endpoint-id:
           description: Id of this endpoint
-          maxLength: 9223372036854775808
+          maxLength: 18446744073709551615
           minLength: 1
           pattern: '[a-zA-Z_][a-zA-Z0-9\-_.]*'
           title: endpoint-id
@@ -526,7 +526,7 @@ components:
           type: string
         imsi-id:
           description: Id of this imsi-range
-          maxLength: 9223372036854775808
+          maxLength: 18446744073709551615
           minLength: 1
           pattern: '[a-zA-Z_][a-zA-Z0-9\-_.]*'
           title: imsi-id
@@ -863,7 +863,7 @@ components:
           type: string
         edge-device-id:
           description: Id of edge monitoring device
-          maxLength: 9223372036854775808
+          maxLength: 18446744073709551615
           minLength: 1
           pattern: '[a-zA-Z_][a-zA-Z0-9\-_.]*'
           title: edge-device-id
@@ -905,7 +905,7 @@ components:
           type: boolean
         small-cell-id:
           description: Id of small cell
-          maxLength: 9223372036854775808
+          maxLength: 18446744073709551615
           minLength: 1
           pattern: '[a-zA-Z_][a-zA-Z0-9\-_.]*'
           title: small-cell-id

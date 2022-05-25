@@ -6,7 +6,7 @@ SHELL 			  		= bash -e -o pipefail
 KIND_CLUSTER_NAME 		?= kind
 DOCKER_USER       		?=
 DOCKER_PASSWORD   		?=
-MODEL_COMPILER_VERSION  ?= v0.9.31
+MODEL_COMPILER_VERSION  ?= v0.10.2
 
 .PHONY: models
 
@@ -21,13 +21,16 @@ help: # @HELP Print the command options
         {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}; \
 	'
 
-models: clean# @HELP Generate Golang code for all the models
+models: clean # @HELP Generate Golang code for all the models
 	@cd models && for model in *; do echo -e "Generating $$model:\n"; docker run -v $$(pwd)/$$model:/config-model onosproject/model-compiler:${MODEL_COMPILER_VERSION}; echo -e "\n\n"; done
 
 models-openapi: # @HELP generates the openapi specs for the models
 	@cd models && for model in *; do echo -e "Building OpenApi Specs for $$model:\n"; pushd $$model; make openapi; popd; echo -e "\n\n"; done
 
-docker-build: models models-openapi # @HELP Build Docker containers for all the models
+models-gnmi-client: # @HELP generates the gnmi-client for the models
+	@cd models && for model in *; do echo -e "Building gNMI Client for $$model:\n"; pushd $$model; rm -f api/gnmi_client.go; make gnmi-gen; popd; echo -e "\n\n"; done
+
+docker-build: models models-openapi models-gnmi-client # @HELP Build Docker containers for all the models
 	@cd models && for model in *; do echo -e "Building container for $$model:\n"; pushd $$model; make image; popd; echo -e "\n\n"; done
 
 docker-push: # @HELP Publish Docker containers for all the models
@@ -46,11 +49,16 @@ pyang-tool: # @HELP Install the Pyang tool if needed
 clean:	# @HELP Removes the generated code
 	@cd models && for model in *; do pushd $$model; rm -f Dockerfile Makefile *.tree; popd; done;
 
-test: yang-lint models models-openapi# @HELP Make sure the generated code has been committed
-	@bash test/generated.sh
-	cd models/aether-2.0.x && make test
-	cd models/aether-2.1.x && make test
-	cd models/aether-4.x && make test
+check-models-tag: # @HELP check that the model tags are valid
+	@make -C models/aether-2.0.x check-tag
+	@make -C models/aether-2.1.x check-tag
+	@make -C models/aether-4.x check-tag
+
+test: yang-lint check-models-tag models models-openapi models-gnmi-client # @HELP Make sure the generated code has been committed
+	# @bash test/generated.sh # TODO uncomment after AETHER-3550 is solved
+	@make -C models/aether-2.0.x  test
+	@make -C models/aether-2.1.x  test
+	@make -C models/aether-4.x  test
 
 docker-login:
 ifdef DOCKER_USER
