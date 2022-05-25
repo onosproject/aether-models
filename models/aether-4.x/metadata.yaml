@@ -5,7 +5,7 @@
 name: aether
 version: 4.0.18
 artifactName: aether-4.x
-goPackage: github.com/onosproject/aether-models/models/aether-4.x
+goPackage: github.com/onosproject/aether-models/models/aether-4.x/v4
 openAPITargetAlias: target
 modules:
   - name: onf-aether-types

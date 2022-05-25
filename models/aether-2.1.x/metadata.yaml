@@ -5,7 +5,7 @@
 name: aether
 version: 2.1.x
 artifactName: aether-2.1.x
-goPackage: github.com/onosproject/aether-models/models/aether-2.1.x
+goPackage: github.com/onosproject/aether-models/models/aether-2.1.x/v2
 openAPITargetAlias: enterprise-id
 modules:
   - name: onf-aether-site
