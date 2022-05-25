@@ -1,4 +1,4 @@
-module github.com/onosproject/aether-models/models/aether-4.x
+module github.com/onosproject/aether-models/models/aether-4.x/v4
 
 go 1.16
 

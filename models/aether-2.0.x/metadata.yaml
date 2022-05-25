@@ -5,7 +5,7 @@
 name: aether
 version: 2.0.x
 artifactName: aether-2.0.x
-goPackage: github.com/onosproject/aether-models/models/aether-2.0.x
+goPackage: github.com/onosproject/aether-models/models/aether-2.0.x/v2
 openAPITargetAlias: target
 modules:
   - name: onf-aether-connectivity-service

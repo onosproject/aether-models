@@ -9,7 +9,7 @@ package main
 
 import (
 	"context"
-	"github.com/onosproject/aether-models/models/aether-4.x/api"
+	"github.com/onosproject/aether-models/models/aether-4.x/v4/api"
     "github.com/onosproject/config-models/pkg/utils"
 	"github.com/onosproject/config-models/pkg/xpath/navigator"
 	"github.com/onosproject/onos-api/go/onos/config/admin"

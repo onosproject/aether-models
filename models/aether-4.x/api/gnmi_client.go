@@ -36,312 +36,6 @@ func NewAetherGnmiClient(conn *grpc.ClientConn) *GnmiClient {
 
 
 
-func (c *GnmiClient) GetConnectivityService_ConnectivityService_Item(ctx context.Context, target string, 
-key string,
-) (*OnfConnectivityService_ConnectivityService_ConnectivityService, error) {
-    gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
-    defer cancel()
-
-
-    
-    
-    path :=  []*gnmi.Path{
-        {
-            Elem: []*gnmi.PathElem{
-            {
-                    Name: "connectivity-service",
-                },
-            {
-                    Name: "connectivity-service",
-                    Key: map[string]string{
-                        
-                        "id": string(key),
-                        
-                        },
-                },
-            },
-            Target: target,
-        },
-    }
-
-    req := &gnmi.GetRequest{
-        Encoding: gnmi.Encoding_JSON,
-        Path:     path,
-    }
-    res, err := c.client.Get(gnmiCtx, req)
-
-    if err != nil {
-        return nil, err
-    }
-
-    val, err := gnmi_utils.GetResponseUpdate(res)
-
-    if err != nil {
-        return nil, err
-    }
-
-    json := val.GetJsonVal()
-    st := Device{}
-    Unmarshal(json, &st)
-
-    if reflect.ValueOf(st.ConnectivityService).Kind() == reflect.Ptr && reflect.ValueOf(st.ConnectivityService).IsNil() {
-        return nil, status.Error(codes.NotFound, "OnfConnectivityService_ConnectivityService_ConnectivityService-not-found")
-    }
-    if res, ok := st.ConnectivityService.ConnectivityService[key]; ok {
-        return res, nil
-    }
-
-    return nil, status.Error(codes.NotFound, "OnfConnectivityService_ConnectivityService_ConnectivityService-not-found")
-    }
-
-
-
-
-
-
-
-
-func (c *GnmiClient) DeleteConnectivityService_ConnectivityService_Item(ctx context.Context, target string, 
-key string,
-) (*gnmi.SetResponse, error) {
-    gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
-    defer cancel()
-
-
-    
-    
-    path :=  []*gnmi.Path{
-        {
-            Elem: []*gnmi.PathElem{
-            {
-                    Name: "connectivity-service",
-                },
-            {
-                    Name: "connectivity-service",
-                    Key: map[string]string{
-                        
-                        "id": string(key),
-                        
-                        },
-                },
-            },
-            Target: target,
-        },
-    }
-
-    req := &gnmi.SetRequest{
-        Delete: []*gnmi.Path{
-            {
-            Elem:   path[0].Elem,
-            Target: target,
-            },
-        },
-    }
-    return c.client.Set(gnmiCtx, req)
-    }
-
-
-
-
-
-
-
-
-func (c *GnmiClient) UpdateConnectivityService_ConnectivityService_Item(ctx context.Context, target string,  data OnfConnectivityService_ConnectivityService_ConnectivityService,
-) (*gnmi.SetResponse, error) {
-    gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
-    defer cancel()
-
-
-    
-    
-
-    
-    path :=  []*gnmi.Path{
-        {
-            Elem: []*gnmi.PathElem{
-            {
-                    Name: "connectivity-service",
-                },
-            {
-                    Name: "connectivity-service",
-                    Key: map[string]string{
-                        "id": string(*data.Id),
-                        },
-                },
-            },
-            Target: target,
-        },
-    }
-
-    req, err := gnmi_utils.CreateGnmiSetForContainer(ctx, data, path[0], target)
-    if err != nil {
-        return nil, err
-    }
-
-    return c.client.Set(gnmiCtx, req)
-    }
-
-
-
-
-
-
-
-
-func (c *GnmiClient) GetEnterprise_Enterprise_Item(ctx context.Context, target string, 
-key string,
-) (*OnfEnterprise_Enterprise_Enterprise, error) {
-    gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
-    defer cancel()
-
-
-    
-    
-    path :=  []*gnmi.Path{
-        {
-            Elem: []*gnmi.PathElem{
-            {
-                    Name: "enterprise",
-                },
-            {
-                    Name: "enterprise",
-                    Key: map[string]string{
-                        
-                        "id": string(key),
-                        
-                        },
-                },
-            },
-            Target: target,
-        },
-    }
-
-    req := &gnmi.GetRequest{
-        Encoding: gnmi.Encoding_JSON,
-        Path:     path,
-    }
-    res, err := c.client.Get(gnmiCtx, req)
-
-    if err != nil {
-        return nil, err
-    }
-
-    val, err := gnmi_utils.GetResponseUpdate(res)
-
-    if err != nil {
-        return nil, err
-    }
-
-    json := val.GetJsonVal()
-    st := Device{}
-    Unmarshal(json, &st)
-
-    if reflect.ValueOf(st.Enterprise).Kind() == reflect.Ptr && reflect.ValueOf(st.Enterprise).IsNil() {
-        return nil, status.Error(codes.NotFound, "OnfEnterprise_Enterprise_Enterprise-not-found")
-    }
-    if res, ok := st.Enterprise.Enterprise[key]; ok {
-        return res, nil
-    }
-
-    return nil, status.Error(codes.NotFound, "OnfEnterprise_Enterprise_Enterprise-not-found")
-    }
-
-
-
-
-
-
-
-
-func (c *GnmiClient) DeleteEnterprise_Enterprise_Item(ctx context.Context, target string, 
-key string,
-) (*gnmi.SetResponse, error) {
-    gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
-    defer cancel()
-
-
-    
-    
-    path :=  []*gnmi.Path{
-        {
-            Elem: []*gnmi.PathElem{
-            {
-                    Name: "enterprise",
-                },
-            {
-                    Name: "enterprise",
-                    Key: map[string]string{
-                        
-                        "id": string(key),
-                        
-                        },
-                },
-            },
-            Target: target,
-        },
-    }
-
-    req := &gnmi.SetRequest{
-        Delete: []*gnmi.Path{
-            {
-            Elem:   path[0].Elem,
-            Target: target,
-            },
-        },
-    }
-    return c.client.Set(gnmiCtx, req)
-    }
-
-
-
-
-
-
-
-
-func (c *GnmiClient) UpdateEnterprise_Enterprise_Item(ctx context.Context, target string,  data OnfEnterprise_Enterprise_Enterprise,
-) (*gnmi.SetResponse, error) {
-    gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
-    defer cancel()
-
-
-    
-    
-
-    
-    path :=  []*gnmi.Path{
-        {
-            Elem: []*gnmi.PathElem{
-            {
-                    Name: "enterprise",
-                },
-            {
-                    Name: "enterprise",
-                    Key: map[string]string{
-                        "id": string(*data.Id),
-                        },
-                },
-            },
-            Target: target,
-        },
-    }
-
-    req, err := gnmi_utils.CreateGnmiSetForContainer(ctx, data, path[0], target)
-    if err != nil {
-        return nil, err
-    }
-
-    return c.client.Set(gnmiCtx, req)
-    }
-
-
-
-
-
-
-
-
 func (c *GnmiClient) GetSite_Site_Item(ctx context.Context, target string, 
 key string,
 ) (*OnfSite_Site_Site, error) {
@@ -471,6 +165,159 @@ func (c *GnmiClient) UpdateSite_Site_Item(ctx context.Context, target string,  d
                 },
             {
                     Name: "site",
+                    Key: map[string]string{
+                        "id": string(*data.Id),
+                        },
+                },
+            },
+            Target: target,
+        },
+    }
+
+    req, err := gnmi_utils.CreateGnmiSetForContainer(ctx, data, path[0], target)
+    if err != nil {
+        return nil, err
+    }
+
+    return c.client.Set(gnmiCtx, req)
+    }
+
+
+
+
+
+
+
+
+func (c *GnmiClient) GetTemplate_Template_Item(ctx context.Context, target string, 
+key string,
+) (*OnfTemplate_Template_Template, error) {
+    gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
+    defer cancel()
+
+
+    
+    
+    path :=  []*gnmi.Path{
+        {
+            Elem: []*gnmi.PathElem{
+            {
+                    Name: "template",
+                },
+            {
+                    Name: "template",
+                    Key: map[string]string{
+                        
+                        "id": string(key),
+                        
+                        },
+                },
+            },
+            Target: target,
+        },
+    }
+
+    req := &gnmi.GetRequest{
+        Encoding: gnmi.Encoding_JSON,
+        Path:     path,
+    }
+    res, err := c.client.Get(gnmiCtx, req)
+
+    if err != nil {
+        return nil, err
+    }
+
+    val, err := gnmi_utils.GetResponseUpdate(res)
+
+    if err != nil {
+        return nil, err
+    }
+
+    json := val.GetJsonVal()
+    st := Device{}
+    Unmarshal(json, &st)
+
+    if reflect.ValueOf(st.Template).Kind() == reflect.Ptr && reflect.ValueOf(st.Template).IsNil() {
+        return nil, status.Error(codes.NotFound, "OnfTemplate_Template_Template-not-found")
+    }
+    if res, ok := st.Template.Template[key]; ok {
+        return res, nil
+    }
+
+    return nil, status.Error(codes.NotFound, "OnfTemplate_Template_Template-not-found")
+    }
+
+
+
+
+
+
+
+
+func (c *GnmiClient) DeleteTemplate_Template_Item(ctx context.Context, target string, 
+key string,
+) (*gnmi.SetResponse, error) {
+    gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
+    defer cancel()
+
+
+    
+    
+    path :=  []*gnmi.Path{
+        {
+            Elem: []*gnmi.PathElem{
+            {
+                    Name: "template",
+                },
+            {
+                    Name: "template",
+                    Key: map[string]string{
+                        
+                        "id": string(key),
+                        
+                        },
+                },
+            },
+            Target: target,
+        },
+    }
+
+    req := &gnmi.SetRequest{
+        Delete: []*gnmi.Path{
+            {
+            Elem:   path[0].Elem,
+            Target: target,
+            },
+        },
+    }
+    return c.client.Set(gnmiCtx, req)
+    }
+
+
+
+
+
+
+
+
+func (c *GnmiClient) UpdateTemplate_Template_Item(ctx context.Context, target string,  data OnfTemplate_Template_Template,
+) (*gnmi.SetResponse, error) {
+    gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
+    defer cancel()
+
+
+    
+    
+
+    
+    path :=  []*gnmi.Path{
+        {
+            Elem: []*gnmi.PathElem{
+            {
+                    Name: "template",
+                },
+            {
+                    Name: "template",
                     Key: map[string]string{
                         "id": string(*data.Id),
                         },
@@ -954,9 +801,9 @@ func (c *GnmiClient) UpdateApplication_Application_Item(ctx context.Context, tar
 
 
 
-func (c *GnmiClient) GetIpDomain_IpDomain_Item(ctx context.Context, target string, 
+func (c *GnmiClient) GetConnectivityService_ConnectivityService_Item(ctx context.Context, target string, 
 key string,
-) (*OnfIpDomain_IpDomain_IpDomain, error) {
+) (*OnfConnectivityService_ConnectivityService_ConnectivityService, error) {
     gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
     defer cancel()
 
@@ -967,10 +814,10 @@ key string,
         {
             Elem: []*gnmi.PathElem{
             {
-                    Name: "ip-domain",
+                    Name: "connectivity-service",
                 },
             {
-                    Name: "ip-domain",
+                    Name: "connectivity-service",
                     Key: map[string]string{
                         
                         "id": string(key),
@@ -1002,14 +849,14 @@ key string,
     st := Device{}
     Unmarshal(json, &st)
 
-    if reflect.ValueOf(st.IpDomain).Kind() == reflect.Ptr && reflect.ValueOf(st.IpDomain).IsNil() {
-        return nil, status.Error(codes.NotFound, "OnfIpDomain_IpDomain_IpDomain-not-found")
+    if reflect.ValueOf(st.ConnectivityService).Kind() == reflect.Ptr && reflect.ValueOf(st.ConnectivityService).IsNil() {
+        return nil, status.Error(codes.NotFound, "OnfConnectivityService_ConnectivityService_ConnectivityService-not-found")
     }
-    if res, ok := st.IpDomain.IpDomain[key]; ok {
+    if res, ok := st.ConnectivityService.ConnectivityService[key]; ok {
         return res, nil
     }
 
-    return nil, status.Error(codes.NotFound, "OnfIpDomain_IpDomain_IpDomain-not-found")
+    return nil, status.Error(codes.NotFound, "OnfConnectivityService_ConnectivityService_ConnectivityService-not-found")
     }
 
 
@@ -1019,7 +866,7 @@ key string,
 
 
 
-func (c *GnmiClient) DeleteIpDomain_IpDomain_Item(ctx context.Context, target string, 
+func (c *GnmiClient) DeleteConnectivityService_ConnectivityService_Item(ctx context.Context, target string, 
 key string,
 ) (*gnmi.SetResponse, error) {
     gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
@@ -1032,10 +879,10 @@ key string,
         {
             Elem: []*gnmi.PathElem{
             {
-                    Name: "ip-domain",
+                    Name: "connectivity-service",
                 },
             {
-                    Name: "ip-domain",
+                    Name: "connectivity-service",
                     Key: map[string]string{
                         
                         "id": string(key),
@@ -1065,7 +912,7 @@ key string,
 
 
 
-func (c *GnmiClient) UpdateIpDomain_IpDomain_Item(ctx context.Context, target string,  data OnfIpDomain_IpDomain_IpDomain,
+func (c *GnmiClient) UpdateConnectivityService_ConnectivityService_Item(ctx context.Context, target string,  data OnfConnectivityService_ConnectivityService_ConnectivityService,
 ) (*gnmi.SetResponse, error) {
     gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
     defer cancel()
@@ -1079,316 +926,10 @@ func (c *GnmiClient) UpdateIpDomain_IpDomain_Item(ctx context.Context, target st
         {
             Elem: []*gnmi.PathElem{
             {
-                    Name: "ip-domain",
+                    Name: "connectivity-service",
                 },
             {
-                    Name: "ip-domain",
-                    Key: map[string]string{
-                        "id": string(*data.Id),
-                        },
-                },
-            },
-            Target: target,
-        },
-    }
-
-    req, err := gnmi_utils.CreateGnmiSetForContainer(ctx, data, path[0], target)
-    if err != nil {
-        return nil, err
-    }
-
-    return c.client.Set(gnmiCtx, req)
-    }
-
-
-
-
-
-
-
-
-func (c *GnmiClient) GetTemplate_Template_Item(ctx context.Context, target string, 
-key string,
-) (*OnfTemplate_Template_Template, error) {
-    gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
-    defer cancel()
-
-
-    
-    
-    path :=  []*gnmi.Path{
-        {
-            Elem: []*gnmi.PathElem{
-            {
-                    Name: "template",
-                },
-            {
-                    Name: "template",
-                    Key: map[string]string{
-                        
-                        "id": string(key),
-                        
-                        },
-                },
-            },
-            Target: target,
-        },
-    }
-
-    req := &gnmi.GetRequest{
-        Encoding: gnmi.Encoding_JSON,
-        Path:     path,
-    }
-    res, err := c.client.Get(gnmiCtx, req)
-
-    if err != nil {
-        return nil, err
-    }
-
-    val, err := gnmi_utils.GetResponseUpdate(res)
-
-    if err != nil {
-        return nil, err
-    }
-
-    json := val.GetJsonVal()
-    st := Device{}
-    Unmarshal(json, &st)
-
-    if reflect.ValueOf(st.Template).Kind() == reflect.Ptr && reflect.ValueOf(st.Template).IsNil() {
-        return nil, status.Error(codes.NotFound, "OnfTemplate_Template_Template-not-found")
-    }
-    if res, ok := st.Template.Template[key]; ok {
-        return res, nil
-    }
-
-    return nil, status.Error(codes.NotFound, "OnfTemplate_Template_Template-not-found")
-    }
-
-
-
-
-
-
-
-
-func (c *GnmiClient) DeleteTemplate_Template_Item(ctx context.Context, target string, 
-key string,
-) (*gnmi.SetResponse, error) {
-    gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
-    defer cancel()
-
-
-    
-    
-    path :=  []*gnmi.Path{
-        {
-            Elem: []*gnmi.PathElem{
-            {
-                    Name: "template",
-                },
-            {
-                    Name: "template",
-                    Key: map[string]string{
-                        
-                        "id": string(key),
-                        
-                        },
-                },
-            },
-            Target: target,
-        },
-    }
-
-    req := &gnmi.SetRequest{
-        Delete: []*gnmi.Path{
-            {
-            Elem:   path[0].Elem,
-            Target: target,
-            },
-        },
-    }
-    return c.client.Set(gnmiCtx, req)
-    }
-
-
-
-
-
-
-
-
-func (c *GnmiClient) UpdateTemplate_Template_Item(ctx context.Context, target string,  data OnfTemplate_Template_Template,
-) (*gnmi.SetResponse, error) {
-    gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
-    defer cancel()
-
-
-    
-    
-
-    
-    path :=  []*gnmi.Path{
-        {
-            Elem: []*gnmi.PathElem{
-            {
-                    Name: "template",
-                },
-            {
-                    Name: "template",
-                    Key: map[string]string{
-                        "id": string(*data.Id),
-                        },
-                },
-            },
-            Target: target,
-        },
-    }
-
-    req, err := gnmi_utils.CreateGnmiSetForContainer(ctx, data, path[0], target)
-    if err != nil {
-        return nil, err
-    }
-
-    return c.client.Set(gnmiCtx, req)
-    }
-
-
-
-
-
-
-
-
-func (c *GnmiClient) GetUpf_Upf_Item(ctx context.Context, target string, 
-key string,
-) (*OnfUpf_Upf_Upf, error) {
-    gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
-    defer cancel()
-
-
-    
-    
-    path :=  []*gnmi.Path{
-        {
-            Elem: []*gnmi.PathElem{
-            {
-                    Name: "upf",
-                },
-            {
-                    Name: "upf",
-                    Key: map[string]string{
-                        
-                        "id": string(key),
-                        
-                        },
-                },
-            },
-            Target: target,
-        },
-    }
-
-    req := &gnmi.GetRequest{
-        Encoding: gnmi.Encoding_JSON,
-        Path:     path,
-    }
-    res, err := c.client.Get(gnmiCtx, req)
-
-    if err != nil {
-        return nil, err
-    }
-
-    val, err := gnmi_utils.GetResponseUpdate(res)
-
-    if err != nil {
-        return nil, err
-    }
-
-    json := val.GetJsonVal()
-    st := Device{}
-    Unmarshal(json, &st)
-
-    if reflect.ValueOf(st.Upf).Kind() == reflect.Ptr && reflect.ValueOf(st.Upf).IsNil() {
-        return nil, status.Error(codes.NotFound, "OnfUpf_Upf_Upf-not-found")
-    }
-    if res, ok := st.Upf.Upf[key]; ok {
-        return res, nil
-    }
-
-    return nil, status.Error(codes.NotFound, "OnfUpf_Upf_Upf-not-found")
-    }
-
-
-
-
-
-
-
-
-func (c *GnmiClient) DeleteUpf_Upf_Item(ctx context.Context, target string, 
-key string,
-) (*gnmi.SetResponse, error) {
-    gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
-    defer cancel()
-
-
-    
-    
-    path :=  []*gnmi.Path{
-        {
-            Elem: []*gnmi.PathElem{
-            {
-                    Name: "upf",
-                },
-            {
-                    Name: "upf",
-                    Key: map[string]string{
-                        
-                        "id": string(key),
-                        
-                        },
-                },
-            },
-            Target: target,
-        },
-    }
-
-    req := &gnmi.SetRequest{
-        Delete: []*gnmi.Path{
-            {
-            Elem:   path[0].Elem,
-            Target: target,
-            },
-        },
-    }
-    return c.client.Set(gnmiCtx, req)
-    }
-
-
-
-
-
-
-
-
-func (c *GnmiClient) UpdateUpf_Upf_Item(ctx context.Context, target string,  data OnfUpf_Upf_Upf,
-) (*gnmi.SetResponse, error) {
-    gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
-    defer cancel()
-
-
-    
-    
-
-    
-    path :=  []*gnmi.Path{
-        {
-            Elem: []*gnmi.PathElem{
-            {
-                    Name: "upf",
-                },
-            {
-                    Name: "upf",
+                    Name: "connectivity-service",
                     Key: map[string]string{
                         "id": string(*data.Id),
                         },
@@ -1563,26 +1104,37 @@ func (c *GnmiClient) UpdateDeviceGroup_DeviceGroup_Item(ctx context.Context, tar
 
 
 
-func (c *GnmiClient) GetConnectivityService_ConnectivityService(ctx context.Context, target string, 
-) (map[string]*OnfConnectivityService_ConnectivityService_ConnectivityService, error) {
+
+
+
+func (c *GnmiClient) GetIpDomain_IpDomain_Item(ctx context.Context, target string, 
+key string,
+) (*OnfIpDomain_IpDomain_IpDomain, error) {
     gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
     defer cancel()
 
-    
 
-path :=  []*gnmi.Path{
-    {
-        Elem: []*gnmi.PathElem{
+    
+    
+    path :=  []*gnmi.Path{
         {
-                Name: "connectivity-service",
+            Elem: []*gnmi.PathElem{
+            {
+                    Name: "ip-domain",
+                },
+            {
+                    Name: "ip-domain",
+                    Key: map[string]string{
+                        
+                        "id": string(key),
+                        
+                        },
+                },
             },
-        {
-                Name: "connectivity-service",
-            },
+            Target: target,
         },
-        Target: target,
-    },
-}
+    }
+
     req := &gnmi.GetRequest{
         Encoding: gnmi.Encoding_JSON,
         Path:     path,
@@ -1603,117 +1155,139 @@ path :=  []*gnmi.Path{
     st := Device{}
     Unmarshal(json, &st)
 
-    if reflect.ValueOf(st.ConnectivityService).Kind() == reflect.Ptr && reflect.ValueOf(st.ConnectivityService).IsNil() {
-        return nil, status.Error(codes.NotFound, "OnfConnectivityService_ConnectivityService_ConnectivityService-not-found")
+    if reflect.ValueOf(st.IpDomain).Kind() == reflect.Ptr && reflect.ValueOf(st.IpDomain).IsNil() {
+        return nil, status.Error(codes.NotFound, "OnfIpDomain_IpDomain_IpDomain-not-found")
     }
-    if reflect.ValueOf(st.ConnectivityService.ConnectivityService).Kind() == reflect.Ptr && reflect.ValueOf(st.ConnectivityService.ConnectivityService).IsNil() {
-        return nil, status.Error(codes.NotFound, "OnfConnectivityService_ConnectivityService_ConnectivityService-not-found")
+    if res, ok := st.IpDomain.IpDomain[key]; ok {
+        return res, nil
     }
 
-    return st.ConnectivityService.ConnectivityService, nil
-}
+    return nil, status.Error(codes.NotFound, "OnfIpDomain_IpDomain_IpDomain-not-found")
+    }
 
 
 
 
 
-func (c *GnmiClient) DeleteConnectivityService_ConnectivityService(ctx context.Context, target string, 
+
+
+
+func (c *GnmiClient) DeleteIpDomain_IpDomain_Item(ctx context.Context, target string, 
+key string,
 ) (*gnmi.SetResponse, error) {
     gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
     defer cancel()
 
-    
 
-path :=  []*gnmi.Path{
-    {
-        Elem: []*gnmi.PathElem{
+    
+    
+    path :=  []*gnmi.Path{
         {
-                Name: "connectivity-service",
+            Elem: []*gnmi.PathElem{
+            {
+                    Name: "ip-domain",
+                },
+            {
+                    Name: "ip-domain",
+                    Key: map[string]string{
+                        
+                        "id": string(key),
+                        
+                        },
+                },
             },
-        {
-                Name: "connectivity-service",
-            },
+            Target: target,
         },
-        Target: target,
-    },
-}
+    }
+
     req := &gnmi.SetRequest{
         Delete: []*gnmi.Path{
             {
-                Elem:   path[0].Elem,
-                Target: target,
+            Elem:   path[0].Elem,
+            Target: target,
             },
         },
     }
     return c.client.Set(gnmiCtx, req)
-}
+    }
 
 
 
 
 
-func (c *GnmiClient) UpdateConnectivityService_ConnectivityService(ctx context.Context, target string,  list map[string]*OnfConnectivityService_ConnectivityService_ConnectivityService,
+
+
+
+func (c *GnmiClient) UpdateIpDomain_IpDomain_Item(ctx context.Context, target string,  data OnfIpDomain_IpDomain_IpDomain,
 ) (*gnmi.SetResponse, error) {
     gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
     defer cancel()
 
+
     
-    basePathElems :=  []*gnmi.PathElem{
-    {
-        Name: "connectivity-service",
+    
+
+    
+    path :=  []*gnmi.Path{
+        {
+            Elem: []*gnmi.PathElem{
+            {
+                    Name: "ip-domain",
+                },
+            {
+                    Name: "ip-domain",
+                    Key: map[string]string{
+                        "id": string(*data.Id),
+                        },
+                },
+            },
+            Target: target,
         },
     }
-    req := &gnmi.SetRequest{
-        Update: []*gnmi.Update{},
-    }
-    for _, item := range list {
 
-        path := &gnmi.Path{
-            Elem: append(basePathElems, &gnmi.PathElem{
-                Name: "list2a",
-                Key: map[string]string{
-                    "id": string(*item.Id),
-                    },
-            }),
-            Target: target,
-        }
-
-        // TODO if it's pointer, pass the value
-        // if it's a value pass it directly
-        r, err := gnmi_utils.CreateGnmiSetForContainer(ctx, *item, path, target)
-        if err != nil {
-            return nil, err
-        }
-        req.Update = append(req.Update, r.Update...)
+    req, err := gnmi_utils.CreateGnmiSetForContainer(ctx, data, path[0], target)
+    if err != nil {
+        return nil, err
     }
 
     return c.client.Set(gnmiCtx, req)
-}
+    }
 
 
 
 
 
-func (c *GnmiClient) GetEnterprise_Enterprise(ctx context.Context, target string, 
-) (map[string]*OnfEnterprise_Enterprise_Enterprise, error) {
+
+
+
+func (c *GnmiClient) GetEnterprise_Enterprise_Item(ctx context.Context, target string, 
+key string,
+) (*OnfEnterprise_Enterprise_Enterprise, error) {
     gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
     defer cancel()
 
-    
 
-path :=  []*gnmi.Path{
-    {
-        Elem: []*gnmi.PathElem{
+    
+    
+    path :=  []*gnmi.Path{
         {
-                Name: "enterprise",
+            Elem: []*gnmi.PathElem{
+            {
+                    Name: "enterprise",
+                },
+            {
+                    Name: "enterprise",
+                    Key: map[string]string{
+                        
+                        "id": string(key),
+                        
+                        },
+                },
             },
-        {
-                Name: "enterprise",
-            },
+            Target: target,
         },
-        Target: target,
-    },
-}
+    }
+
     req := &gnmi.GetRequest{
         Encoding: gnmi.Encoding_JSON,
         Path:     path,
@@ -1737,89 +1311,253 @@ path :=  []*gnmi.Path{
     if reflect.ValueOf(st.Enterprise).Kind() == reflect.Ptr && reflect.ValueOf(st.Enterprise).IsNil() {
         return nil, status.Error(codes.NotFound, "OnfEnterprise_Enterprise_Enterprise-not-found")
     }
-    if reflect.ValueOf(st.Enterprise.Enterprise).Kind() == reflect.Ptr && reflect.ValueOf(st.Enterprise.Enterprise).IsNil() {
-        return nil, status.Error(codes.NotFound, "OnfEnterprise_Enterprise_Enterprise-not-found")
+    if res, ok := st.Enterprise.Enterprise[key]; ok {
+        return res, nil
     }
 
-    return st.Enterprise.Enterprise, nil
-}
+    return nil, status.Error(codes.NotFound, "OnfEnterprise_Enterprise_Enterprise-not-found")
+    }
 
 
 
 
 
-func (c *GnmiClient) DeleteEnterprise_Enterprise(ctx context.Context, target string, 
+
+
+
+func (c *GnmiClient) DeleteEnterprise_Enterprise_Item(ctx context.Context, target string, 
+key string,
 ) (*gnmi.SetResponse, error) {
     gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
     defer cancel()
 
-    
 
-path :=  []*gnmi.Path{
-    {
-        Elem: []*gnmi.PathElem{
+    
+    
+    path :=  []*gnmi.Path{
         {
-                Name: "enterprise",
+            Elem: []*gnmi.PathElem{
+            {
+                    Name: "enterprise",
+                },
+            {
+                    Name: "enterprise",
+                    Key: map[string]string{
+                        
+                        "id": string(key),
+                        
+                        },
+                },
             },
-        {
-                Name: "enterprise",
-            },
+            Target: target,
         },
-        Target: target,
-    },
-}
+    }
+
     req := &gnmi.SetRequest{
         Delete: []*gnmi.Path{
             {
-                Elem:   path[0].Elem,
-                Target: target,
+            Elem:   path[0].Elem,
+            Target: target,
             },
         },
     }
     return c.client.Set(gnmiCtx, req)
-}
+    }
 
 
 
 
 
-func (c *GnmiClient) UpdateEnterprise_Enterprise(ctx context.Context, target string,  list map[string]*OnfEnterprise_Enterprise_Enterprise,
+
+
+
+func (c *GnmiClient) UpdateEnterprise_Enterprise_Item(ctx context.Context, target string,  data OnfEnterprise_Enterprise_Enterprise,
 ) (*gnmi.SetResponse, error) {
     gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
     defer cancel()
 
+
     
-    basePathElems :=  []*gnmi.PathElem{
-    {
-        Name: "enterprise",
+    
+
+    
+    path :=  []*gnmi.Path{
+        {
+            Elem: []*gnmi.PathElem{
+            {
+                    Name: "enterprise",
+                },
+            {
+                    Name: "enterprise",
+                    Key: map[string]string{
+                        "id": string(*data.Id),
+                        },
+                },
+            },
+            Target: target,
         },
     }
-    req := &gnmi.SetRequest{
-        Update: []*gnmi.Update{},
-    }
-    for _, item := range list {
 
-        path := &gnmi.Path{
-            Elem: append(basePathElems, &gnmi.PathElem{
-                Name: "list2a",
-                Key: map[string]string{
-                    "id": string(*item.Id),
-                    },
-            }),
-            Target: target,
-        }
-
-        // TODO if it's pointer, pass the value
-        // if it's a value pass it directly
-        r, err := gnmi_utils.CreateGnmiSetForContainer(ctx, *item, path, target)
-        if err != nil {
-            return nil, err
-        }
-        req.Update = append(req.Update, r.Update...)
+    req, err := gnmi_utils.CreateGnmiSetForContainer(ctx, data, path[0], target)
+    if err != nil {
+        return nil, err
     }
 
     return c.client.Set(gnmiCtx, req)
-}
+    }
+
+
+
+
+
+
+
+
+func (c *GnmiClient) GetUpf_Upf_Item(ctx context.Context, target string, 
+key string,
+) (*OnfUpf_Upf_Upf, error) {
+    gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
+    defer cancel()
+
+
+    
+    
+    path :=  []*gnmi.Path{
+        {
+            Elem: []*gnmi.PathElem{
+            {
+                    Name: "upf",
+                },
+            {
+                    Name: "upf",
+                    Key: map[string]string{
+                        
+                        "id": string(key),
+                        
+                        },
+                },
+            },
+            Target: target,
+        },
+    }
+
+    req := &gnmi.GetRequest{
+        Encoding: gnmi.Encoding_JSON,
+        Path:     path,
+    }
+    res, err := c.client.Get(gnmiCtx, req)
+
+    if err != nil {
+        return nil, err
+    }
+
+    val, err := gnmi_utils.GetResponseUpdate(res)
+
+    if err != nil {
+        return nil, err
+    }
+
+    json := val.GetJsonVal()
+    st := Device{}
+    Unmarshal(json, &st)
+
+    if reflect.ValueOf(st.Upf).Kind() == reflect.Ptr && reflect.ValueOf(st.Upf).IsNil() {
+        return nil, status.Error(codes.NotFound, "OnfUpf_Upf_Upf-not-found")
+    }
+    if res, ok := st.Upf.Upf[key]; ok {
+        return res, nil
+    }
+
+    return nil, status.Error(codes.NotFound, "OnfUpf_Upf_Upf-not-found")
+    }
+
+
+
+
+
+
+
+
+func (c *GnmiClient) DeleteUpf_Upf_Item(ctx context.Context, target string, 
+key string,
+) (*gnmi.SetResponse, error) {
+    gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
+    defer cancel()
+
+
+    
+    
+    path :=  []*gnmi.Path{
+        {
+            Elem: []*gnmi.PathElem{
+            {
+                    Name: "upf",
+                },
+            {
+                    Name: "upf",
+                    Key: map[string]string{
+                        
+                        "id": string(key),
+                        
+                        },
+                },
+            },
+            Target: target,
+        },
+    }
+
+    req := &gnmi.SetRequest{
+        Delete: []*gnmi.Path{
+            {
+            Elem:   path[0].Elem,
+            Target: target,
+            },
+        },
+    }
+    return c.client.Set(gnmiCtx, req)
+    }
+
+
+
+
+
+
+
+
+func (c *GnmiClient) UpdateUpf_Upf_Item(ctx context.Context, target string,  data OnfUpf_Upf_Upf,
+) (*gnmi.SetResponse, error) {
+    gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
+    defer cancel()
+
+
+    
+    
+
+    
+    path :=  []*gnmi.Path{
+        {
+            Elem: []*gnmi.PathElem{
+            {
+                    Name: "upf",
+                },
+            {
+                    Name: "upf",
+                    Key: map[string]string{
+                        "id": string(*data.Id),
+                        },
+                },
+            },
+            Target: target,
+        },
+    }
+
+    req, err := gnmi_utils.CreateGnmiSetForContainer(ctx, data, path[0], target)
+    if err != nil {
+        return nil, err
+    }
+
+    return c.client.Set(gnmiCtx, req)
+    }
 
 
 
@@ -1923,6 +1661,137 @@ func (c *GnmiClient) UpdateSite_Site(ctx context.Context, target string,  list m
     basePathElems :=  []*gnmi.PathElem{
     {
         Name: "site",
+        },
+    }
+    req := &gnmi.SetRequest{
+        Update: []*gnmi.Update{},
+    }
+    for _, item := range list {
+
+        path := &gnmi.Path{
+            Elem: append(basePathElems, &gnmi.PathElem{
+                Name: "list2a",
+                Key: map[string]string{
+                    "id": string(*item.Id),
+                    },
+            }),
+            Target: target,
+        }
+
+        // TODO if it's pointer, pass the value
+        // if it's a value pass it directly
+        r, err := gnmi_utils.CreateGnmiSetForContainer(ctx, *item, path, target)
+        if err != nil {
+            return nil, err
+        }
+        req.Update = append(req.Update, r.Update...)
+    }
+
+    return c.client.Set(gnmiCtx, req)
+}
+
+
+
+
+
+func (c *GnmiClient) GetTemplate_Template(ctx context.Context, target string, 
+) (map[string]*OnfTemplate_Template_Template, error) {
+    gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
+    defer cancel()
+
+    
+
+path :=  []*gnmi.Path{
+    {
+        Elem: []*gnmi.PathElem{
+        {
+                Name: "template",
+            },
+        {
+                Name: "template",
+            },
+        },
+        Target: target,
+    },
+}
+    req := &gnmi.GetRequest{
+        Encoding: gnmi.Encoding_JSON,
+        Path:     path,
+    }
+    res, err := c.client.Get(gnmiCtx, req)
+
+    if err != nil {
+        return nil, err
+    }
+
+    val, err := gnmi_utils.GetResponseUpdate(res)
+
+    if err != nil {
+        return nil, err
+    }
+
+    json := val.GetJsonVal()
+    st := Device{}
+    Unmarshal(json, &st)
+
+    if reflect.ValueOf(st.Template).Kind() == reflect.Ptr && reflect.ValueOf(st.Template).IsNil() {
+        return nil, status.Error(codes.NotFound, "OnfTemplate_Template_Template-not-found")
+    }
+    if reflect.ValueOf(st.Template.Template).Kind() == reflect.Ptr && reflect.ValueOf(st.Template.Template).IsNil() {
+        return nil, status.Error(codes.NotFound, "OnfTemplate_Template_Template-not-found")
+    }
+
+    return st.Template.Template, nil
+}
+
+
+
+
+
+func (c *GnmiClient) DeleteTemplate_Template(ctx context.Context, target string, 
+) (*gnmi.SetResponse, error) {
+    gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
+    defer cancel()
+
+    
+
+path :=  []*gnmi.Path{
+    {
+        Elem: []*gnmi.PathElem{
+        {
+                Name: "template",
+            },
+        {
+                Name: "template",
+            },
+        },
+        Target: target,
+    },
+}
+    req := &gnmi.SetRequest{
+        Delete: []*gnmi.Path{
+            {
+                Elem:   path[0].Elem,
+                Target: target,
+            },
+        },
+    }
+    return c.client.Set(gnmiCtx, req)
+}
+
+
+
+
+
+func (c *GnmiClient) UpdateTemplate_Template(ctx context.Context, target string,  list map[string]*OnfTemplate_Template_Template,
+) (*gnmi.SetResponse, error) {
+    gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
+    defer cancel()
+
+    
+    basePathElems :=  []*gnmi.PathElem{
+    {
+        Name: "template",
         },
     }
     req := &gnmi.SetRequest{
@@ -2349,8 +2218,8 @@ func (c *GnmiClient) UpdateApplication_Application(ctx context.Context, target s
 
 
 
-func (c *GnmiClient) GetIpDomain_IpDomain(ctx context.Context, target string, 
-) (map[string]*OnfIpDomain_IpDomain_IpDomain, error) {
+func (c *GnmiClient) GetConnectivityService_ConnectivityService(ctx context.Context, target string, 
+) (map[string]*OnfConnectivityService_ConnectivityService_ConnectivityService, error) {
     gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
     defer cancel()
 
@@ -2360,10 +2229,10 @@ path :=  []*gnmi.Path{
     {
         Elem: []*gnmi.PathElem{
         {
-                Name: "ip-domain",
+                Name: "connectivity-service",
             },
         {
-                Name: "ip-domain",
+                Name: "connectivity-service",
             },
         },
         Target: target,
@@ -2389,21 +2258,21 @@ path :=  []*gnmi.Path{
     st := Device{}
     Unmarshal(json, &st)
 
-    if reflect.ValueOf(st.IpDomain).Kind() == reflect.Ptr && reflect.ValueOf(st.IpDomain).IsNil() {
-        return nil, status.Error(codes.NotFound, "OnfIpDomain_IpDomain_IpDomain-not-found")
+    if reflect.ValueOf(st.ConnectivityService).Kind() == reflect.Ptr && reflect.ValueOf(st.ConnectivityService).IsNil() {
+        return nil, status.Error(codes.NotFound, "OnfConnectivityService_ConnectivityService_ConnectivityService-not-found")
     }
-    if reflect.ValueOf(st.IpDomain.IpDomain).Kind() == reflect.Ptr && reflect.ValueOf(st.IpDomain.IpDomain).IsNil() {
-        return nil, status.Error(codes.NotFound, "OnfIpDomain_IpDomain_IpDomain-not-found")
+    if reflect.ValueOf(st.ConnectivityService.ConnectivityService).Kind() == reflect.Ptr && reflect.ValueOf(st.ConnectivityService.ConnectivityService).IsNil() {
+        return nil, status.Error(codes.NotFound, "OnfConnectivityService_ConnectivityService_ConnectivityService-not-found")
     }
 
-    return st.IpDomain.IpDomain, nil
+    return st.ConnectivityService.ConnectivityService, nil
 }
 
 
 
 
 
-func (c *GnmiClient) DeleteIpDomain_IpDomain(ctx context.Context, target string, 
+func (c *GnmiClient) DeleteConnectivityService_ConnectivityService(ctx context.Context, target string, 
 ) (*gnmi.SetResponse, error) {
     gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
     defer cancel()
@@ -2414,10 +2283,10 @@ path :=  []*gnmi.Path{
     {
         Elem: []*gnmi.PathElem{
         {
-                Name: "ip-domain",
+                Name: "connectivity-service",
             },
         {
-                Name: "ip-domain",
+                Name: "connectivity-service",
             },
         },
         Target: target,
@@ -2438,7 +2307,7 @@ path :=  []*gnmi.Path{
 
 
 
-func (c *GnmiClient) UpdateIpDomain_IpDomain(ctx context.Context, target string,  list map[string]*OnfIpDomain_IpDomain_IpDomain,
+func (c *GnmiClient) UpdateConnectivityService_ConnectivityService(ctx context.Context, target string,  list map[string]*OnfConnectivityService_ConnectivityService_ConnectivityService,
 ) (*gnmi.SetResponse, error) {
     gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
     defer cancel()
@@ -2446,269 +2315,7 @@ func (c *GnmiClient) UpdateIpDomain_IpDomain(ctx context.Context, target string,
     
     basePathElems :=  []*gnmi.PathElem{
     {
-        Name: "ip-domain",
-        },
-    }
-    req := &gnmi.SetRequest{
-        Update: []*gnmi.Update{},
-    }
-    for _, item := range list {
-
-        path := &gnmi.Path{
-            Elem: append(basePathElems, &gnmi.PathElem{
-                Name: "list2a",
-                Key: map[string]string{
-                    "id": string(*item.Id),
-                    },
-            }),
-            Target: target,
-        }
-
-        // TODO if it's pointer, pass the value
-        // if it's a value pass it directly
-        r, err := gnmi_utils.CreateGnmiSetForContainer(ctx, *item, path, target)
-        if err != nil {
-            return nil, err
-        }
-        req.Update = append(req.Update, r.Update...)
-    }
-
-    return c.client.Set(gnmiCtx, req)
-}
-
-
-
-
-
-func (c *GnmiClient) GetTemplate_Template(ctx context.Context, target string, 
-) (map[string]*OnfTemplate_Template_Template, error) {
-    gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
-    defer cancel()
-
-    
-
-path :=  []*gnmi.Path{
-    {
-        Elem: []*gnmi.PathElem{
-        {
-                Name: "template",
-            },
-        {
-                Name: "template",
-            },
-        },
-        Target: target,
-    },
-}
-    req := &gnmi.GetRequest{
-        Encoding: gnmi.Encoding_JSON,
-        Path:     path,
-    }
-    res, err := c.client.Get(gnmiCtx, req)
-
-    if err != nil {
-        return nil, err
-    }
-
-    val, err := gnmi_utils.GetResponseUpdate(res)
-
-    if err != nil {
-        return nil, err
-    }
-
-    json := val.GetJsonVal()
-    st := Device{}
-    Unmarshal(json, &st)
-
-    if reflect.ValueOf(st.Template).Kind() == reflect.Ptr && reflect.ValueOf(st.Template).IsNil() {
-        return nil, status.Error(codes.NotFound, "OnfTemplate_Template_Template-not-found")
-    }
-    if reflect.ValueOf(st.Template.Template).Kind() == reflect.Ptr && reflect.ValueOf(st.Template.Template).IsNil() {
-        return nil, status.Error(codes.NotFound, "OnfTemplate_Template_Template-not-found")
-    }
-
-    return st.Template.Template, nil
-}
-
-
-
-
-
-func (c *GnmiClient) DeleteTemplate_Template(ctx context.Context, target string, 
-) (*gnmi.SetResponse, error) {
-    gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
-    defer cancel()
-
-    
-
-path :=  []*gnmi.Path{
-    {
-        Elem: []*gnmi.PathElem{
-        {
-                Name: "template",
-            },
-        {
-                Name: "template",
-            },
-        },
-        Target: target,
-    },
-}
-    req := &gnmi.SetRequest{
-        Delete: []*gnmi.Path{
-            {
-                Elem:   path[0].Elem,
-                Target: target,
-            },
-        },
-    }
-    return c.client.Set(gnmiCtx, req)
-}
-
-
-
-
-
-func (c *GnmiClient) UpdateTemplate_Template(ctx context.Context, target string,  list map[string]*OnfTemplate_Template_Template,
-) (*gnmi.SetResponse, error) {
-    gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
-    defer cancel()
-
-    
-    basePathElems :=  []*gnmi.PathElem{
-    {
-        Name: "template",
-        },
-    }
-    req := &gnmi.SetRequest{
-        Update: []*gnmi.Update{},
-    }
-    for _, item := range list {
-
-        path := &gnmi.Path{
-            Elem: append(basePathElems, &gnmi.PathElem{
-                Name: "list2a",
-                Key: map[string]string{
-                    "id": string(*item.Id),
-                    },
-            }),
-            Target: target,
-        }
-
-        // TODO if it's pointer, pass the value
-        // if it's a value pass it directly
-        r, err := gnmi_utils.CreateGnmiSetForContainer(ctx, *item, path, target)
-        if err != nil {
-            return nil, err
-        }
-        req.Update = append(req.Update, r.Update...)
-    }
-
-    return c.client.Set(gnmiCtx, req)
-}
-
-
-
-
-
-func (c *GnmiClient) GetUpf_Upf(ctx context.Context, target string, 
-) (map[string]*OnfUpf_Upf_Upf, error) {
-    gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
-    defer cancel()
-
-    
-
-path :=  []*gnmi.Path{
-    {
-        Elem: []*gnmi.PathElem{
-        {
-                Name: "upf",
-            },
-        {
-                Name: "upf",
-            },
-        },
-        Target: target,
-    },
-}
-    req := &gnmi.GetRequest{
-        Encoding: gnmi.Encoding_JSON,
-        Path:     path,
-    }
-    res, err := c.client.Get(gnmiCtx, req)
-
-    if err != nil {
-        return nil, err
-    }
-
-    val, err := gnmi_utils.GetResponseUpdate(res)
-
-    if err != nil {
-        return nil, err
-    }
-
-    json := val.GetJsonVal()
-    st := Device{}
-    Unmarshal(json, &st)
-
-    if reflect.ValueOf(st.Upf).Kind() == reflect.Ptr && reflect.ValueOf(st.Upf).IsNil() {
-        return nil, status.Error(codes.NotFound, "OnfUpf_Upf_Upf-not-found")
-    }
-    if reflect.ValueOf(st.Upf.Upf).Kind() == reflect.Ptr && reflect.ValueOf(st.Upf.Upf).IsNil() {
-        return nil, status.Error(codes.NotFound, "OnfUpf_Upf_Upf-not-found")
-    }
-
-    return st.Upf.Upf, nil
-}
-
-
-
-
-
-func (c *GnmiClient) DeleteUpf_Upf(ctx context.Context, target string, 
-) (*gnmi.SetResponse, error) {
-    gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
-    defer cancel()
-
-    
-
-path :=  []*gnmi.Path{
-    {
-        Elem: []*gnmi.PathElem{
-        {
-                Name: "upf",
-            },
-        {
-                Name: "upf",
-            },
-        },
-        Target: target,
-    },
-}
-    req := &gnmi.SetRequest{
-        Delete: []*gnmi.Path{
-            {
-                Elem:   path[0].Elem,
-                Target: target,
-            },
-        },
-    }
-    return c.client.Set(gnmiCtx, req)
-}
-
-
-
-
-
-func (c *GnmiClient) UpdateUpf_Upf(ctx context.Context, target string,  list map[string]*OnfUpf_Upf_Upf,
-) (*gnmi.SetResponse, error) {
-    gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
-    defer cancel()
-
-    
-    basePathElems :=  []*gnmi.PathElem{
-    {
-        Name: "upf",
+        Name: "connectivity-service",
         },
     }
     req := &gnmi.SetRequest{
@@ -2871,108 +2478,130 @@ func (c *GnmiClient) UpdateDeviceGroup_DeviceGroup(ctx context.Context, target s
 
 
 
-func (c *GnmiClient) GetConnectivityService(ctx context.Context, target string, 
-) (*OnfConnectivityService_ConnectivityService, error) {
-gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
-defer cancel()
 
 
+func (c *GnmiClient) GetIpDomain_IpDomain(ctx context.Context, target string, 
+) (map[string]*OnfIpDomain_IpDomain_IpDomain, error) {
+    gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
+    defer cancel()
+
+    
 
 path :=  []*gnmi.Path{
     {
         Elem: []*gnmi.PathElem{
         {
-                Name: "connectivity-service",
+                Name: "ip-domain",
+            },
+        {
+                Name: "ip-domain",
             },
         },
         Target: target,
     },
 }
-
-req := &gnmi.GetRequest{
-    Encoding: gnmi.Encoding_JSON,
-    Path:     path,
+    req := &gnmi.GetRequest{
+        Encoding: gnmi.Encoding_JSON,
+        Path:     path,
     }
     res, err := c.client.Get(gnmiCtx, req)
 
     if err != nil {
-    return nil, err
+        return nil, err
     }
 
     val, err := gnmi_utils.GetResponseUpdate(res)
 
     if err != nil {
-    return nil, err
+        return nil, err
     }
 
     json := val.GetJsonVal()
     st := Device{}
     Unmarshal(json, &st)
 
-    if reflect.ValueOf(st.ConnectivityService).Kind() == reflect.Ptr && reflect.ValueOf(st.ConnectivityService).IsNil() {
-    return nil, status.Error(codes.NotFound, "OnfConnectivityService_ConnectivityService-not-found")
+    if reflect.ValueOf(st.IpDomain).Kind() == reflect.Ptr && reflect.ValueOf(st.IpDomain).IsNil() {
+        return nil, status.Error(codes.NotFound, "OnfIpDomain_IpDomain_IpDomain-not-found")
+    }
+    if reflect.ValueOf(st.IpDomain.IpDomain).Kind() == reflect.Ptr && reflect.ValueOf(st.IpDomain.IpDomain).IsNil() {
+        return nil, status.Error(codes.NotFound, "OnfIpDomain_IpDomain_IpDomain-not-found")
     }
 
-    return st.ConnectivityService, nil
-
+    return st.IpDomain.IpDomain, nil
 }
 
 
 
-func (c *GnmiClient) DeleteConnectivityService(ctx context.Context, target string, 
+
+
+func (c *GnmiClient) DeleteIpDomain_IpDomain(ctx context.Context, target string, 
 ) (*gnmi.SetResponse, error) {
-gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
-defer cancel()
+    gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
+    defer cancel()
 
-
+    
 
 path :=  []*gnmi.Path{
     {
         Elem: []*gnmi.PathElem{
         {
-                Name: "connectivity-service",
+                Name: "ip-domain",
+            },
+        {
+                Name: "ip-domain",
             },
         },
         Target: target,
     },
 }
-
-
-req := &gnmi.SetRequest{
-    Delete: []*gnmi.Path{
-    {
-    Elem:   path[0].Elem,
-    Target: target,
-    },
-    },
+    req := &gnmi.SetRequest{
+        Delete: []*gnmi.Path{
+            {
+                Elem:   path[0].Elem,
+                Target: target,
+            },
+        },
     }
     return c.client.Set(gnmiCtx, req)
 }
 
 
 
-func (c *GnmiClient) UpdateConnectivityService(ctx context.Context, target string,  data OnfConnectivityService_ConnectivityService,
+
+
+func (c *GnmiClient) UpdateIpDomain_IpDomain(ctx context.Context, target string,  list map[string]*OnfIpDomain_IpDomain_IpDomain,
 ) (*gnmi.SetResponse, error) {
-gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
-defer cancel()
+    gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
+    defer cancel()
 
-
-
-path :=  []*gnmi.Path{
+    
+    basePathElems :=  []*gnmi.PathElem{
     {
-        Elem: []*gnmi.PathElem{
-        {
-                Name: "connectivity-service",
-            },
+        Name: "ip-domain",
         },
-        Target: target,
-    },
-}
+    }
+    req := &gnmi.SetRequest{
+        Update: []*gnmi.Update{},
+    }
+    for _, item := range list {
 
+        path := &gnmi.Path{
+            Elem: append(basePathElems, &gnmi.PathElem{
+                Name: "list2a",
+                Key: map[string]string{
+                    "id": string(*item.Id),
+                    },
+            }),
+            Target: target,
+        }
 
-req, err := gnmi_utils.CreateGnmiSetForContainer(ctx, data, path[0], target)
-    if err != nil {
-    return nil, err
+        // TODO if it's pointer, pass the value
+        // if it's a value pass it directly
+        r, err := gnmi_utils.CreateGnmiSetForContainer(ctx, *item, path, target)
+        if err != nil {
+            return nil, err
+        }
+        req.Update = append(req.Update, r.Update...)
     }
 
     return c.client.Set(gnmiCtx, req)
@@ -2980,12 +2609,14 @@ req, err := gnmi_utils.CreateGnmiSetForContainer(ctx, data, path[0], target)
 
 
 
-func (c *GnmiClient) GetEnterprise(ctx context.Context, target string, 
-) (*OnfEnterprise_Enterprise, error) {
-gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
-defer cancel()
 
 
+func (c *GnmiClient) GetEnterprise_Enterprise(ctx context.Context, target string, 
+) (map[string]*OnfEnterprise_Enterprise_Enterprise, error) {
+    gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
+    defer cancel()
+
+    
 
 path :=  []*gnmi.Path{
     {
@@ -2993,25 +2624,27 @@ path :=  []*gnmi.Path{
         {
                 Name: "enterprise",
             },
+        {
+                Name: "enterprise",
+            },
         },
         Target: target,
     },
 }
-
-req := &gnmi.GetRequest{
-    Encoding: gnmi.Encoding_JSON,
-    Path:     path,
+    req := &gnmi.GetRequest{
+        Encoding: gnmi.Encoding_JSON,
+        Path:     path,
     }
     res, err := c.client.Get(gnmiCtx, req)
 
     if err != nil {
-    return nil, err
+        return nil, err
     }
 
     val, err := gnmi_utils.GetResponseUpdate(res)
 
     if err != nil {
-    return nil, err
+        return nil, err
     }
 
     json := val.GetJsonVal()
@@ -3019,21 +2652,25 @@ req := &gnmi.GetRequest{
     Unmarshal(json, &st)
 
     if reflect.ValueOf(st.Enterprise).Kind() == reflect.Ptr && reflect.ValueOf(st.Enterprise).IsNil() {
-    return nil, status.Error(codes.NotFound, "OnfEnterprise_Enterprise-not-found")
+        return nil, status.Error(codes.NotFound, "OnfEnterprise_Enterprise_Enterprise-not-found")
+    }
+    if reflect.ValueOf(st.Enterprise.Enterprise).Kind() == reflect.Ptr && reflect.ValueOf(st.Enterprise.Enterprise).IsNil() {
+        return nil, status.Error(codes.NotFound, "OnfEnterprise_Enterprise_Enterprise-not-found")
     }
 
-    return st.Enterprise, nil
-
+    return st.Enterprise.Enterprise, nil
 }
 
 
 
-func (c *GnmiClient) DeleteEnterprise(ctx context.Context, target string, 
+
+
+func (c *GnmiClient) DeleteEnterprise_Enterprise(ctx context.Context, target string, 
 ) (*gnmi.SetResponse, error) {
-gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
-defer cancel()
+    gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
+    defer cancel()
 
-
+    
 
 path :=  []*gnmi.Path{
     {
@@ -3041,47 +2678,192 @@ path :=  []*gnmi.Path{
         {
                 Name: "enterprise",
             },
+        {
+                Name: "enterprise",
+            },
         },
         Target: target,
     },
 }
-
-
-req := &gnmi.SetRequest{
-    Delete: []*gnmi.Path{
-    {
-    Elem:   path[0].Elem,
-    Target: target,
-    },
-    },
+    req := &gnmi.SetRequest{
+        Delete: []*gnmi.Path{
+            {
+                Elem:   path[0].Elem,
+                Target: target,
+            },
+        },
     }
     return c.client.Set(gnmiCtx, req)
 }
 
 
 
-func (c *GnmiClient) UpdateEnterprise(ctx context.Context, target string,  data OnfEnterprise_Enterprise,
+
+
+func (c *GnmiClient) UpdateEnterprise_Enterprise(ctx context.Context, target string,  list map[string]*OnfEnterprise_Enterprise_Enterprise,
 ) (*gnmi.SetResponse, error) {
-gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
-defer cancel()
+    gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
+    defer cancel()
+
+    
+    basePathElems :=  []*gnmi.PathElem{
+    {
+        Name: "enterprise",
+        },
+    }
+    req := &gnmi.SetRequest{
+        Update: []*gnmi.Update{},
+    }
+    for _, item := range list {
+
+        path := &gnmi.Path{
+            Elem: append(basePathElems, &gnmi.PathElem{
+                Name: "list2a",
+                Key: map[string]string{
+                    "id": string(*item.Id),
+                    },
+            }),
+            Target: target,
+        }
+
+        // TODO if it's pointer, pass the value
+        // if it's a value pass it directly
+        r, err := gnmi_utils.CreateGnmiSetForContainer(ctx, *item, path, target)
+        if err != nil {
+            return nil, err
+        }
+        req.Update = append(req.Update, r.Update...)
+    }
+
+    return c.client.Set(gnmiCtx, req)
+}
 
 
+
+
+
+func (c *GnmiClient) GetUpf_Upf(ctx context.Context, target string, 
+) (map[string]*OnfUpf_Upf_Upf, error) {
+    gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
+    defer cancel()
+
+    
 
 path :=  []*gnmi.Path{
     {
         Elem: []*gnmi.PathElem{
         {
-                Name: "enterprise",
+                Name: "upf",
+            },
+        {
+                Name: "upf",
             },
         },
         Target: target,
     },
 }
+    req := &gnmi.GetRequest{
+        Encoding: gnmi.Encoding_JSON,
+        Path:     path,
+    }
+    res, err := c.client.Get(gnmiCtx, req)
 
-
-req, err := gnmi_utils.CreateGnmiSetForContainer(ctx, data, path[0], target)
     if err != nil {
-    return nil, err
+        return nil, err
+    }
+
+    val, err := gnmi_utils.GetResponseUpdate(res)
+
+    if err != nil {
+        return nil, err
+    }
+
+    json := val.GetJsonVal()
+    st := Device{}
+    Unmarshal(json, &st)
+
+    if reflect.ValueOf(st.Upf).Kind() == reflect.Ptr && reflect.ValueOf(st.Upf).IsNil() {
+        return nil, status.Error(codes.NotFound, "OnfUpf_Upf_Upf-not-found")
+    }
+    if reflect.ValueOf(st.Upf.Upf).Kind() == reflect.Ptr && reflect.ValueOf(st.Upf.Upf).IsNil() {
+        return nil, status.Error(codes.NotFound, "OnfUpf_Upf_Upf-not-found")
+    }
+
+    return st.Upf.Upf, nil
+}
+
+
+
+
+
+func (c *GnmiClient) DeleteUpf_Upf(ctx context.Context, target string, 
+) (*gnmi.SetResponse, error) {
+    gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
+    defer cancel()
+
+    
+
+path :=  []*gnmi.Path{
+    {
+        Elem: []*gnmi.PathElem{
+        {
+                Name: "upf",
+            },
+        {
+                Name: "upf",
+            },
+        },
+        Target: target,
+    },
+}
+    req := &gnmi.SetRequest{
+        Delete: []*gnmi.Path{
+            {
+                Elem:   path[0].Elem,
+                Target: target,
+            },
+        },
+    }
+    return c.client.Set(gnmiCtx, req)
+}
+
+
+
+
+
+func (c *GnmiClient) UpdateUpf_Upf(ctx context.Context, target string,  list map[string]*OnfUpf_Upf_Upf,
+) (*gnmi.SetResponse, error) {
+    gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
+    defer cancel()
+
+    
+    basePathElems :=  []*gnmi.PathElem{
+    {
+        Name: "upf",
+        },
+    }
+    req := &gnmi.SetRequest{
+        Update: []*gnmi.Update{},
+    }
+    for _, item := range list {
+
+        path := &gnmi.Path{
+            Elem: append(basePathElems, &gnmi.PathElem{
+                Name: "list2a",
+                Key: map[string]string{
+                    "id": string(*item.Id),
+                    },
+            }),
+            Target: target,
+        }
+
+        // TODO if it's pointer, pass the value
+        // if it's a value pass it directly
+        r, err := gnmi_utils.CreateGnmiSetForContainer(ctx, *item, path, target)
+        if err != nil {
+            return nil, err
+        }
+        req.Update = append(req.Update, r.Update...)
     }
 
     return c.client.Set(gnmiCtx, req)
@@ -3181,6 +2963,115 @@ path :=  []*gnmi.Path{
         Elem: []*gnmi.PathElem{
         {
                 Name: "site",
+            },
+        },
+        Target: target,
+    },
+}
+
+
+req, err := gnmi_utils.CreateGnmiSetForContainer(ctx, data, path[0], target)
+    if err != nil {
+    return nil, err
+    }
+
+    return c.client.Set(gnmiCtx, req)
+}
+
+
+
+func (c *GnmiClient) GetTemplate(ctx context.Context, target string, 
+) (*OnfTemplate_Template, error) {
+gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
+defer cancel()
+
+
+
+path :=  []*gnmi.Path{
+    {
+        Elem: []*gnmi.PathElem{
+        {
+                Name: "template",
+            },
+        },
+        Target: target,
+    },
+}
+
+req := &gnmi.GetRequest{
+    Encoding: gnmi.Encoding_JSON,
+    Path:     path,
+    }
+    res, err := c.client.Get(gnmiCtx, req)
+
+    if err != nil {
+    return nil, err
+    }
+
+    val, err := gnmi_utils.GetResponseUpdate(res)
+
+    if err != nil {
+    return nil, err
+    }
+
+    json := val.GetJsonVal()
+    st := Device{}
+    Unmarshal(json, &st)
+
+    if reflect.ValueOf(st.Template).Kind() == reflect.Ptr && reflect.ValueOf(st.Template).IsNil() {
+    return nil, status.Error(codes.NotFound, "OnfTemplate_Template-not-found")
+    }
+
+    return st.Template, nil
+
+}
+
+
+
+func (c *GnmiClient) DeleteTemplate(ctx context.Context, target string, 
+) (*gnmi.SetResponse, error) {
+gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
+defer cancel()
+
+
+
+path :=  []*gnmi.Path{
+    {
+        Elem: []*gnmi.PathElem{
+        {
+                Name: "template",
+            },
+        },
+        Target: target,
+    },
+}
+
+
+req := &gnmi.SetRequest{
+    Delete: []*gnmi.Path{
+    {
+    Elem:   path[0].Elem,
+    Target: target,
+    },
+    },
+    }
+    return c.client.Set(gnmiCtx, req)
+}
+
+
+
+func (c *GnmiClient) UpdateTemplate(ctx context.Context, target string,  data OnfTemplate_Template,
+) (*gnmi.SetResponse, error) {
+gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
+defer cancel()
+
+
+
+path :=  []*gnmi.Path{
+    {
+        Elem: []*gnmi.PathElem{
+        {
+                Name: "template",
             },
         },
         Target: target,
@@ -3525,8 +3416,8 @@ req, err := gnmi_utils.CreateGnmiSetForContainer(ctx, data, path[0], target)
 
 
 
-func (c *GnmiClient) GetIpDomain(ctx context.Context, target string, 
-) (*OnfIpDomain_IpDomain, error) {
+func (c *GnmiClient) GetConnectivityService(ctx context.Context, target string, 
+) (*OnfConnectivityService_ConnectivityService, error) {
 gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
 defer cancel()
 
@@ -3536,7 +3427,7 @@ path :=  []*gnmi.Path{
     {
         Elem: []*gnmi.PathElem{
         {
-                Name: "ip-domain",
+                Name: "connectivity-service",
             },
         },
         Target: target,
@@ -3563,17 +3454,17 @@ req := &gnmi.GetRequest{
     st := Device{}
     Unmarshal(json, &st)
 
-    if reflect.ValueOf(st.IpDomain).Kind() == reflect.Ptr && reflect.ValueOf(st.IpDomain).IsNil() {
-    return nil, status.Error(codes.NotFound, "OnfIpDomain_IpDomain-not-found")
+    if reflect.ValueOf(st.ConnectivityService).Kind() == reflect.Ptr && reflect.ValueOf(st.ConnectivityService).IsNil() {
+    return nil, status.Error(codes.NotFound, "OnfConnectivityService_ConnectivityService-not-found")
     }
 
-    return st.IpDomain, nil
+    return st.ConnectivityService, nil
 
 }
 
 
 
-func (c *GnmiClient) DeleteIpDomain(ctx context.Context, target string, 
+func (c *GnmiClient) DeleteConnectivityService(ctx context.Context, target string, 
 ) (*gnmi.SetResponse, error) {
 gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
 defer cancel()
@@ -3584,7 +3475,7 @@ path :=  []*gnmi.Path{
     {
         Elem: []*gnmi.PathElem{
         {
-                Name: "ip-domain",
+                Name: "connectivity-service",
             },
         },
         Target: target,
@@ -3605,7 +3496,7 @@ req := &gnmi.SetRequest{
 
 
 
-func (c *GnmiClient) UpdateIpDomain(ctx context.Context, target string,  data OnfIpDomain_IpDomain,
+func (c *GnmiClient) UpdateConnectivityService(ctx context.Context, target string,  data OnfConnectivityService_ConnectivityService,
 ) (*gnmi.SetResponse, error) {
 gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
 defer cancel()
@@ -3616,225 +3507,7 @@ path :=  []*gnmi.Path{
     {
         Elem: []*gnmi.PathElem{
         {
-                Name: "ip-domain",
-            },
-        },
-        Target: target,
-    },
-}
-
-
-req, err := gnmi_utils.CreateGnmiSetForContainer(ctx, data, path[0], target)
-    if err != nil {
-    return nil, err
-    }
-
-    return c.client.Set(gnmiCtx, req)
-}
-
-
-
-func (c *GnmiClient) GetTemplate(ctx context.Context, target string, 
-) (*OnfTemplate_Template, error) {
-gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
-defer cancel()
-
-
-
-path :=  []*gnmi.Path{
-    {
-        Elem: []*gnmi.PathElem{
-        {
-                Name: "template",
-            },
-        },
-        Target: target,
-    },
-}
-
-req := &gnmi.GetRequest{
-    Encoding: gnmi.Encoding_JSON,
-    Path:     path,
-    }
-    res, err := c.client.Get(gnmiCtx, req)
-
-    if err != nil {
-    return nil, err
-    }
-
-    val, err := gnmi_utils.GetResponseUpdate(res)
-
-    if err != nil {
-    return nil, err
-    }
-
-    json := val.GetJsonVal()
-    st := Device{}
-    Unmarshal(json, &st)
-
-    if reflect.ValueOf(st.Template).Kind() == reflect.Ptr && reflect.ValueOf(st.Template).IsNil() {
-    return nil, status.Error(codes.NotFound, "OnfTemplate_Template-not-found")
-    }
-
-    return st.Template, nil
-
-}
-
-
-
-func (c *GnmiClient) DeleteTemplate(ctx context.Context, target string, 
-) (*gnmi.SetResponse, error) {
-gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
-defer cancel()
-
-
-
-path :=  []*gnmi.Path{
-    {
-        Elem: []*gnmi.PathElem{
-        {
-                Name: "template",
-            },
-        },
-        Target: target,
-    },
-}
-
-
-req := &gnmi.SetRequest{
-    Delete: []*gnmi.Path{
-    {
-    Elem:   path[0].Elem,
-    Target: target,
-    },
-    },
-    }
-    return c.client.Set(gnmiCtx, req)
-}
-
-
-
-func (c *GnmiClient) UpdateTemplate(ctx context.Context, target string,  data OnfTemplate_Template,
-) (*gnmi.SetResponse, error) {
-gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
-defer cancel()
-
-
-
-path :=  []*gnmi.Path{
-    {
-        Elem: []*gnmi.PathElem{
-        {
-                Name: "template",
-            },
-        },
-        Target: target,
-    },
-}
-
-
-req, err := gnmi_utils.CreateGnmiSetForContainer(ctx, data, path[0], target)
-    if err != nil {
-    return nil, err
-    }
-
-    return c.client.Set(gnmiCtx, req)
-}
-
-
-
-func (c *GnmiClient) GetUpf(ctx context.Context, target string, 
-) (*OnfUpf_Upf, error) {
-gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
-defer cancel()
-
-
-
-path :=  []*gnmi.Path{
-    {
-        Elem: []*gnmi.PathElem{
-        {
-                Name: "upf",
-            },
-        },
-        Target: target,
-    },
-}
-
-req := &gnmi.GetRequest{
-    Encoding: gnmi.Encoding_JSON,
-    Path:     path,
-    }
-    res, err := c.client.Get(gnmiCtx, req)
-
-    if err != nil {
-    return nil, err
-    }
-
-    val, err := gnmi_utils.GetResponseUpdate(res)
-
-    if err != nil {
-    return nil, err
-    }
-
-    json := val.GetJsonVal()
-    st := Device{}
-    Unmarshal(json, &st)
-
-    if reflect.ValueOf(st.Upf).Kind() == reflect.Ptr && reflect.ValueOf(st.Upf).IsNil() {
-    return nil, status.Error(codes.NotFound, "OnfUpf_Upf-not-found")
-    }
-
-    return st.Upf, nil
-
-}
-
-
-
-func (c *GnmiClient) DeleteUpf(ctx context.Context, target string, 
-) (*gnmi.SetResponse, error) {
-gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
-defer cancel()
-
-
-
-path :=  []*gnmi.Path{
-    {
-        Elem: []*gnmi.PathElem{
-        {
-                Name: "upf",
-            },
-        },
-        Target: target,
-    },
-}
-
-
-req := &gnmi.SetRequest{
-    Delete: []*gnmi.Path{
-    {
-    Elem:   path[0].Elem,
-    Target: target,
-    },
-    },
-    }
-    return c.client.Set(gnmiCtx, req)
-}
-
-
-
-func (c *GnmiClient) UpdateUpf(ctx context.Context, target string,  data OnfUpf_Upf,
-) (*gnmi.SetResponse, error) {
-gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
-defer cancel()
-
-
-
-path :=  []*gnmi.Path{
-    {
-        Elem: []*gnmi.PathElem{
-        {
-                Name: "upf",
+                Name: "connectivity-service",
             },
         },
         Target: target,
@@ -3944,6 +3617,333 @@ path :=  []*gnmi.Path{
         Elem: []*gnmi.PathElem{
         {
                 Name: "device-group",
+            },
+        },
+        Target: target,
+    },
+}
+
+
+req, err := gnmi_utils.CreateGnmiSetForContainer(ctx, data, path[0], target)
+    if err != nil {
+    return nil, err
+    }
+
+    return c.client.Set(gnmiCtx, req)
+}
+
+
+
+func (c *GnmiClient) GetIpDomain(ctx context.Context, target string, 
+) (*OnfIpDomain_IpDomain, error) {
+gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
+defer cancel()
+
+
+
+path :=  []*gnmi.Path{
+    {
+        Elem: []*gnmi.PathElem{
+        {
+                Name: "ip-domain",
+            },
+        },
+        Target: target,
+    },
+}
+
+req := &gnmi.GetRequest{
+    Encoding: gnmi.Encoding_JSON,
+    Path:     path,
+    }
+    res, err := c.client.Get(gnmiCtx, req)
+
+    if err != nil {
+    return nil, err
+    }
+
+    val, err := gnmi_utils.GetResponseUpdate(res)
+
+    if err != nil {
+    return nil, err
+    }
+
+    json := val.GetJsonVal()
+    st := Device{}
+    Unmarshal(json, &st)
+
+    if reflect.ValueOf(st.IpDomain).Kind() == reflect.Ptr && reflect.ValueOf(st.IpDomain).IsNil() {
+    return nil, status.Error(codes.NotFound, "OnfIpDomain_IpDomain-not-found")
+    }
+
+    return st.IpDomain, nil
+
+}
+
+
+
+func (c *GnmiClient) DeleteIpDomain(ctx context.Context, target string, 
+) (*gnmi.SetResponse, error) {
+gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
+defer cancel()
+
+
+
+path :=  []*gnmi.Path{
+    {
+        Elem: []*gnmi.PathElem{
+        {
+                Name: "ip-domain",
+            },
+        },
+        Target: target,
+    },
+}
+
+
+req := &gnmi.SetRequest{
+    Delete: []*gnmi.Path{
+    {
+    Elem:   path[0].Elem,
+    Target: target,
+    },
+    },
+    }
+    return c.client.Set(gnmiCtx, req)
+}
+
+
+
+func (c *GnmiClient) UpdateIpDomain(ctx context.Context, target string,  data OnfIpDomain_IpDomain,
+) (*gnmi.SetResponse, error) {
+gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
+defer cancel()
+
+
+
+path :=  []*gnmi.Path{
+    {
+        Elem: []*gnmi.PathElem{
+        {
+                Name: "ip-domain",
+            },
+        },
+        Target: target,
+    },
+}
+
+
+req, err := gnmi_utils.CreateGnmiSetForContainer(ctx, data, path[0], target)
+    if err != nil {
+    return nil, err
+    }
+
+    return c.client.Set(gnmiCtx, req)
+}
+
+
+
+func (c *GnmiClient) GetEnterprise(ctx context.Context, target string, 
+) (*OnfEnterprise_Enterprise, error) {
+gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
+defer cancel()
+
+
+
+path :=  []*gnmi.Path{
+    {
+        Elem: []*gnmi.PathElem{
+        {
+                Name: "enterprise",
+            },
+        },
+        Target: target,
+    },
+}
+
+req := &gnmi.GetRequest{
+    Encoding: gnmi.Encoding_JSON,
+    Path:     path,
+    }
+    res, err := c.client.Get(gnmiCtx, req)
+
+    if err != nil {
+    return nil, err
+    }
+
+    val, err := gnmi_utils.GetResponseUpdate(res)
+
+    if err != nil {
+    return nil, err
+    }
+
+    json := val.GetJsonVal()
+    st := Device{}
+    Unmarshal(json, &st)
+
+    if reflect.ValueOf(st.Enterprise).Kind() == reflect.Ptr && reflect.ValueOf(st.Enterprise).IsNil() {
+    return nil, status.Error(codes.NotFound, "OnfEnterprise_Enterprise-not-found")
+    }
+
+    return st.Enterprise, nil
+
+}
+
+
+
+func (c *GnmiClient) DeleteEnterprise(ctx context.Context, target string, 
+) (*gnmi.SetResponse, error) {
+gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
+defer cancel()
+
+
+
+path :=  []*gnmi.Path{
+    {
+        Elem: []*gnmi.PathElem{
+        {
+                Name: "enterprise",
+            },
+        },
+        Target: target,
+    },
+}
+
+
+req := &gnmi.SetRequest{
+    Delete: []*gnmi.Path{
+    {
+    Elem:   path[0].Elem,
+    Target: target,
+    },
+    },
+    }
+    return c.client.Set(gnmiCtx, req)
+}
+
+
+
+func (c *GnmiClient) UpdateEnterprise(ctx context.Context, target string,  data OnfEnterprise_Enterprise,
+) (*gnmi.SetResponse, error) {
+gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
+defer cancel()
+
+
+
+path :=  []*gnmi.Path{
+    {
+        Elem: []*gnmi.PathElem{
+        {
+                Name: "enterprise",
+            },
+        },
+        Target: target,
+    },
+}
+
+
+req, err := gnmi_utils.CreateGnmiSetForContainer(ctx, data, path[0], target)
+    if err != nil {
+    return nil, err
+    }
+
+    return c.client.Set(gnmiCtx, req)
+}
+
+
+
+func (c *GnmiClient) GetUpf(ctx context.Context, target string, 
+) (*OnfUpf_Upf, error) {
+gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
+defer cancel()
+
+
+
+path :=  []*gnmi.Path{
+    {
+        Elem: []*gnmi.PathElem{
+        {
+                Name: "upf",
+            },
+        },
+        Target: target,
+    },
+}
+
+req := &gnmi.GetRequest{
+    Encoding: gnmi.Encoding_JSON,
+    Path:     path,
+    }
+    res, err := c.client.Get(gnmiCtx, req)
+
+    if err != nil {
+    return nil, err
+    }
+
+    val, err := gnmi_utils.GetResponseUpdate(res)
+
+    if err != nil {
+    return nil, err
+    }
+
+    json := val.GetJsonVal()
+    st := Device{}
+    Unmarshal(json, &st)
+
+    if reflect.ValueOf(st.Upf).Kind() == reflect.Ptr && reflect.ValueOf(st.Upf).IsNil() {
+    return nil, status.Error(codes.NotFound, "OnfUpf_Upf-not-found")
+    }
+
+    return st.Upf, nil
+
+}
+
+
+
+func (c *GnmiClient) DeleteUpf(ctx context.Context, target string, 
+) (*gnmi.SetResponse, error) {
+gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
+defer cancel()
+
+
+
+path :=  []*gnmi.Path{
+    {
+        Elem: []*gnmi.PathElem{
+        {
+                Name: "upf",
+            },
+        },
+        Target: target,
+    },
+}
+
+
+req := &gnmi.SetRequest{
+    Delete: []*gnmi.Path{
+    {
+    Elem:   path[0].Elem,
+    Target: target,
+    },
+    },
+    }
+    return c.client.Set(gnmiCtx, req)
+}
+
+
+
+func (c *GnmiClient) UpdateUpf(ctx context.Context, target string,  data OnfUpf_Upf,
+) (*gnmi.SetResponse, error) {
+gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
+defer cancel()
+
+
+
+path :=  []*gnmi.Path{
+    {
+        Elem: []*gnmi.PathElem{
+        {
+                Name: "upf",
             },
         },
         Target: target,
