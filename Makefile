@@ -6,7 +6,7 @@ SHELL 			  		= bash -e -o pipefail
 KIND_CLUSTER_NAME 		?= kind
 DOCKER_USER       		?=
 DOCKER_PASSWORD   		?=
-MODEL_COMPILER_VERSION  ?= v0.10.11
+MODEL_COMPILER_VERSION  ?= v0.10.13
 
 .PHONY: models
 
@@ -55,7 +55,7 @@ check-models-tag: # @HELP check that the model tags are valid
 	@make -C models/aether-4.x check-tag
 
 test: yang-lint check-models-tag models models-openapi models-gnmi-client # @HELP Make sure the generated code has been committed
-	# @bash test/generated.sh # TODO uncomment after AETHER-3550 is solved
+	@bash test/generated.sh
 	@make -C models/aether-2.0.x  test
 	@make -C models/aether-2.1.x  test
 	@make -C models/aether-4.x  test
