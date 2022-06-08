@@ -29,6 +29,76 @@ func NewAetherGnmiClient(conn *grpc.ClientConn) *GnmiClient {
 	return &GnmiClient{client: gnmi_client}
 }
 
+func (c *GnmiClient) Delete_ConnectivityServices_ConnectivityService(ctx context.Context, target string,
+	key string,
+) (*gnmi.SetResponse, error) {
+	gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
+	defer cancel()
+
+	path := []*gnmi.Path{
+		{
+			Elem: []*gnmi.PathElem{
+				{
+					Name: "connectivity-services",
+				},
+				{
+					Name: "connectivity-service",
+					Key: map[string]string{
+
+						"connectivity-service-id": fmt.Sprint(key),
+					},
+				},
+			},
+			Target: target,
+		},
+	}
+
+	req := &gnmi.SetRequest{
+		Delete: []*gnmi.Path{
+			{
+				Elem:   path[0].Elem,
+				Target: target,
+			},
+		},
+	}
+	return c.client.Set(gnmiCtx, req)
+}
+
+func (c *GnmiClient) Delete_Enterprises_Enterprise(ctx context.Context, target string,
+	key string,
+) (*gnmi.SetResponse, error) {
+	gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
+	defer cancel()
+
+	path := []*gnmi.Path{
+		{
+			Elem: []*gnmi.PathElem{
+				{
+					Name: "enterprises",
+				},
+				{
+					Name: "enterprise",
+					Key: map[string]string{
+
+						"enterprise-id": fmt.Sprint(key),
+					},
+				},
+			},
+			Target: target,
+		},
+	}
+
+	req := &gnmi.SetRequest{
+		Delete: []*gnmi.Path{
+			{
+				Elem:   path[0].Elem,
+				Target: target,
+			},
+		},
+	}
+	return c.client.Set(gnmiCtx, req)
+}
+
 func (c *GnmiClient) Get_ConnectivityServices_ConnectivityService(ctx context.Context, target string,
 	key string,
 ) (*OnfConnectivityService_ConnectivityServices_ConnectivityService, error) {
@@ -81,71 +151,6 @@ func (c *GnmiClient) Get_ConnectivityServices_ConnectivityService(ctx context.Co
 	}
 
 	return nil, status.Error(codes.NotFound, "OnfConnectivityService_ConnectivityServices_ConnectivityService-not-found")
-}
-
-func (c *GnmiClient) Delete_ConnectivityServices_ConnectivityService(ctx context.Context, target string,
-	key string,
-) (*gnmi.SetResponse, error) {
-	gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
-	defer cancel()
-
-	path := []*gnmi.Path{
-		{
-			Elem: []*gnmi.PathElem{
-				{
-					Name: "connectivity-services",
-				},
-				{
-					Name: "connectivity-service",
-					Key: map[string]string{
-
-						"connectivity-service-id": fmt.Sprint(key),
-					},
-				},
-			},
-			Target: target,
-		},
-	}
-
-	req := &gnmi.SetRequest{
-		Delete: []*gnmi.Path{
-			{
-				Elem:   path[0].Elem,
-				Target: target,
-			},
-		},
-	}
-	return c.client.Set(gnmiCtx, req)
-}
-
-func (c *GnmiClient) Update_ConnectivityServices_ConnectivityService(ctx context.Context, target string, data OnfConnectivityService_ConnectivityServices_ConnectivityService,
-) (*gnmi.SetResponse, error) {
-	gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
-	defer cancel()
-
-	path := []*gnmi.Path{
-		{
-			Elem: []*gnmi.PathElem{
-				{
-					Name: "connectivity-services",
-				},
-				{
-					Name: "connectivity-service",
-					Key: map[string]string{
-						"connectivity-service-id": fmt.Sprint(*data.ConnectivityServiceId),
-					},
-				},
-			},
-			Target: target,
-		},
-	}
-
-	req, err := gnmi_utils.CreateGnmiSetForContainer(ctx, data, path[0], target)
-	if err != nil {
-		return nil, err
-	}
-
-	return c.client.Set(gnmiCtx, req)
 }
 
 func (c *GnmiClient) Get_Enterprises_Enterprise(ctx context.Context, target string,
@@ -202,8 +207,7 @@ func (c *GnmiClient) Get_Enterprises_Enterprise(ctx context.Context, target stri
 	return nil, status.Error(codes.NotFound, "OnfEnterprise_Enterprises_Enterprise-not-found")
 }
 
-func (c *GnmiClient) Delete_Enterprises_Enterprise(ctx context.Context, target string,
-	key string,
+func (c *GnmiClient) Update_ConnectivityServices_ConnectivityService(ctx context.Context, target string, data OnfConnectivityService_ConnectivityServices_ConnectivityService,
 ) (*gnmi.SetResponse, error) {
 	gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
 	defer cancel()
@@ -212,13 +216,12 @@ func (c *GnmiClient) Delete_Enterprises_Enterprise(ctx context.Context, target s
 		{
 			Elem: []*gnmi.PathElem{
 				{
-					Name: "enterprises",
+					Name: "connectivity-services",
 				},
 				{
-					Name: "enterprise",
+					Name: "connectivity-service",
 					Key: map[string]string{
-
-						"enterprise-id": fmt.Sprint(key),
+						"connectivity-service-id": fmt.Sprint(*data.ConnectivityServiceId),
 					},
 				},
 			},
@@ -226,14 +229,11 @@ func (c *GnmiClient) Delete_Enterprises_Enterprise(ctx context.Context, target s
 		},
 	}
 
-	req := &gnmi.SetRequest{
-		Delete: []*gnmi.Path{
-			{
-				Elem:   path[0].Elem,
-				Target: target,
-			},
-		},
+	req, err := gnmi_utils.CreateGnmiSetForContainer(ctx, data, path[0], target)
+	if err != nil {
+		return nil, err
 	}
+
 	return c.client.Set(gnmiCtx, req)
 }
 
@@ -264,6 +264,64 @@ func (c *GnmiClient) Update_Enterprises_Enterprise(ctx context.Context, target s
 		return nil, err
 	}
 
+	return c.client.Set(gnmiCtx, req)
+}
+
+func (c *GnmiClient) Delete_ConnectivityServices_ConnectivityService_List(ctx context.Context, target string,
+) (*gnmi.SetResponse, error) {
+	gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
+	defer cancel()
+
+	path := []*gnmi.Path{
+		{
+			Elem: []*gnmi.PathElem{
+				{
+					Name: "connectivity-services",
+				},
+				{
+					Name: "connectivity-service",
+				},
+			},
+			Target: target,
+		},
+	}
+	req := &gnmi.SetRequest{
+		Delete: []*gnmi.Path{
+			{
+				Elem:   path[0].Elem,
+				Target: target,
+			},
+		},
+	}
+	return c.client.Set(gnmiCtx, req)
+}
+
+func (c *GnmiClient) Delete_Enterprises_Enterprise_List(ctx context.Context, target string,
+) (*gnmi.SetResponse, error) {
+	gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
+	defer cancel()
+
+	path := []*gnmi.Path{
+		{
+			Elem: []*gnmi.PathElem{
+				{
+					Name: "enterprises",
+				},
+				{
+					Name: "enterprise",
+				},
+			},
+			Target: target,
+		},
+	}
+	req := &gnmi.SetRequest{
+		Delete: []*gnmi.Path{
+			{
+				Elem:   path[0].Elem,
+				Target: target,
+			},
+		},
+	}
 	return c.client.Set(gnmiCtx, req)
 }
 
@@ -315,72 +373,6 @@ func (c *GnmiClient) Get_ConnectivityServices_ConnectivityService_List(ctx conte
 	return st.ConnectivityServices.ConnectivityService, nil
 }
 
-func (c *GnmiClient) Delete_ConnectivityServices_ConnectivityService_List(ctx context.Context, target string,
-) (*gnmi.SetResponse, error) {
-	gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
-	defer cancel()
-
-	path := []*gnmi.Path{
-		{
-			Elem: []*gnmi.PathElem{
-				{
-					Name: "connectivity-services",
-				},
-				{
-					Name: "connectivity-service",
-				},
-			},
-			Target: target,
-		},
-	}
-	req := &gnmi.SetRequest{
-		Delete: []*gnmi.Path{
-			{
-				Elem:   path[0].Elem,
-				Target: target,
-			},
-		},
-	}
-	return c.client.Set(gnmiCtx, req)
-}
-
-func (c *GnmiClient) Update_ConnectivityServices_ConnectivityService_List(ctx context.Context, target string, list map[string]*OnfConnectivityService_ConnectivityServices_ConnectivityService,
-) (*gnmi.SetResponse, error) {
-	gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
-	defer cancel()
-
-	basePathElems := []*gnmi.PathElem{
-		{
-			Name: "connectivity-services",
-		},
-	}
-	req := &gnmi.SetRequest{
-		Update: []*gnmi.Update{},
-	}
-	for _, item := range list {
-
-		path := &gnmi.Path{
-			Elem: append(basePathElems, &gnmi.PathElem{
-				Name: "list2a",
-				Key: map[string]string{
-					"connectivity-service-id": fmt.Sprint(*item.ConnectivityServiceId),
-				},
-			}),
-			Target: target,
-		}
-
-		// TODO if it's pointer, pass the value
-		// if it's a value pass it directly
-		r, err := gnmi_utils.CreateGnmiSetForContainer(ctx, *item, path, target)
-		if err != nil {
-			return nil, err
-		}
-		req.Update = append(req.Update, r.Update...)
-	}
-
-	return c.client.Set(gnmiCtx, req)
-}
-
 func (c *GnmiClient) Get_Enterprises_Enterprise_List(ctx context.Context, target string,
 ) (map[string]*OnfEnterprise_Enterprises_Enterprise, error) {
 	gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
@@ -429,32 +421,40 @@ func (c *GnmiClient) Get_Enterprises_Enterprise_List(ctx context.Context, target
 	return st.Enterprises.Enterprise, nil
 }
 
-func (c *GnmiClient) Delete_Enterprises_Enterprise_List(ctx context.Context, target string,
+func (c *GnmiClient) Update_ConnectivityServices_ConnectivityService_List(ctx context.Context, target string, list map[string]*OnfConnectivityService_ConnectivityServices_ConnectivityService,
 ) (*gnmi.SetResponse, error) {
 	gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
 	defer cancel()
 
-	path := []*gnmi.Path{
+	basePathElems := []*gnmi.PathElem{
 		{
-			Elem: []*gnmi.PathElem{
-				{
-					Name: "enterprises",
-				},
-				{
-					Name: "enterprise",
-				},
-			},
-			Target: target,
+			Name: "connectivity-services",
 		},
 	}
 	req := &gnmi.SetRequest{
-		Delete: []*gnmi.Path{
-			{
-				Elem:   path[0].Elem,
-				Target: target,
-			},
-		},
+		Update: []*gnmi.Update{},
 	}
+	for _, item := range list {
+
+		path := &gnmi.Path{
+			Elem: append(basePathElems, &gnmi.PathElem{
+				Name: "list2a",
+				Key: map[string]string{
+					"connectivity-service-id": fmt.Sprint(*item.ConnectivityServiceId),
+				},
+			}),
+			Target: target,
+		}
+
+		// TODO if it's pointer, pass the value
+		// if it's a value pass it directly
+		r, err := gnmi_utils.CreateGnmiSetForContainer(ctx, *item, path, target)
+		if err != nil {
+			return nil, err
+		}
+		req.Update = append(req.Update, r.Update...)
+	}
+
 	return c.client.Set(gnmiCtx, req)
 }
 
@@ -492,6 +492,60 @@ func (c *GnmiClient) Update_Enterprises_Enterprise_List(ctx context.Context, tar
 		req.Update = append(req.Update, r.Update...)
 	}
 
+	return c.client.Set(gnmiCtx, req)
+}
+
+func (c *GnmiClient) Delete_ConnectivityServices(ctx context.Context, target string,
+) (*gnmi.SetResponse, error) {
+	gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
+	defer cancel()
+
+	path := []*gnmi.Path{
+		{
+			Elem: []*gnmi.PathElem{
+				{
+					Name: "connectivity-services",
+				},
+			},
+			Target: target,
+		},
+	}
+
+	req := &gnmi.SetRequest{
+		Delete: []*gnmi.Path{
+			{
+				Elem:   path[0].Elem,
+				Target: target,
+			},
+		},
+	}
+	return c.client.Set(gnmiCtx, req)
+}
+
+func (c *GnmiClient) Delete_Enterprises(ctx context.Context, target string,
+) (*gnmi.SetResponse, error) {
+	gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
+	defer cancel()
+
+	path := []*gnmi.Path{
+		{
+			Elem: []*gnmi.PathElem{
+				{
+					Name: "enterprises",
+				},
+			},
+			Target: target,
+		},
+	}
+
+	req := &gnmi.SetRequest{
+		Delete: []*gnmi.Path{
+			{
+				Elem:   path[0].Elem,
+				Target: target,
+			},
+		},
+	}
 	return c.client.Set(gnmiCtx, req)
 }
 
@@ -539,57 +593,6 @@ func (c *GnmiClient) Get_ConnectivityServices(ctx context.Context, target string
 
 }
 
-func (c *GnmiClient) Delete_ConnectivityServices(ctx context.Context, target string,
-) (*gnmi.SetResponse, error) {
-	gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
-	defer cancel()
-
-	path := []*gnmi.Path{
-		{
-			Elem: []*gnmi.PathElem{
-				{
-					Name: "connectivity-services",
-				},
-			},
-			Target: target,
-		},
-	}
-
-	req := &gnmi.SetRequest{
-		Delete: []*gnmi.Path{
-			{
-				Elem:   path[0].Elem,
-				Target: target,
-			},
-		},
-	}
-	return c.client.Set(gnmiCtx, req)
-}
-
-func (c *GnmiClient) Update_ConnectivityServices(ctx context.Context, target string, data OnfConnectivityService_ConnectivityServices,
-) (*gnmi.SetResponse, error) {
-	gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
-	defer cancel()
-
-	path := []*gnmi.Path{
-		{
-			Elem: []*gnmi.PathElem{
-				{
-					Name: "connectivity-services",
-				},
-			},
-			Target: target,
-		},
-	}
-
-	req, err := gnmi_utils.CreateGnmiSetForContainer(ctx, data, path[0], target)
-	if err != nil {
-		return nil, err
-	}
-
-	return c.client.Set(gnmiCtx, req)
-}
-
 func (c *GnmiClient) Get_Enterprises(ctx context.Context, target string,
 ) (*OnfEnterprise_Enterprises, error) {
 	gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
@@ -634,7 +637,7 @@ func (c *GnmiClient) Get_Enterprises(ctx context.Context, target string,
 
 }
 
-func (c *GnmiClient) Delete_Enterprises(ctx context.Context, target string,
+func (c *GnmiClient) Update_ConnectivityServices(ctx context.Context, target string, data OnfConnectivityService_ConnectivityServices,
 ) (*gnmi.SetResponse, error) {
 	gnmiCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
 	defer cancel()
@@ -643,21 +646,18 @@ func (c *GnmiClient) Delete_Enterprises(ctx context.Context, target string,
 		{
 			Elem: []*gnmi.PathElem{
 				{
-					Name: "enterprises",
+					Name: "connectivity-services",
 				},
 			},
 			Target: target,
 		},
 	}
 
-	req := &gnmi.SetRequest{
-		Delete: []*gnmi.Path{
-			{
-				Elem:   path[0].Elem,
-				Target: target,
-			},
-		},
+	req, err := gnmi_utils.CreateGnmiSetForContainer(ctx, data, path[0], target)
+	if err != nil {
+		return nil, err
 	}
+
 	return c.client.Set(gnmiCtx, req)
 }
 

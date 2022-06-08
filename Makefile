@@ -6,7 +6,7 @@ SHELL 			  		= bash -e -o pipefail
 KIND_CLUSTER_NAME 		?= kind
 DOCKER_USER       		?=
 DOCKER_PASSWORD   		?=
-MODEL_COMPILER_VERSION  ?= v0.10.11
+MODEL_COMPILER_VERSION  ?= v0.10.17
 
 .PHONY: models
 
