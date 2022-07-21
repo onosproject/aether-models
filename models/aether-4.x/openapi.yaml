@@ -292,7 +292,6 @@ components:
           type: string
         endpoint-id:
           description: Id of this endpoint
-          maxLength: 18446744073709551615
           minLength: 1
           pattern: '[a-zA-Z_][a-zA-Z0-9\-_.]*'
           title: endpoint-id
@@ -526,7 +525,6 @@ components:
           type: string
         imsi-id:
           description: Id of this imsi-range
-          maxLength: 18446744073709551615
           minLength: 1
           pattern: '[a-zA-Z_][a-zA-Z0-9\-_.]*'
           title: imsi-id
@@ -863,7 +861,6 @@ components:
           type: string
         edge-device-id:
           description: Id of edge monitoring device
-          maxLength: 18446744073709551615
           minLength: 1
           pattern: '[a-zA-Z_][a-zA-Z0-9\-_.]*'
           title: edge-device-id
@@ -905,7 +902,6 @@ components:
           type: boolean
         small-cell-id:
           description: Id of small cell
-          maxLength: 18446744073709551615
           minLength: 1
           pattern: '[a-zA-Z_][a-zA-Z0-9\-_.]*'
           title: small-cell-id
@@ -1423,9 +1419,6 @@ paths:
                 $ref: '#/components/schemas/Application'
           description: GET OK 200
       summary: GET /application Container
-      tags:
-      - ""
-      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     post:
@@ -1448,9 +1441,6 @@ paths:
                 $ref: '#/components/schemas/Application_Application_List'
           description: GET OK 200
       summary: GET /application/application List
-      tags:
-      - Application_Application
-      - List
     parameters:
     - $ref: '#/components/parameters/target'
   /aether/v4.0.18/{target}/application/application/{id}:
@@ -1471,9 +1461,6 @@ paths:
                 $ref: '#/components/schemas/Application_Application'
           description: GET OK 200
       summary: GET /application/application Container
-      tags:
-      - Application_Application
-      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -1504,9 +1491,6 @@ paths:
                 $ref: '#/components/schemas/Application_Application_Endpoint_List'
           description: GET OK 200
       summary: GET /application/application/{id}/endpoint List
-      tags:
-      - Application_Application_Endpoint
-      - List
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -1535,9 +1519,6 @@ paths:
                 $ref: '#/components/schemas/Application_Application_Endpoint'
           description: GET OK 200
       summary: GET /application/application/{id}/endpoint Container
-      tags:
-      - Application_Application_Endpoint
-      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -1582,9 +1563,6 @@ paths:
                 $ref: '#/components/schemas/Application_Application_Endpoint_Mbr'
           description: GET OK 200
       summary: GET /application/application/{id}/endpoint/{endpoint-id}/mbr Container
-      tags:
-      - Application_Application_Endpoint
-      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -1629,9 +1607,6 @@ paths:
                 $ref: '#/components/schemas/Connectivity-service'
           description: GET OK 200
       summary: GET /connectivity-service Container
-      tags:
-      - ""
-      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     post:
@@ -1654,9 +1629,6 @@ paths:
                 $ref: '#/components/schemas/Connectivity-service_Connectivity-service_List'
           description: GET OK 200
       summary: GET /connectivity-service/connectivity-service List
-      tags:
-      - Connectivity-service_Connectivity-service
-      - List
     parameters:
     - $ref: '#/components/parameters/target'
   /aether/v4.0.18/{target}/connectivity-service/connectivity-service/{id}:
@@ -1677,9 +1649,6 @@ paths:
                 $ref: '#/components/schemas/Connectivity-service_Connectivity-service'
           description: GET OK 200
       summary: GET /connectivity-service/connectivity-service Container
-      tags:
-      - Connectivity-service_Connectivity-service
-      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -1716,9 +1685,6 @@ paths:
                 $ref: '#/components/schemas/Device-group'
           description: GET OK 200
       summary: GET /device-group Container
-      tags:
-      - ""
-      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     post:
@@ -1741,9 +1707,6 @@ paths:
                 $ref: '#/components/schemas/Device-group_Device-group_List'
           description: GET OK 200
       summary: GET /device-group/device-group List
-      tags:
-      - Device-group_Device-group
-      - List
     parameters:
     - $ref: '#/components/parameters/target'
   /aether/v4.0.18/{target}/device-group/device-group/{id}:
@@ -1764,9 +1727,6 @@ paths:
                 $ref: '#/components/schemas/Device-group_Device-group'
           description: GET OK 200
       summary: GET /device-group/device-group Container
-      tags:
-      - Device-group_Device-group
-      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -1803,9 +1763,6 @@ paths:
                 $ref: '#/components/schemas/Device-group_Device-group_Device'
           description: GET OK 200
       summary: GET /device-group/device-group/{id}/device Container
-      tags:
-      - Device-group_Device-group
-      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -1842,9 +1799,6 @@ paths:
                 $ref: '#/components/schemas/Device-group_Device-group_Device_Mbr'
           description: GET OK 200
       summary: GET /device-group/device-group/{id}/device/mbr Container
-      tags:
-      - Device-group_Device-group_Device
-      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -1877,9 +1831,6 @@ paths:
                 $ref: '#/components/schemas/Device-group_Device-group_Imsis_List'
           description: GET OK 200
       summary: GET /device-group/device-group/{id}/imsis List
-      tags:
-      - Device-group_Device-group_Imsis
-      - List
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -1910,9 +1861,6 @@ paths:
                 $ref: '#/components/schemas/Device-group_Device-group_Imsis'
           description: GET OK 200
       summary: GET /device-group/device-group/{id}/imsis Container
-      tags:
-      - Device-group_Device-group_Imsis
-      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -1957,9 +1905,6 @@ paths:
                 $ref: '#/components/schemas/Enterprise'
           description: GET OK 200
       summary: GET /enterprise Container
-      tags:
-      - ""
-      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     post:
@@ -1982,9 +1927,6 @@ paths:
                 $ref: '#/components/schemas/Enterprise_Enterprise_List'
           description: GET OK 200
       summary: GET /enterprise/enterprise List
-      tags:
-      - Enterprise_Enterprise
-      - List
     parameters:
     - $ref: '#/components/parameters/target'
   /aether/v4.0.18/{target}/enterprise/enterprise/{id}:
@@ -2005,9 +1947,6 @@ paths:
                 $ref: '#/components/schemas/Enterprise_Enterprise'
           description: GET OK 200
       summary: GET /enterprise/enterprise Container
-      tags:
-      - Enterprise_Enterprise
-      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -2038,9 +1977,6 @@ paths:
                 $ref: '#/components/schemas/Enterprise_Enterprise_Connectivity-service_List'
           description: GET OK 200
       summary: GET /enterprise/enterprise/{id}/connectivity-service List
-      tags:
-      - Enterprise_Enterprise_Connectivity-service
-      - List
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -2069,9 +2005,6 @@ paths:
                 $ref: '#/components/schemas/Enterprise_Enterprise_Connectivity-service'
           description: GET OK 200
       summary: GET /enterprise/enterprise/{id}/connectivity-service Container
-      tags:
-      - Enterprise_Enterprise_Connectivity-service
-      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -2116,9 +2049,6 @@ paths:
                 $ref: '#/components/schemas/Ip-domain'
           description: GET OK 200
       summary: GET /ip-domain Container
-      tags:
-      - ""
-      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     post:
@@ -2141,9 +2071,6 @@ paths:
                 $ref: '#/components/schemas/Ip-domain_Ip-domain_List'
           description: GET OK 200
       summary: GET /ip-domain/ip-domain List
-      tags:
-      - Ip-domain_Ip-domain
-      - List
     parameters:
     - $ref: '#/components/parameters/target'
   /aether/v4.0.18/{target}/ip-domain/ip-domain/{id}:
@@ -2164,9 +2091,6 @@ paths:
                 $ref: '#/components/schemas/Ip-domain_Ip-domain'
           description: GET OK 200
       summary: GET /ip-domain/ip-domain Container
-      tags:
-      - Ip-domain_Ip-domain
-      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -2203,9 +2127,6 @@ paths:
                 $ref: '#/components/schemas/Site'
           description: GET OK 200
       summary: GET /site Container
-      tags:
-      - ""
-      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     post:
@@ -2228,9 +2149,6 @@ paths:
                 $ref: '#/components/schemas/Site_Site_List'
           description: GET OK 200
       summary: GET /site/site List
-      tags:
-      - Site_Site
-      - List
     parameters:
     - $ref: '#/components/parameters/target'
   /aether/v4.0.18/{target}/site/site/{id}:
@@ -2251,9 +2169,6 @@ paths:
                 $ref: '#/components/schemas/Site_Site'
           description: GET OK 200
       summary: GET /site/site Container
-      tags:
-      - Site_Site
-      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -2290,9 +2205,6 @@ paths:
                 $ref: '#/components/schemas/Site_Site_Imsi-definition'
           description: GET OK 200
       summary: GET /site/site/{id}/imsi-definition Container
-      tags:
-      - Site_Site
-      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -2329,9 +2241,6 @@ paths:
                 $ref: '#/components/schemas/Site_Site_Monitoring'
           description: GET OK 200
       summary: GET /site/site/{id}/monitoring Container
-      tags:
-      - Site_Site
-      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -2362,9 +2271,6 @@ paths:
                 $ref: '#/components/schemas/Site_Site_Monitoring_Edge-device_List'
           description: GET OK 200
       summary: GET /site/site/{id}/monitoring/edge-device List
-      tags:
-      - Site_Site_Monitoring_Edge-device
-      - List
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -2393,9 +2299,6 @@ paths:
                 $ref: '#/components/schemas/Site_Site_Monitoring_Edge-device'
           description: GET OK 200
       summary: GET /site/site/{id}/monitoring/edge-device Container
-      tags:
-      - Site_Site_Monitoring_Edge-device
-      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -2434,9 +2337,6 @@ paths:
                 $ref: '#/components/schemas/Site_Site_Small-cell_List'
           description: GET OK 200
       summary: GET /site/site/{id}/small-cell List
-      tags:
-      - Site_Site_Small-cell
-      - List
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -2465,9 +2365,6 @@ paths:
                 $ref: '#/components/schemas/Site_Site_Small-cell'
           description: GET OK 200
       summary: GET /site/site/{id}/small-cell Container
-      tags:
-      - Site_Site_Small-cell
-      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -2512,9 +2409,6 @@ paths:
                 $ref: '#/components/schemas/Template'
           description: GET OK 200
       summary: GET /template Container
-      tags:
-      - ""
-      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     post:
@@ -2537,9 +2431,6 @@ paths:
                 $ref: '#/components/schemas/Template_Template_List'
           description: GET OK 200
       summary: GET /template/template List
-      tags:
-      - Template_Template
-      - List
     parameters:
     - $ref: '#/components/parameters/target'
   /aether/v4.0.18/{target}/template/template/{id}:
@@ -2560,9 +2451,6 @@ paths:
                 $ref: '#/components/schemas/Template_Template'
           description: GET OK 200
       summary: GET /template/template Container
-      tags:
-      - Template_Template
-      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -2599,9 +2487,6 @@ paths:
                 $ref: '#/components/schemas/Template_Template_Slice'
           description: GET OK 200
       summary: GET /template/template/{id}/slice Container
-      tags:
-      - Template_Template
-      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -2638,9 +2523,6 @@ paths:
                 $ref: '#/components/schemas/Template_Template_Slice_Mbr'
           description: GET OK 200
       summary: GET /template/template/{id}/slice/mbr Container
-      tags:
-      - Template_Template_Slice
-      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -2677,9 +2559,6 @@ paths:
                 $ref: '#/components/schemas/Traffic-class'
           description: GET OK 200
       summary: GET /traffic-class Container
-      tags:
-      - ""
-      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     post:
@@ -2702,9 +2581,6 @@ paths:
                 $ref: '#/components/schemas/Traffic-class_Traffic-class_List'
           description: GET OK 200
       summary: GET /traffic-class/traffic-class List
-      tags:
-      - Traffic-class_Traffic-class
-      - List
     parameters:
     - $ref: '#/components/parameters/target'
   /aether/v4.0.18/{target}/traffic-class/traffic-class/{id}:
@@ -2725,9 +2601,6 @@ paths:
                 $ref: '#/components/schemas/Traffic-class_Traffic-class'
           description: GET OK 200
       summary: GET /traffic-class/traffic-class Container
-      tags:
-      - Traffic-class_Traffic-class
-      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -2764,9 +2637,6 @@ paths:
                 $ref: '#/components/schemas/Upf'
           description: GET OK 200
       summary: GET /upf Container
-      tags:
-      - ""
-      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     post:
@@ -2789,9 +2659,6 @@ paths:
                 $ref: '#/components/schemas/Upf_Upf_List'
           description: GET OK 200
       summary: GET /upf/upf List
-      tags:
-      - Upf_Upf
-      - List
     parameters:
     - $ref: '#/components/parameters/target'
   /aether/v4.0.18/{target}/upf/upf/{id}:
@@ -2812,9 +2679,6 @@ paths:
                 $ref: '#/components/schemas/Upf_Upf'
           description: GET OK 200
       summary: GET /upf/upf Container
-      tags:
-      - Upf_Upf
-      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -2851,9 +2715,6 @@ paths:
                 $ref: '#/components/schemas/Vcs'
           description: GET OK 200
       summary: GET /vcs Container
-      tags:
-      - ""
-      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     post:
@@ -2876,9 +2737,6 @@ paths:
                 $ref: '#/components/schemas/Vcs_Vcs_List'
           description: GET OK 200
       summary: GET /vcs/vcs List
-      tags:
-      - Vcs_Vcs
-      - List
     parameters:
     - $ref: '#/components/parameters/target'
   /aether/v4.0.18/{target}/vcs/vcs/{id}:
@@ -2899,9 +2757,6 @@ paths:
                 $ref: '#/components/schemas/Vcs_Vcs'
           description: GET OK 200
       summary: GET /vcs/vcs Container
-      tags:
-      - Vcs_Vcs
-      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -2934,9 +2789,6 @@ paths:
                 $ref: '#/components/schemas/Vcs_Vcs_Device-group_List'
           description: GET OK 200
       summary: GET /vcs/vcs/{id}/device-group List
-      tags:
-      - Vcs_Vcs_Device-group
-      - List
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -2967,9 +2819,6 @@ paths:
                 $ref: '#/components/schemas/Vcs_Vcs_Device-group'
           description: GET OK 200
       summary: GET /vcs/vcs/{id}/device-group Container
-      tags:
-      - Vcs_Vcs_Device-group
-      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -3011,9 +2860,6 @@ paths:
                 $ref: '#/components/schemas/Vcs_Vcs_Filter_List'
           description: GET OK 200
       summary: GET /vcs/vcs/{id}/filter List
-      tags:
-      - Vcs_Vcs_Filter
-      - List
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -3045,9 +2891,6 @@ paths:
                 $ref: '#/components/schemas/Vcs_Vcs_Filter'
           description: GET OK 200
       summary: GET /vcs/vcs/{id}/filter Container
-      tags:
-      - Vcs_Vcs_Filter
-      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -3092,9 +2935,6 @@ paths:
                 $ref: '#/components/schemas/Vcs_Vcs_Slice'
           description: GET OK 200
       summary: GET /vcs/vcs/{id}/slice Container
-      tags:
-      - Vcs_Vcs
-      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -3131,9 +2971,6 @@ paths:
                 $ref: '#/components/schemas/Vcs_Vcs_Slice_Mbr'
           description: GET OK 200
       summary: GET /vcs/vcs/{id}/slice/mbr Container
-      tags:
-      - Vcs_Vcs_Slice
-      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     - content:

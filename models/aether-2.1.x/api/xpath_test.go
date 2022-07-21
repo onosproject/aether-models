@@ -26,7 +26,7 @@ func Test_XPathSelect(t *testing.T) {
 	}
 	schema.Root = device
 	assert.NotNil(t, device)
-	ynn := navigator.NewYangNodeNavigator(schema.RootSchema(), device)
+	ynn := navigator.NewYangNodeNavigator(schema.RootSchema(), device, false)
 	assert.NotNil(t, ynn)
 
 	tests := []navigator.XpathSelect{
@@ -177,7 +177,7 @@ func Test_XPathSelectSite(t *testing.T) {
 	}
 	schema.Root = device
 	assert.NotNil(t, device)
-	ynn := navigator.NewYangNodeNavigator(schema.RootSchema(), device)
+	ynn := navigator.NewYangNodeNavigator(schema.RootSchema(), device, false)
 	assert.NotNil(t, ynn)
 
 	tests := []navigator.XpathSelect{
@@ -371,7 +371,7 @@ func Test_XPathEvaluateDeviceGroup(t *testing.T) {
 	}
 	schema.Root = device
 	assert.NotNil(t, device)
-	ynn := navigator.NewYangNodeNavigator(schema.RootSchema(), device)
+	ynn := navigator.NewYangNodeNavigator(schema.RootSchema(), device, false)
 	assert.NotNil(t, ynn)
 
 	tests := []navigator.XpathEvaluate{
@@ -452,7 +452,7 @@ func Test_XPathEvaluateSlice(t *testing.T) {
 	}
 	schema.Root = device
 	assert.NotNil(t, device)
-	ynn := navigator.NewYangNodeNavigator(schema.RootSchema(), device)
+	ynn := navigator.NewYangNodeNavigator(schema.RootSchema(), device, false)
 	assert.NotNil(t, ynn)
 
 	tests := []navigator.XpathEvaluate{
