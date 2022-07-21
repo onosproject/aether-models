@@ -1462,9 +1462,6 @@ paths:
                 $ref: '#/components/schemas/Connectivity-services'
           description: GET OK 200
       summary: GET /connectivity-services Container
-      tags:
-      - ""
-      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     post:
@@ -1487,9 +1484,6 @@ paths:
                 $ref: '#/components/schemas/Connectivity-services_Connectivity-service_List'
           description: GET OK 200
       summary: GET /connectivity-services/connectivity-service List
-      tags:
-      - Connectivity-services_Connectivity-service
-      - List
     parameters:
     - $ref: '#/components/parameters/target'
   /aether/v2.0.x/{target}/connectivity-services/connectivity-service/{connectivity-service-id}:
@@ -1510,9 +1504,6 @@ paths:
                 $ref: '#/components/schemas/Connectivity-services_Connectivity-service'
           description: GET OK 200
       summary: GET /connectivity-services/connectivity-service Container
-      tags:
-      - Connectivity-services_Connectivity-service
-      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -1549,9 +1540,6 @@ paths:
                 $ref: '#/components/schemas/Enterprises'
           description: GET OK 200
       summary: GET /enterprises Container
-      tags:
-      - ""
-      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     post:
@@ -1574,9 +1562,6 @@ paths:
                 $ref: '#/components/schemas/Enterprises_Enterprise_List'
           description: GET OK 200
       summary: GET /enterprises/enterprise List
-      tags:
-      - Enterprises_Enterprise
-      - List
     parameters:
     - $ref: '#/components/parameters/target'
   /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}:
@@ -1597,9 +1582,6 @@ paths:
                 $ref: '#/components/schemas/Enterprises_Enterprise'
           description: GET OK 200
       summary: GET /enterprises/enterprise Container
-      tags:
-      - Enterprises_Enterprise
-      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -1630,9 +1612,6 @@ paths:
                 $ref: '#/components/schemas/Enterprises_Enterprise_Application_List'
           description: GET OK 200
       summary: GET /enterprises/enterprise/{enterprise-id}/application List
-      tags:
-      - Enterprises_Enterprise_Application
-      - List
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -1661,9 +1640,6 @@ paths:
                 $ref: '#/components/schemas/Enterprises_Enterprise_Application'
           description: GET OK 200
       summary: GET /enterprises/enterprise/{enterprise-id}/application Container
-      tags:
-      - Enterprises_Enterprise_Application
-      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -1703,9 +1679,6 @@ paths:
           description: GET OK 200
       summary: GET /enterprises/enterprise/{enterprise-id}/application/{application-id}/endpoint
         List
-      tags:
-      - Enterprises_Enterprise_Application_Endpoint
-      - List
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -1743,9 +1716,6 @@ paths:
           description: GET OK 200
       summary: GET /enterprises/enterprise/{enterprise-id}/application/{application-id}/endpoint
         Container
-      tags:
-      - Enterprises_Enterprise_Application_Endpoint
-      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -1799,9 +1769,6 @@ paths:
           description: GET OK 200
       summary: GET /enterprises/enterprise/{enterprise-id}/application/{application-id}/endpoint/{endpoint-id}/mbr
         Container
-      tags:
-      - Enterprises_Enterprise_Application_Endpoint
-      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -1848,9 +1815,6 @@ paths:
                 $ref: '#/components/schemas/Enterprises_Enterprise_Connectivity-service_List'
           description: GET OK 200
       summary: GET /enterprises/enterprise/{enterprise-id}/connectivity-service List
-      tags:
-      - Enterprises_Enterprise_Connectivity-service
-      - List
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -1879,9 +1843,6 @@ paths:
                 $ref: '#/components/schemas/Enterprises_Enterprise_Connectivity-service'
           description: GET OK 200
       summary: GET /enterprises/enterprise/{enterprise-id}/connectivity-service Container
-      tags:
-      - Enterprises_Enterprise_Connectivity-service
-      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -1920,9 +1881,6 @@ paths:
                 $ref: '#/components/schemas/Enterprises_Enterprise_Site_List'
           description: GET OK 200
       summary: GET /enterprises/enterprise/{enterprise-id}/site List
-      tags:
-      - Enterprises_Enterprise_Site
-      - List
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -1951,9 +1909,6 @@ paths:
                 $ref: '#/components/schemas/Enterprises_Enterprise_Site'
           description: GET OK 200
       summary: GET /enterprises/enterprise/{enterprise-id}/site Container
-      tags:
-      - Enterprises_Enterprise_Site
-      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -1992,9 +1947,6 @@ paths:
                 $ref: '#/components/schemas/Enterprises_Enterprise_Site_Device_List'
           description: GET OK 200
       summary: GET /enterprises/enterprise/{enterprise-id}/site/{site-id}/device List
-      tags:
-      - Enterprises_Enterprise_Site_Device
-      - List
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -2026,9 +1978,6 @@ paths:
           description: GET OK 200
       summary: GET /enterprises/enterprise/{enterprise-id}/site/{site-id}/device-group
         List
-      tags:
-      - Enterprises_Enterprise_Site_Device-group
-      - List
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -2066,9 +2015,6 @@ paths:
           description: GET OK 200
       summary: GET /enterprises/enterprise/{enterprise-id}/site/{site-id}/device-group
         Container
-      tags:
-      - Enterprises_Enterprise_Site_Device-group
-      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -2116,9 +2062,6 @@ paths:
           description: GET OK 200
       summary: GET /enterprises/enterprise/{enterprise-id}/site/{site-id}/device-group/{device-group-id}/device
         List
-      tags:
-      - Enterprises_Enterprise_Site_Device-group_Device
-      - List
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -2164,9 +2107,6 @@ paths:
           description: GET OK 200
       summary: GET /enterprises/enterprise/{enterprise-id}/site/{site-id}/device-group/{device-group-id}/device
         Container
-      tags:
-      - Enterprises_Enterprise_Site_Device-group_Device
-      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -2228,9 +2168,6 @@ paths:
           description: GET OK 200
       summary: GET /enterprises/enterprise/{enterprise-id}/site/{site-id}/device-group/{device-group-id}/mbr
         Container
-      tags:
-      - Enterprises_Enterprise_Site_Device-group
-      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -2283,9 +2220,6 @@ paths:
                 $ref: '#/components/schemas/Enterprises_Enterprise_Site_Device'
           description: GET OK 200
       summary: GET /enterprises/enterprise/{enterprise-id}/site/{site-id}/device Container
-      tags:
-      - Enterprises_Enterprise_Site_Device
-      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -2339,9 +2273,6 @@ paths:
           description: GET OK 200
       summary: GET /enterprises/enterprise/{enterprise-id}/site/{site-id}/imsi-definition
         Container
-      tags:
-      - Enterprises_Enterprise_Site
-      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -2381,9 +2312,6 @@ paths:
           description: GET OK 200
       summary: GET /enterprises/enterprise/{enterprise-id}/site/{site-id}/ip-domain
         List
-      tags:
-      - Enterprises_Enterprise_Site_Ip-domain
-      - List
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -2421,9 +2349,6 @@ paths:
           description: GET OK 200
       summary: GET /enterprises/enterprise/{enterprise-id}/site/{site-id}/ip-domain
         Container
-      tags:
-      - Enterprises_Enterprise_Site_Ip-domain
-      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -2477,9 +2402,6 @@ paths:
           description: GET OK 200
       summary: GET /enterprises/enterprise/{enterprise-id}/site/{site-id}/monitoring
         Container
-      tags:
-      - Enterprises_Enterprise_Site
-      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -2519,9 +2441,6 @@ paths:
           description: GET OK 200
       summary: GET /enterprises/enterprise/{enterprise-id}/site/{site-id}/monitoring/edge-device
         List
-      tags:
-      - Enterprises_Enterprise_Site_Monitoring_Edge-device
-      - List
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -2559,9 +2478,6 @@ paths:
           description: GET OK 200
       summary: GET /enterprises/enterprise/{enterprise-id}/site/{site-id}/monitoring/edge-device
         Container
-      tags:
-      - Enterprises_Enterprise_Site_Monitoring_Edge-device
-      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -2609,9 +2525,6 @@ paths:
           description: GET OK 200
       summary: GET /enterprises/enterprise/{enterprise-id}/site/{site-id}/sim-card
         List
-      tags:
-      - Enterprises_Enterprise_Site_Sim-card
-      - List
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -2649,9 +2562,6 @@ paths:
           description: GET OK 200
       summary: GET /enterprises/enterprise/{enterprise-id}/site/{site-id}/sim-card
         Container
-      tags:
-      - Enterprises_Enterprise_Site_Sim-card
-      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -2698,9 +2608,6 @@ paths:
                 $ref: '#/components/schemas/Enterprises_Enterprise_Site_Slice_List'
           description: GET OK 200
       summary: GET /enterprises/enterprise/{enterprise-id}/site/{site-id}/slice List
-      tags:
-      - Enterprises_Enterprise_Site_Slice
-      - List
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -2737,9 +2644,6 @@ paths:
                 $ref: '#/components/schemas/Enterprises_Enterprise_Site_Slice'
           description: GET OK 200
       summary: GET /enterprises/enterprise/{enterprise-id}/site/{site-id}/slice Container
-      tags:
-      - Enterprises_Enterprise_Site_Slice
-      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -2789,9 +2693,6 @@ paths:
           description: GET OK 200
       summary: GET /enterprises/enterprise/{enterprise-id}/site/{site-id}/slice/{slice-id}/device-group
         List
-      tags:
-      - Enterprises_Enterprise_Site_Slice_Device-group
-      - List
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -2839,9 +2740,6 @@ paths:
           description: GET OK 200
       summary: GET /enterprises/enterprise/{enterprise-id}/site/{site-id}/slice/{slice-id}/device-group
         Container
-      tags:
-      - Enterprises_Enterprise_Site_Slice_Device-group
-      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -2900,9 +2798,6 @@ paths:
           description: GET OK 200
       summary: GET /enterprises/enterprise/{enterprise-id}/site/{site-id}/slice/{slice-id}/filter
         List
-      tags:
-      - Enterprises_Enterprise_Site_Slice_Filter
-      - List
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -2951,9 +2846,6 @@ paths:
           description: GET OK 200
       summary: GET /enterprises/enterprise/{enterprise-id}/site/{site-id}/slice/{slice-id}/filter
         Container
-      tags:
-      - Enterprises_Enterprise_Site_Slice_Filter
-      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -3015,9 +2907,6 @@ paths:
           description: GET OK 200
       summary: GET /enterprises/enterprise/{enterprise-id}/site/{site-id}/slice/{slice-id}/mbr
         Container
-      tags:
-      - Enterprises_Enterprise_Site_Slice
-      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -3065,9 +2954,6 @@ paths:
           description: GET OK 200
       summary: GET /enterprises/enterprise/{enterprise-id}/site/{site-id}/slice/{slice-id}/priority-traffic-rule
         List
-      tags:
-      - Enterprises_Enterprise_Site_Slice_Priority-traffic-rule
-      - List
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -3113,9 +2999,6 @@ paths:
           description: GET OK 200
       summary: GET /enterprises/enterprise/{enterprise-id}/site/{site-id}/slice/{slice-id}/priority-traffic-rule
         Container
-      tags:
-      - Enterprises_Enterprise_Site_Slice_Priority-traffic-rule
-      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -3171,9 +3054,6 @@ paths:
           description: GET OK 200
       summary: GET /enterprises/enterprise/{enterprise-id}/site/{site-id}/small-cell
         List
-      tags:
-      - Enterprises_Enterprise_Site_Small-cell
-      - List
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -3211,9 +3091,6 @@ paths:
           description: GET OK 200
       summary: GET /enterprises/enterprise/{enterprise-id}/site/{site-id}/small-cell
         Container
-      tags:
-      - Enterprises_Enterprise_Site_Small-cell
-      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -3260,9 +3137,6 @@ paths:
                 $ref: '#/components/schemas/Enterprises_Enterprise_Site_Upf_List'
           description: GET OK 200
       summary: GET /enterprises/enterprise/{enterprise-id}/site/{site-id}/upf List
-      tags:
-      - Enterprises_Enterprise_Site_Upf
-      - List
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -3299,9 +3173,6 @@ paths:
                 $ref: '#/components/schemas/Enterprises_Enterprise_Site_Upf'
           description: GET OK 200
       summary: GET /enterprises/enterprise/{enterprise-id}/site/{site-id}/upf Container
-      tags:
-      - Enterprises_Enterprise_Site_Upf
-      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -3348,9 +3219,6 @@ paths:
                 $ref: '#/components/schemas/Enterprises_Enterprise_Template_List'
           description: GET OK 200
       summary: GET /enterprises/enterprise/{enterprise-id}/template List
-      tags:
-      - Enterprises_Enterprise_Template
-      - List
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -3379,9 +3247,6 @@ paths:
                 $ref: '#/components/schemas/Enterprises_Enterprise_Template'
           description: GET OK 200
       summary: GET /enterprises/enterprise/{enterprise-id}/template Container
-      tags:
-      - Enterprises_Enterprise_Template
-      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -3427,9 +3292,6 @@ paths:
           description: GET OK 200
       summary: GET /enterprises/enterprise/{enterprise-id}/template/{template-id}/mbr
         Container
-      tags:
-      - Enterprises_Enterprise_Template
-      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -3468,9 +3330,6 @@ paths:
                 $ref: '#/components/schemas/Enterprises_Enterprise_Traffic-class_List'
           description: GET OK 200
       summary: GET /enterprises/enterprise/{enterprise-id}/traffic-class List
-      tags:
-      - Enterprises_Enterprise_Traffic-class
-      - List
     parameters:
     - $ref: '#/components/parameters/target'
     - content:
@@ -3499,9 +3358,6 @@ paths:
                 $ref: '#/components/schemas/Enterprises_Enterprise_Traffic-class'
           description: GET OK 200
       summary: GET /enterprises/enterprise/{enterprise-id}/traffic-class Container
-      tags:
-      - Enterprises_Enterprise_Traffic-class
-      - Container
     parameters:
     - $ref: '#/components/parameters/target'
     - content:

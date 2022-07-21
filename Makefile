@@ -6,7 +6,7 @@ SHELL 			  		= bash -e -o pipefail
 KIND_CLUSTER_NAME 		?= kind
 DOCKER_USER       		?=
 DOCKER_PASSWORD   		?=
-MODEL_COMPILER_VERSION  ?= v0.10.17
+MODEL_COMPILER_VERSION  ?= v0.10.24
 
 .PHONY: models
 
@@ -27,10 +27,7 @@ models: clean # @HELP Generate Golang code for all the models
 models-openapi: # @HELP generates the openapi specs for the models
 	@cd models && for model in *; do echo -e "Building OpenApi Specs for $$model:\n"; pushd $$model; make openapi; popd; echo -e "\n\n"; done
 
-models-gnmi-client: # @HELP generates the gnmi-client for the models
-	@cd models && for model in *; do echo -e "Building gNMI Client for $$model:\n"; pushd $$model; rm -f api/gnmi_client.go; make gnmi-gen; popd; echo -e "\n\n"; done
-
-docker-build: models models-openapi models-gnmi-client # @HELP Build Docker containers for all the models
+docker-build: models models-openapi # @HELP Build Docker containers for all the models
 	@cd models && for model in *; do echo -e "Building container for $$model:\n"; pushd $$model; make image; popd; echo -e "\n\n"; done
 
 docker-push: # @HELP Publish Docker containers for all the models
@@ -54,7 +51,7 @@ check-models-tag: # @HELP check that the model tags are valid
 	@make -C models/aether-2.1.x check-tag
 	@make -C models/aether-4.x check-tag
 
-test: yang-lint check-models-tag models models-openapi models-gnmi-client # @HELP Make sure the generated code has been committed
+test: yang-lint check-models-tag models models-openapi # @HELP Make sure the generated code has been committed
 	# @bash test/generated.sh # TODO uncomment after AETHER-3550 is solved
 	@make -C models/aether-2.0.x  test
 	@make -C models/aether-2.1.x  test

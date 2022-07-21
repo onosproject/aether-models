@@ -24,7 +24,7 @@ func Test_WalkAndValidatePortsMust(t *testing.T) {
 	}
 	schema.Root = device
 	assert.NotNil(t, device)
-	nn := navigator.NewYangNodeNavigator(schema.RootSchema(), device)
+	nn := navigator.NewYangNodeNavigator(schema.RootSchema(), device, false)
 	assert.NotNil(t, nn)
 
 	ynn, ynnOk := nn.(*navigator.YangNodeNavigator)
@@ -46,7 +46,7 @@ func Test_WalkAndValidateMustPortsWrong(t *testing.T) {
 	}
 	schema.Root = device
 	assert.NotNil(t, device)
-	nn := navigator.NewYangNodeNavigator(schema.RootSchema(), device)
+	nn := navigator.NewYangNodeNavigator(schema.RootSchema(), device, false)
 	assert.NotNil(t, nn)
 
 	ynn, ynnOk := nn.(*navigator.YangNodeNavigator)
@@ -68,7 +68,7 @@ func Test_WalkAndValidateMustIpDomainSlice(t *testing.T) {
 	}
 	schema.Root = device
 	assert.NotNil(t, device)
-	nn := navigator.NewYangNodeNavigator(schema.RootSchema(), device)
+	nn := navigator.NewYangNodeNavigator(schema.RootSchema(), device, false)
 	assert.NotNil(t, nn)
 
 	ynn, ynnOk := nn.(*navigator.YangNodeNavigator)

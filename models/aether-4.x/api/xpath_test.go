@@ -26,7 +26,7 @@ func Test_XPathSelect(t *testing.T) {
 	}
 	schema.Root = device
 	assert.NotNil(t, device)
-	ynn := navigator.NewYangNodeNavigator(schema.RootSchema(), device)
+	ynn := navigator.NewYangNodeNavigator(schema.RootSchema(), device, false)
 	assert.NotNil(t, ynn)
 
 	tests := []navigator.XpathSelect{
