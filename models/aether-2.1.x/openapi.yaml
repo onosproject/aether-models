@@ -813,6 +813,9 @@ components:
       properties:
         connectivity-service:
           description: The type of connectivity service 4g/5g to use with the slice
+          enum:
+          - 4g
+          - 5g
           title: connectivity-service
           type: string
         default-behavior:
