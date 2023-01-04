@@ -48,11 +48,11 @@ clean:	# @HELP Removes the generated code
 	@for model in models/*; do pushd $$model; rm -f Dockerfile Makefile *.tree; popd; done;
 
 check-models-tag: # @HELP check that the model tags are valid
-	@for model in models/*; make -C $$model check-tag; done;
+	@for model in models/*; do make -C $$model check-tag; done;
 
 test: yang-lint check-models-tag models models-openapi # @HELP Make sure the generated code has been committed
 	# @bash test/generated.sh # TODO uncomment after AETHER-3550 is solved
-	@for model in models/*; make -C $$model test; done;
+	@for model in models/*; do make -C $$model test; done;
 
 docker-login:
 ifdef DOCKER_USER
