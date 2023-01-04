@@ -194,14 +194,14 @@
           "display-name": "Robot 1 Sim",
           "description": "Robot 1 Sim Card",
           "iccid": "123401",
-          "imsi": "1234011"
+          "imsi": "123456789012345"
         },
         {
           "sim-id": "sim-2",
           "display-name": "Robot 2 Sim",
           "description": "Robot 2 Sim Card",
           "iccid": "123402",
-          "imsi": "1234021"
+          "imsi": "123456789012346"
         }
       ]
     }
