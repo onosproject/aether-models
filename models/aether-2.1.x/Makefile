@@ -26,7 +26,10 @@ DOCKER_BUILD_ARGS = \
 	--build-arg org_label_schema_vcs_ref="${DOCKER_LABEL_VCS_REF}" \
 	--build-arg org_label_schema_build_date="${DOCKER_LABEL_BUILD_DATE}" \
 	--build-arg org_opencord_vcs_commit_date="${DOCKER_LABEL_COMMIT_DATE}" \
-	--build-arg org_opencord_vcs_dirty="${DOCKER_LABEL_VCS_DIRTY}"
+	--build-arg org_opencord_vcs_dirty="${DOCKER_LABEL_VCS_DIRTY}" \
+	--build-arg http_proxy=${http_proxy} \
+	--build-arg https_proxy=${https_proxy} \
+	--build-arg no_proxy=${no_proxy}
 
 export CGO_ENABLED=0
 export GO111MODULE=on
@@ -52,15 +55,20 @@ image: mod-update # @HELP Build the docker image (available parameters: DOCKER_R
 	docker build ${PLATFORM} $(DOCKER_BUILD_ARGS) -t ${DOCKER_REPOSITORY}aether-2.1.x:${VERSION} .
 	docker tag ${DOCKER_REPOSITORY}aether-2.1.x:${VERSION} ${DOCKER_REPOSITORY}aether-2.1.x:${LATEST_VERSION}
 
+.PHONY: build-openapi
+build-openapi: mod-update # @HELP Generate OpenApi specs
+	go build -o _bin/openapi-gen openapi/openapi-gen.go
+
 .PHONY: openapi
-openapi: mod-update # @HELP Generate OpenApi specs
-	go run openapi/openapi-gen.go -o openapi.yaml
+openapi: build-openapi # @HELP Generate OpenApi specs
+	_bin/openapi-gen -o openapi.yaml
 
-
-
-
-
-
+yang-lint:
+	cd yang; \
+	p="."; \
+	mdy=`grep ".yang" ../metadata.yaml | awk '{print $$2}' | paste -sd ' ' -`; \
+	for dir in */; do p=$$p:$$dir; done; \
+	pyang --lint --lint-ensure-hyphenated-names --ignore-error=XPATH_FUNCTION -p $$p $$mdy
 
 test: mod-update # @HELP Run the unit tests
 	go test ./...
@@ -95,3 +103,7 @@ kind-only: # @HELP Loads the docker image into the kind cluster  (available para
 
 kind: # @HELP build the docker image and loads it into the currently configured kind cluster (available parameters: KIND_CLUSTER_NAME, DOCKER_REPOSITORY, VERSION)
 kind: image kind-only
+
+clean:
+	rm -rf Makefile go.mod go.sum _bin vendor Dockerfile openapi.yaml aether.tree \
+		openapi/openapi-gen.go plugin/main.go api/model.go api/generated.go
