@@ -33,6 +33,7 @@ type server struct {
 // gRPC path lists; derived from native path maps
 var roPaths []*admin.ReadOnlyPath
 var rwPaths []*admin.ReadWritePath
+var namespaceMappings []*admin.Namespace
 
 func (p *modelPlugin) Register(gs *grpc.Server) {
 	log.Info("Registering model plugin service")
@@ -59,7 +60,7 @@ func main() {
 	if err != nil {
 		log.Fatalf("Unable to extract model schema: %+v", err)
 	}
-	roPaths, rwPaths = path.ExtractPaths(entries)
+	roPaths, rwPaths, namespaceMappings = path.ExtractPaths(entries)
 
 	// Start gRPC server
 	log.Info("Starting model plugin")
@@ -102,6 +103,8 @@ func (s server) GetModelInfo(ctx context.Context, request *admin.ModelInfoReques
 			GetStateMode:       0,
 			ReadOnlyPath:       roPaths,
 			ReadWritePath:      rwPaths,
+            NamespaceMappings:    namespaceMappings,
+            SouthboundUsePrefix:  false,
 		},
 	}, nil
 }
@@ -130,6 +133,36 @@ func (s server) GetPathValues(ctx context.Context, request *admin.PathValuesRequ
 		return nil, errors.Status(errors.NewInvalid("Unable to get path values: %+v", err)).Err()
 	}
 	return &admin.PathValuesResponse{PathValues: pathValues}, nil
+}
+
+func (s server) GetValueSelection(ctx context.Context, request *admin.ValueSelectionRequest) (*admin.ValueSelectionResponse, error) {
+	log.Infof("Received value selection request: %s", request.String())
+	device, err := s.unmarshallConfigValues(request.ConfigJson)
+	if err != nil {
+		return nil, errors.Status(err).Err()
+	}
+	schema, err := api.Schema()
+	if err != nil {
+		return nil, errors.NewInvalid("Unable to get schema: %+v", err)
+	}
+
+	nn := navigator.NewYangNodeNavigator(schema.RootSchema(), *device, true)
+	ynn, ok := nn.(*navigator.YangNodeNavigator)
+	if !ok {
+		return nil, errors.NewInvalid("Cannot cast NodeNavigator to YangNodeNavigator")
+	}
+	if err := ynn.NavigateTo(request.SelectionPath); err != nil {
+		return nil, errors.NewInvalid("Unable to navigate to %s", request.SelectionPath)
+	}
+
+	results, err := ynn.LeafSelection()
+	if err != nil {
+		return nil, errors.NewInvalid("error getting leaf-selection", err)
+	}
+
+	return &admin.ValueSelectionResponse{
+		Selection: results,
+	}, nil
 }
 
 func (s server) unmarshallConfigValues(jsonTree []byte) (*ygot.ValidatedGoStruct, error) {

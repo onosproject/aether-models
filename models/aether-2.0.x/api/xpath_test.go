@@ -400,7 +400,7 @@ func Test_XPathEvaluateDeviceGroup(t *testing.T) {
 		/*
 			{
 				Name:     "check that no more than 1 device-groups use 'acme-chicago' ip-domain",
-				Path:     "count(../ent:device-group[ent:ip-domain='acme-chicago']) <= 1",
+				XPath:     "count(../ent:device-group[ent:ip-domain='acme-chicago']) <= 1",
 				Expected: true,
 			},
 		*/

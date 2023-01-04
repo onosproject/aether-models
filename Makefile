@@ -1,3 +1,4 @@
+# SPDX-FileCopyrightText: 2023-present Intel Corporation
 # SPDX-FileCopyrightText: 2019-present Open Networking Foundation <info@opennetworking.org>
 #
 # SPDX-License-Identifier: Apache-2.0
@@ -6,7 +7,7 @@ SHELL 			  		= bash -e -o pipefail
 KIND_CLUSTER_NAME 		?= kind
 DOCKER_USER       		?=
 DOCKER_PASSWORD   		?=
-MODEL_COMPILER_VERSION  ?= v0.10.29
+MODEL_COMPILER_VERSION  ?= v0.10.47
 
 .PHONY: models
 
@@ -22,40 +23,36 @@ help: # @HELP Print the command options
 	'
 
 models: clean # @HELP Generate Golang code for all the models
-	@cd models && for model in *; do echo -e "Generating $$model:\n"; docker run -v $$(pwd)/$$model:/config-model onosproject/model-compiler:${MODEL_COMPILER_VERSION}; echo -e "\n\n"; done
+	@for model in models/*; do echo -e "Generating $$model:\n"; docker run -v $$(pwd)/$$model:/config-model onosproject/model-compiler:${MODEL_COMPILER_VERSION}; echo -e "\n\n"; done
 
 models-openapi: # @HELP generates the openapi specs for the models
-	@cd models && for model in *; do echo -e "Building OpenApi Specs for $$model:\n"; pushd $$model; make openapi; popd; echo -e "\n\n"; done
+	@for model in models/*; do echo -e "Building OpenApi Specs for $$model:\n"; make -C $$model openapi; echo -e "\n\n"; done
 
 docker-build: models models-openapi # @HELP Build Docker containers for all the models
-	@cd models && for model in *; do echo -e "Building container for $$model:\n"; pushd $$model; make image; popd; echo -e "\n\n"; done
+	@for model in models/*; do echo -e "Building container for $$model:\n"; make -C $$model image; echo -e "\n\n"; done
 
 docker-push: # @HELP Publish Docker containers for all the models
-	@cd models && for model in *; do pushd $$model; make publish; popd; done
+	@for model in models/*; make -C $$model publish; done
 
 kind-load: # @HELP Load Docker containers for all the models in a kind cluster (use: KIND_CLUSTER_NAME to customize the cluster name)
-	@cd models && for model in *; do pushd $$model; make kind; popd; done
+	@for model in models/*; make -C $$model kind; done
 
 yang-lint: # @HELP Lint the yang models
 yang-lint: pyang-tool
-	@cd models && for model in *; do echo -e "Linting YANG files for: $$model"; pyang --lint --ignore-error=XPATH_FUNCTION $$model/yang/*.yang; done
+	@for model in models/*; do echo -e "Linting YANG files for: $$model"; pyang --lint --ignore-error=XPATH_FUNCTION $$model/yang/*.yang; done
 
 pyang-tool: # @HELP Install the Pyang tool if needed
-	pyang --version || python -m pip install pyang==2.5.2
+	pyang --version || python3 -m pip install pyang==2.5.2
 
 clean:	# @HELP Removes the generated code
-	@cd models && for model in *; do pushd $$model; rm -f Dockerfile Makefile *.tree; popd; done;
+	@for model in models/*; do pushd $$model; rm -f Dockerfile Makefile *.tree; popd; done;
 
 check-models-tag: # @HELP check that the model tags are valid
-	@make -C models/aether-2.0.x check-tag
-	@make -C models/aether-2.1.x check-tag
-	@make -C models/aether-4.x check-tag
+	@for model in models/*; make -C $$model check-tag; done;
 
 test: yang-lint check-models-tag models models-openapi # @HELP Make sure the generated code has been committed
 	# @bash test/generated.sh # TODO uncomment after AETHER-3550 is solved
-	@make -C models/aether-2.0.x  test
-	@make -C models/aether-2.1.x  test
-	@make -C models/aether-4.x  test
+	@for model in models/*; make -C $$model test; done;
 
 docker-login:
 ifdef DOCKER_USER

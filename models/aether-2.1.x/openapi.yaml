@@ -1,3 +1,4 @@
+# SPDX-FileCopyrightText: 2022-present Intel Corporation
 # SPDX-FileCopyrightText: 2021-present Open Networking Foundation <info@opennetworking.org>
 #
 # SPDX-License-Identifier: Apache-2.0
@@ -272,6 +273,7 @@ components:
           title: traffic-class
           type: string
           x-leafref: /tc:traffic-class/tc:traffic-class-id
+          x-leafref-resolver: /aether/v2.1.x/{enterprise-id}/application/{application-id}/endpoint/{endpoint-id}/traffic-class/values
       required:
       - endpoint-id
       - port-start
@@ -317,6 +319,24 @@ components:
       x-keys:
       - application-id
       x-list-multiple: true
+    LeafRefOption:
+      description: single label/value of the leafref option
+      properties:
+        label:
+          description: label of the leafref option
+          title: label
+          type: string
+        value:
+          description: value of the leafref option
+          title: value
+          type: string
+      type: object
+    LeafRefOptions:
+      description: List of label/value of leafref options
+      items:
+        $ref: '#/components/schemas/LeafRefOption'
+      title: LeafRefOptions
+      type: array
     Site:
       additionalProperties:
         $ref: '#/components/schemas/AdditionalPropertyEnterprise-Id'
@@ -442,6 +462,7 @@ components:
           title: sim-card
           type: string
           x-leafref: ../../sim-card/sim-id
+          x-leafref-resolver: /aether/v2.1.x/{enterprise-id}/site/{site-id}/device/{device-id}/sim-card/values
         state:
           $ref: '#/components/schemas/Site_Device_State'
       required:
@@ -484,6 +505,7 @@ components:
           title: ip-domain
           type: string
           x-leafref: ../../ip-domain/ip-domain-id
+          x-leafref-resolver: /aether/v2.1.x/{enterprise-id}/site/{site-id}/device-group/{device-group-id}/ip-domain/values
         mbr:
           $ref: '#/components/schemas/Site_Device-group_Mbr'
         traffic-class:
@@ -491,6 +513,7 @@ components:
           title: traffic-class
           type: string
           x-leafref: /tc:traffic-class/tc:traffic-class-id
+          x-leafref-resolver: /aether/v2.1.x/{enterprise-id}/site/{site-id}/device-group/{device-group-id}/traffic-class/values
       required:
       - device-group-id
       - traffic-class
@@ -506,6 +529,7 @@ components:
           type: string
           x-go-type: ListKey
           x-leafref: ../../../device/device-id
+          x-leafref-resolver: /aether/v2.1.x/{enterprise-id}/site/{site-id}/device-group/{device-group-id}/device/{device-id}/device-id/values
         enable:
           default: true
           description: Enable this device
@@ -571,15 +595,18 @@ components:
         connected:
           description: the connected status (Yes|No|Idle)
           pattern: Yes|No|Idle
+          readOnly: true
           title: connected
           type: string
         ip-address:
           description: the ip address assigned to the device
+          readOnly: true
           title: ip-address
           type: string
         last-connected:
           description: The time in UTC that the device was last connected
           pattern: \d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?(Z|[\+\-]\d{2}:\d{2})
+          readOnly: true
           title: last-connected
           type: string
       title: Site_Device_State
@@ -870,6 +897,7 @@ components:
           title: upf
           type: string
           x-leafref: ../../upf/upf-id
+          x-leafref-resolver: /aether/v2.1.x/{enterprise-id}/site/{site-id}/slice/{slice-id}/upf/values
       required:
       - default-behavior
       - sd
@@ -889,6 +917,7 @@ components:
           type: string
           x-go-type: ListKey
           x-leafref: ../../../device-group/device-group-id
+          x-leafref-resolver: /aether/v2.1.x/{enterprise-id}/site/{site-id}/slice/{slice-id}/device-group/{device-group}/device-group/values
         enable:
           default: true
           description: Enable this device group
@@ -927,6 +956,7 @@ components:
           type: string
           x-go-type: ListKey
           x-leafref: /app:application/app:application-id
+          x-leafref-resolver: /aether/v2.1.x/{enterprise-id}/site/{site-id}/slice/{slice-id}/filter/{application}/application/values
         priority:
           description: Priority of this application
           maximum: 200
@@ -1000,6 +1030,7 @@ components:
           title: application
           type: string
           x-leafref: /app:application/app:application-id
+          x-leafref-resolver: /aether/v2.1.x/{enterprise-id}/site/{site-id}/slice/{slice-id}/priority-traffic-rule/{priority-traffic-rule-id}/application/values
         description:
           description: long description field
           maxLength: 1024
@@ -1011,6 +1042,7 @@ components:
           title: device
           type: string
           x-leafref: ../../../device/device-id
+          x-leafref-resolver: /aether/v2.1.x/{enterprise-id}/site/{site-id}/slice/{slice-id}/priority-traffic-rule/{priority-traffic-rule-id}/device/values
         display-name:
           description: display name to use in GUI or CLI
           maxLength: 80
@@ -1022,6 +1054,7 @@ components:
           title: endpoint
           type: string
           x-leafref: /app:application/app:endpoint/app:endpoint-id
+          x-leafref-resolver: /aether/v2.1.x/{enterprise-id}/site/{site-id}/slice/{slice-id}/priority-traffic-rule/{priority-traffic-rule-id}/endpoint/values
         gbr:
           $ref: '#/components/schemas/Site_Slice_Priority-traffic-rule_Gbr'
         mbr:
@@ -1039,6 +1072,7 @@ components:
           title: traffic-class
           type: string
           x-leafref: /tc:traffic-class/tc:traffic-class-id
+          x-leafref-resolver: /aether/v2.1.x/{enterprise-id}/site/{site-id}/slice/{slice-id}/priority-traffic-rule/{priority-traffic-rule-id}/traffic-class/values
       required:
       - application
       - device
@@ -1384,6 +1418,8 @@ paths:
                 $ref: '#/components/schemas/Application_List'
           description: GET OK 200
       summary: GET /application List
+      tags:
+      - Application
     parameters:
     - $ref: '#/components/parameters/enterprise-id'
   /aether/v2.1.x/{enterprise-id}/application/{application-id}:
@@ -1393,6 +1429,8 @@ paths:
         "200":
           description: DELETE 200 OK
       summary: DELETE /application
+      tags:
+      - Application
     description: List of applications
     get:
       operationId: getApplication
@@ -1404,6 +1442,8 @@ paths:
                 $ref: '#/components/schemas/Application'
           description: GET OK 200
       summary: GET /application Container
+      tags:
+      - Application
     parameters:
     - $ref: '#/components/parameters/enterprise-id'
     - content:
@@ -1422,6 +1462,8 @@ paths:
         "201":
           description: created
       summary: POST /application
+      tags:
+      - Application
   /aether/v2.1.x/{enterprise-id}/application/{application-id}/endpoint:
     description: list for endpoint
     get:
@@ -1434,6 +1476,8 @@ paths:
                 $ref: '#/components/schemas/Application_Endpoint_List'
           description: GET OK 200
       summary: GET /application/{application-id}/endpoint List
+      tags:
+      - Application_Endpoint
     parameters:
     - $ref: '#/components/parameters/enterprise-id'
     - content:
@@ -1451,6 +1495,8 @@ paths:
         "200":
           description: DELETE 200 OK
       summary: DELETE /application/{application-id}/endpoint
+      tags:
+      - Application_Endpoint
     description: list for endpoint
     get:
       operationId: getApplication_Endpoint
@@ -1462,6 +1508,8 @@ paths:
                 $ref: '#/components/schemas/Application_Endpoint'
           description: GET OK 200
       summary: GET /application/{application-id}/endpoint Container
+      tags:
+      - Application_Endpoint
     parameters:
     - $ref: '#/components/parameters/enterprise-id'
     - content:
@@ -1488,6 +1536,8 @@ paths:
         "201":
           description: created
       summary: POST /application/{application-id}/endpoint
+      tags:
+      - Application_Endpoint
   /aether/v2.1.x/{enterprise-id}/application/{application-id}/endpoint/{endpoint-id}/mbr:
     delete:
       operationId: deleteApplication_Endpoint_Mbr
@@ -1495,6 +1545,8 @@ paths:
         "200":
           description: DELETE 200 OK
       summary: DELETE /application/{application-id}/endpoint/{endpoint-id}/mbr
+      tags:
+      - Application_Endpoint
     description: Maximum bitrate
     get:
       operationId: getApplication_Endpoint_Mbr
@@ -1506,6 +1558,8 @@ paths:
                 $ref: '#/components/schemas/Application_Endpoint_Mbr'
           description: GET OK 200
       summary: GET /application/{application-id}/endpoint/{endpoint-id}/mbr Container
+      tags:
+      - Application_Endpoint
     parameters:
     - $ref: '#/components/parameters/enterprise-id'
     - content:
@@ -1532,6 +1586,41 @@ paths:
         "201":
           description: created
       summary: POST /application/{application-id}/endpoint/{endpoint-id}/mbr
+      tags:
+      - Application_Endpoint
+  /aether/v2.1.x/{enterprise-id}/application/{application-id}/endpoint/{endpoint-id}/traffic-class/values:
+    description: Link to traffic class
+    get:
+      operationId: getApplication_Endpoint_Traffic-class_Values_Leafref
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LeafRefOptions'
+          description: GET OK 200
+      summary: GET /application/{application-id}/endpoint/{endpoint-id}/traffic-class/values
+        Leafref
+      tags:
+      - Application_Endpoint_Traffic-class
+    parameters:
+    - $ref: '#/components/parameters/enterprise-id'
+    - content:
+        text/plain; charset=utf-8:
+          schema:
+            type: string
+      description: key {application-id}
+      in: path
+      name: application-id
+      required: true
+    - content:
+        text/plain; charset=utf-8:
+          schema:
+            type: string
+      description: key {endpoint-id}
+      in: path
+      name: endpoint-id
+      required: true
   /aether/v2.1.x/{enterprise-id}/site:
     description: List of site
     get:
@@ -1544,6 +1633,8 @@ paths:
                 $ref: '#/components/schemas/Site_List'
           description: GET OK 200
       summary: GET /site List
+      tags:
+      - Site
     parameters:
     - $ref: '#/components/parameters/enterprise-id'
   /aether/v2.1.x/{enterprise-id}/site/{site-id}:
@@ -1553,6 +1644,8 @@ paths:
         "200":
           description: DELETE 200 OK
       summary: DELETE /site
+      tags:
+      - Site
     description: List of site
     get:
       operationId: getSite
@@ -1564,6 +1657,8 @@ paths:
                 $ref: '#/components/schemas/Site'
           description: GET OK 200
       summary: GET /site Container
+      tags:
+      - Site
     parameters:
     - $ref: '#/components/parameters/enterprise-id'
     - content:
@@ -1582,6 +1677,8 @@ paths:
         "201":
           description: created
       summary: POST /site
+      tags:
+      - Site
   /aether/v2.1.x/{enterprise-id}/site/{site-id}/connectivity-service:
     delete:
       operationId: deleteSite_Connectivity-service
@@ -1589,6 +1686,8 @@ paths:
         "200":
           description: DELETE 200 OK
       summary: DELETE /site/{site-id}/connectivity-service
+      tags:
+      - Site
     description: Connectivity to the mobile core
     get:
       operationId: getSite_Connectivity-service
@@ -1600,6 +1699,8 @@ paths:
                 $ref: '#/components/schemas/Site_Connectivity-service'
           description: GET OK 200
       summary: GET /site/{site-id}/connectivity-service Container
+      tags:
+      - Site
     parameters:
     - $ref: '#/components/parameters/enterprise-id'
     - content:
@@ -1618,6 +1719,8 @@ paths:
         "201":
           description: created
       summary: POST /site/{site-id}/connectivity-service
+      tags:
+      - Site
   /aether/v2.1.x/{enterprise-id}/site/{site-id}/connectivity-service/core-4g:
     delete:
       operationId: deleteSite_Connectivity-service_Core-4g
@@ -1625,6 +1728,8 @@ paths:
         "200":
           description: DELETE 200 OK
       summary: DELETE /site/{site-id}/connectivity-service/core-4g
+      tags:
+      - Site_Connectivity-service
     description: The 4g core endpoint
     get:
       operationId: getSite_Connectivity-service_Core-4g
@@ -1636,6 +1741,8 @@ paths:
                 $ref: '#/components/schemas/Site_Connectivity-service_Core-4g'
           description: GET OK 200
       summary: GET /site/{site-id}/connectivity-service/core-4g Container
+      tags:
+      - Site_Connectivity-service
     parameters:
     - $ref: '#/components/parameters/enterprise-id'
     - content:
@@ -1654,6 +1761,8 @@ paths:
         "201":
           description: created
       summary: POST /site/{site-id}/connectivity-service/core-4g
+      tags:
+      - Site_Connectivity-service
   /aether/v2.1.x/{enterprise-id}/site/{site-id}/connectivity-service/core-5g:
     delete:
       operationId: deleteSite_Connectivity-service_Core-5g
@@ -1661,6 +1770,8 @@ paths:
         "200":
           description: DELETE 200 OK
       summary: DELETE /site/{site-id}/connectivity-service/core-5g
+      tags:
+      - Site_Connectivity-service
     description: The 5g core endpoint
     get:
       operationId: getSite_Connectivity-service_Core-5g
@@ -1672,6 +1783,8 @@ paths:
                 $ref: '#/components/schemas/Site_Connectivity-service_Core-5g'
           description: GET OK 200
       summary: GET /site/{site-id}/connectivity-service/core-5g Container
+      tags:
+      - Site_Connectivity-service
     parameters:
     - $ref: '#/components/parameters/enterprise-id'
     - content:
@@ -1690,6 +1803,8 @@ paths:
         "201":
           description: created
       summary: POST /site/{site-id}/connectivity-service/core-5g
+      tags:
+      - Site_Connectivity-service
   /aether/v2.1.x/{enterprise-id}/site/{site-id}/device:
     description: List of devices
     get:
@@ -1702,6 +1817,8 @@ paths:
                 $ref: '#/components/schemas/Site_Device_List'
           description: GET OK 200
       summary: GET /site/{site-id}/device List
+      tags:
+      - Site_Device
     parameters:
     - $ref: '#/components/parameters/enterprise-id'
     - content:
@@ -1724,6 +1841,8 @@ paths:
                 $ref: '#/components/schemas/Site_Device-group_List'
           description: GET OK 200
       summary: GET /site/{site-id}/device-group List
+      tags:
+      - Site_Device-group
     parameters:
     - $ref: '#/components/parameters/enterprise-id'
     - content:
@@ -1741,6 +1860,8 @@ paths:
         "200":
           description: DELETE 200 OK
       summary: DELETE /site/{site-id}/device-group
+      tags:
+      - Site_Device-group
     description: List of device groups
     get:
       operationId: getSite_Device-group
@@ -1752,6 +1873,8 @@ paths:
                 $ref: '#/components/schemas/Site_Device-group'
           description: GET OK 200
       summary: GET /site/{site-id}/device-group Container
+      tags:
+      - Site_Device-group
     parameters:
     - $ref: '#/components/parameters/enterprise-id'
     - content:
@@ -1778,6 +1901,8 @@ paths:
         "201":
           description: created
       summary: POST /site/{site-id}/device-group
+      tags:
+      - Site_Device-group
   /aether/v2.1.x/{enterprise-id}/site/{site-id}/device-group/{device-group-id}/device:
     description: list of devices in this device-group
     get:
@@ -1790,6 +1915,8 @@ paths:
                 $ref: '#/components/schemas/Site_Device-group_Device_List'
           description: GET OK 200
       summary: GET /site/{site-id}/device-group/{device-group-id}/device List
+      tags:
+      - Site_Device-group_Device
     parameters:
     - $ref: '#/components/parameters/enterprise-id'
     - content:
@@ -1815,6 +1942,8 @@ paths:
         "200":
           description: DELETE 200 OK
       summary: DELETE /site/{site-id}/device-group/{device-group-id}/device
+      tags:
+      - Site_Device-group_Device
     description: list of devices in this device-group
     get:
       operationId: getSite_Device-group_Device
@@ -1826,6 +1955,8 @@ paths:
                 $ref: '#/components/schemas/Site_Device-group_Device'
           description: GET OK 200
       summary: GET /site/{site-id}/device-group/{device-group-id}/device Container
+      tags:
+      - Site_Device-group_Device
     parameters:
     - $ref: '#/components/parameters/enterprise-id'
     - content:
@@ -1860,6 +1991,84 @@ paths:
         "201":
           description: created
       summary: POST /site/{site-id}/device-group/{device-group-id}/device
+      tags:
+      - Site_Device-group_Device
+  /aether/v2.1.x/{enterprise-id}/site/{site-id}/device-group/{device-group-id}/device/{device-id}/device-id/values:
+    description: Link to device
+    get:
+      operationId: getSite_Device-group_Device_Device-id_Values_Leafref
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LeafRefOptions'
+          description: GET OK 200
+      summary: GET /site/{site-id}/device-group/{device-group-id}/device/{device-id}/device-id/values
+        Leafref
+      tags:
+      - Site_Device-group_Device_Device-id
+    parameters:
+    - $ref: '#/components/parameters/enterprise-id'
+    - content:
+        text/plain; charset=utf-8:
+          schema:
+            type: string
+      description: key {site-id}
+      in: path
+      name: site-id
+      required: true
+    - content:
+        text/plain; charset=utf-8:
+          schema:
+            type: string
+      description: key {device-group-id}
+      in: path
+      name: device-group-id
+      required: true
+    - content:
+        text/plain; charset=utf-8:
+          schema:
+            type: string
+      description: key {device-id}
+      in: path
+      name: device-id
+      required: true
+  /aether/v2.1.x/{enterprise-id}/site/{site-id}/device-group/{device-group-id}/ip-domain/values:
+    description: |-
+      Link to ip-domain settings that determine the pool of IP addresses,
+      as well as the domain resolver settings to use
+    get:
+      operationId: getSite_Device-group_Ip-domain_Values_Leafref
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LeafRefOptions'
+          description: GET OK 200
+      summary: GET /site/{site-id}/device-group/{device-group-id}/ip-domain/values
+        Leafref
+      tags:
+      - Site_Device-group_Ip-domain
+    parameters:
+    - $ref: '#/components/parameters/enterprise-id'
+    - content:
+        text/plain; charset=utf-8:
+          schema:
+            type: string
+      description: key {site-id}
+      in: path
+      name: site-id
+      required: true
+    - content:
+        text/plain; charset=utf-8:
+          schema:
+            type: string
+      description: key {device-group-id}
+      in: path
+      name: device-group-id
+      required: true
   /aether/v2.1.x/{enterprise-id}/site/{site-id}/device-group/{device-group-id}/mbr:
     delete:
       operationId: deleteSite_Device-group_Mbr
@@ -1867,6 +2076,8 @@ paths:
         "200":
           description: DELETE 200 OK
       summary: DELETE /site/{site-id}/device-group/{device-group-id}/mbr
+      tags:
+      - Site_Device-group
     description: Maximum bitrate
     get:
       operationId: getSite_Device-group_Mbr
@@ -1878,6 +2089,8 @@ paths:
                 $ref: '#/components/schemas/Site_Device-group_Mbr'
           description: GET OK 200
       summary: GET /site/{site-id}/device-group/{device-group-id}/mbr Container
+      tags:
+      - Site_Device-group
     parameters:
     - $ref: '#/components/parameters/enterprise-id'
     - content:
@@ -1904,6 +2117,41 @@ paths:
         "201":
           description: created
       summary: POST /site/{site-id}/device-group/{device-group-id}/mbr
+      tags:
+      - Site_Device-group
+  /aether/v2.1.x/{enterprise-id}/site/{site-id}/device-group/{device-group-id}/traffic-class/values:
+    description: Link to traffic class
+    get:
+      operationId: getSite_Device-group_Traffic-class_Values_Leafref
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LeafRefOptions'
+          description: GET OK 200
+      summary: GET /site/{site-id}/device-group/{device-group-id}/traffic-class/values
+        Leafref
+      tags:
+      - Site_Device-group_Traffic-class
+    parameters:
+    - $ref: '#/components/parameters/enterprise-id'
+    - content:
+        text/plain; charset=utf-8:
+          schema:
+            type: string
+      description: key {site-id}
+      in: path
+      name: site-id
+      required: true
+    - content:
+        text/plain; charset=utf-8:
+          schema:
+            type: string
+      description: key {device-group-id}
+      in: path
+      name: device-group-id
+      required: true
   /aether/v2.1.x/{enterprise-id}/site/{site-id}/device/{device-id}:
     delete:
       operationId: deleteSite_Device
@@ -1911,6 +2159,8 @@ paths:
         "200":
           description: DELETE 200 OK
       summary: DELETE /site/{site-id}/device
+      tags:
+      - Site_Device
     description: List of devices
     get:
       operationId: getSite_Device
@@ -1922,6 +2172,8 @@ paths:
                 $ref: '#/components/schemas/Site_Device'
           description: GET OK 200
       summary: GET /site/{site-id}/device Container
+      tags:
+      - Site_Device
     parameters:
     - $ref: '#/components/parameters/enterprise-id'
     - content:
@@ -1948,6 +2200,40 @@ paths:
         "201":
           description: created
       summary: POST /site/{site-id}/device
+      tags:
+      - Site_Device
+  /aether/v2.1.x/{enterprise-id}/site/{site-id}/device/{device-id}/sim-card/values:
+    description: Link to simcard
+    get:
+      operationId: getSite_Device_Sim-card_Values_Leafref
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LeafRefOptions'
+          description: GET OK 200
+      summary: GET /site/{site-id}/device/{device-id}/sim-card/values Leafref
+      tags:
+      - Site_Device_Sim-card
+    parameters:
+    - $ref: '#/components/parameters/enterprise-id'
+    - content:
+        text/plain; charset=utf-8:
+          schema:
+            type: string
+      description: key {site-id}
+      in: path
+      name: site-id
+      required: true
+    - content:
+        text/plain; charset=utf-8:
+          schema:
+            type: string
+      description: key {device-id}
+      in: path
+      name: device-id
+      required: true
   /aether/v2.1.x/{enterprise-id}/site/{site-id}/device/{device-id}/state:
     description: read only attributes of device
     get:
@@ -1960,6 +2246,8 @@ paths:
                 $ref: '#/components/schemas/Site_Device_State'
           description: GET OK 200
       summary: GET /site/{site-id}/device/{device-id}/state Container
+      tags:
+      - Site_Device
     parameters:
     - $ref: '#/components/parameters/enterprise-id'
     - content:
@@ -1985,6 +2273,8 @@ paths:
         "200":
           description: DELETE 200 OK
       summary: DELETE /site/{site-id}/imsi-definition
+      tags:
+      - Site
     description: container for imsi-defination
     get:
       operationId: getSite_Imsi-definition
@@ -1996,6 +2286,8 @@ paths:
                 $ref: '#/components/schemas/Site_Imsi-definition'
           description: GET OK 200
       summary: GET /site/{site-id}/imsi-definition Container
+      tags:
+      - Site
     parameters:
     - $ref: '#/components/parameters/enterprise-id'
     - content:
@@ -2014,6 +2306,8 @@ paths:
         "201":
           description: created
       summary: POST /site/{site-id}/imsi-definition
+      tags:
+      - Site
   /aether/v2.1.x/{enterprise-id}/site/{site-id}/ip-domain:
     description: List of ip domains
     get:
@@ -2026,6 +2320,8 @@ paths:
                 $ref: '#/components/schemas/Site_Ip-domain_List'
           description: GET OK 200
       summary: GET /site/{site-id}/ip-domain List
+      tags:
+      - Site_Ip-domain
     parameters:
     - $ref: '#/components/parameters/enterprise-id'
     - content:
@@ -2043,6 +2339,8 @@ paths:
         "200":
           description: DELETE 200 OK
       summary: DELETE /site/{site-id}/ip-domain
+      tags:
+      - Site_Ip-domain
     description: List of ip domains
     get:
       operationId: getSite_Ip-domain
@@ -2054,6 +2352,8 @@ paths:
                 $ref: '#/components/schemas/Site_Ip-domain'
           description: GET OK 200
       summary: GET /site/{site-id}/ip-domain Container
+      tags:
+      - Site_Ip-domain
     parameters:
     - $ref: '#/components/parameters/enterprise-id'
     - content:
@@ -2080,6 +2380,8 @@ paths:
         "201":
           description: created
       summary: POST /site/{site-id}/ip-domain
+      tags:
+      - Site_Ip-domain
   /aether/v2.1.x/{enterprise-id}/site/{site-id}/monitoring:
     delete:
       operationId: deleteSite_Monitoring
@@ -2087,6 +2389,8 @@ paths:
         "200":
           description: DELETE 200 OK
       summary: DELETE /site/{site-id}/monitoring
+      tags:
+      - Site
     description: container for monitoring
     get:
       operationId: getSite_Monitoring
@@ -2098,6 +2402,8 @@ paths:
                 $ref: '#/components/schemas/Site_Monitoring'
           description: GET OK 200
       summary: GET /site/{site-id}/monitoring Container
+      tags:
+      - Site
     parameters:
     - $ref: '#/components/parameters/enterprise-id'
     - content:
@@ -2116,6 +2422,8 @@ paths:
         "201":
           description: created
       summary: POST /site/{site-id}/monitoring
+      tags:
+      - Site
   /aether/v2.1.x/{enterprise-id}/site/{site-id}/monitoring/edge-device:
     description: List of edge monitoring devices
     get:
@@ -2128,6 +2436,8 @@ paths:
                 $ref: '#/components/schemas/Site_Monitoring_Edge-device_List'
           description: GET OK 200
       summary: GET /site/{site-id}/monitoring/edge-device List
+      tags:
+      - Site_Monitoring_Edge-device
     parameters:
     - $ref: '#/components/parameters/enterprise-id'
     - content:
@@ -2145,6 +2455,8 @@ paths:
         "200":
           description: DELETE 200 OK
       summary: DELETE /site/{site-id}/monitoring/edge-device
+      tags:
+      - Site_Monitoring_Edge-device
     description: List of edge monitoring devices
     get:
       operationId: getSite_Monitoring_Edge-device
@@ -2156,6 +2468,8 @@ paths:
                 $ref: '#/components/schemas/Site_Monitoring_Edge-device'
           description: GET OK 200
       summary: GET /site/{site-id}/monitoring/edge-device Container
+      tags:
+      - Site_Monitoring_Edge-device
     parameters:
     - $ref: '#/components/parameters/enterprise-id'
     - content:
@@ -2182,6 +2496,8 @@ paths:
         "201":
           description: created
       summary: POST /site/{site-id}/monitoring/edge-device
+      tags:
+      - Site_Monitoring_Edge-device
   /aether/v2.1.x/{enterprise-id}/site/{site-id}/sim-card:
     description: List of sim cards
     get:
@@ -2194,6 +2510,8 @@ paths:
                 $ref: '#/components/schemas/Site_Sim-card_List'
           description: GET OK 200
       summary: GET /site/{site-id}/sim-card List
+      tags:
+      - Site_Sim-card
     parameters:
     - $ref: '#/components/parameters/enterprise-id'
     - content:
@@ -2211,6 +2529,8 @@ paths:
         "200":
           description: DELETE 200 OK
       summary: DELETE /site/{site-id}/sim-card
+      tags:
+      - Site_Sim-card
     description: List of sim cards
     get:
       operationId: getSite_Sim-card
@@ -2222,6 +2542,8 @@ paths:
                 $ref: '#/components/schemas/Site_Sim-card'
           description: GET OK 200
       summary: GET /site/{site-id}/sim-card Container
+      tags:
+      - Site_Sim-card
     parameters:
     - $ref: '#/components/parameters/enterprise-id'
     - content:
@@ -2248,6 +2570,8 @@ paths:
         "201":
           description: created
       summary: POST /site/{site-id}/sim-card
+      tags:
+      - Site_Sim-card
   /aether/v2.1.x/{enterprise-id}/site/{site-id}/slice:
     description: List of Slices
     get:
@@ -2260,6 +2584,8 @@ paths:
                 $ref: '#/components/schemas/Site_Slice_List'
           description: GET OK 200
       summary: GET /site/{site-id}/slice List
+      tags:
+      - Site_Slice
     parameters:
     - $ref: '#/components/parameters/enterprise-id'
     - content:
@@ -2277,6 +2603,8 @@ paths:
         "200":
           description: DELETE 200 OK
       summary: DELETE /site/{site-id}/slice
+      tags:
+      - Site_Slice
     description: List of Slices
     get:
       operationId: getSite_Slice
@@ -2288,6 +2616,8 @@ paths:
                 $ref: '#/components/schemas/Site_Slice'
           description: GET OK 200
       summary: GET /site/{site-id}/slice Container
+      tags:
+      - Site_Slice
     parameters:
     - $ref: '#/components/parameters/enterprise-id'
     - content:
@@ -2314,6 +2644,8 @@ paths:
         "201":
           description: created
       summary: POST /site/{site-id}/slice
+      tags:
+      - Site_Slice
   /aether/v2.1.x/{enterprise-id}/site/{site-id}/slice/{slice-id}/device-group:
     description: |-
       A list of device groups. Groups will only participate in
@@ -2328,6 +2660,8 @@ paths:
                 $ref: '#/components/schemas/Site_Slice_Device-group_List'
           description: GET OK 200
       summary: GET /site/{site-id}/slice/{slice-id}/device-group List
+      tags:
+      - Site_Slice_Device-group
     parameters:
     - $ref: '#/components/parameters/enterprise-id'
     - content:
@@ -2353,6 +2687,8 @@ paths:
         "200":
           description: DELETE 200 OK
       summary: DELETE /site/{site-id}/slice/{slice-id}/device-group
+      tags:
+      - Site_Slice_Device-group
     description: |-
       A list of device groups. Groups will only participate in
       the Slice if the enable field is set to True
@@ -2366,6 +2702,8 @@ paths:
                 $ref: '#/components/schemas/Site_Slice_Device-group'
           description: GET OK 200
       summary: GET /site/{site-id}/slice/{slice-id}/device-group Container
+      tags:
+      - Site_Slice_Device-group
     parameters:
     - $ref: '#/components/parameters/enterprise-id'
     - content:
@@ -2400,6 +2738,49 @@ paths:
         "201":
           description: created
       summary: POST /site/{site-id}/slice/{slice-id}/device-group
+      tags:
+      - Site_Slice_Device-group
+  /aether/v2.1.x/{enterprise-id}/site/{site-id}/slice/{slice-id}/device-group/{device-group}/device-group/values:
+    description: Link to device group
+    get:
+      operationId: getSite_Slice_Device-group_Device-group_Values_Leafref
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LeafRefOptions'
+          description: GET OK 200
+      summary: GET /site/{site-id}/slice/{slice-id}/device-group/{device-group}/device-group/values
+        Leafref
+      tags:
+      - Site_Slice_Device-group_Device-group
+    parameters:
+    - $ref: '#/components/parameters/enterprise-id'
+    - content:
+        text/plain; charset=utf-8:
+          schema:
+            type: string
+      description: key {site-id}
+      in: path
+      name: site-id
+      required: true
+    - content:
+        text/plain; charset=utf-8:
+          schema:
+            type: string
+      description: key {slice-id}
+      in: path
+      name: slice-id
+      required: true
+    - content:
+        text/plain; charset=utf-8:
+          schema:
+            type: string
+      description: key {device-group}
+      in: path
+      name: device-group
+      required: true
   /aether/v2.1.x/{enterprise-id}/site/{site-id}/slice/{slice-id}/filter:
     description: |-
       A list of applications to allow and/or deny. Rules are executed in
@@ -2415,6 +2796,8 @@ paths:
                 $ref: '#/components/schemas/Site_Slice_Filter_List'
           description: GET OK 200
       summary: GET /site/{site-id}/slice/{slice-id}/filter List
+      tags:
+      - Site_Slice_Filter
     parameters:
     - $ref: '#/components/parameters/enterprise-id'
     - content:
@@ -2440,6 +2823,8 @@ paths:
         "200":
           description: DELETE 200 OK
       summary: DELETE /site/{site-id}/slice/{slice-id}/filter
+      tags:
+      - Site_Slice_Filter
     description: |-
       A list of applications to allow and/or deny. Rules are executed in
       priority order. The first rule to match will determine the fate
@@ -2454,6 +2839,8 @@ paths:
                 $ref: '#/components/schemas/Site_Slice_Filter'
           description: GET OK 200
       summary: GET /site/{site-id}/slice/{slice-id}/filter Container
+      tags:
+      - Site_Slice_Filter
     parameters:
     - $ref: '#/components/parameters/enterprise-id'
     - content:
@@ -2488,6 +2875,49 @@ paths:
         "201":
           description: created
       summary: POST /site/{site-id}/slice/{slice-id}/filter
+      tags:
+      - Site_Slice_Filter
+  /aether/v2.1.x/{enterprise-id}/site/{site-id}/slice/{slice-id}/filter/{application}/application/values:
+    description: Link to application
+    get:
+      operationId: getSite_Slice_Filter_Application_Values_Leafref
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LeafRefOptions'
+          description: GET OK 200
+      summary: GET /site/{site-id}/slice/{slice-id}/filter/{application}/application/values
+        Leafref
+      tags:
+      - Site_Slice_Filter_Application
+    parameters:
+    - $ref: '#/components/parameters/enterprise-id'
+    - content:
+        text/plain; charset=utf-8:
+          schema:
+            type: string
+      description: key {site-id}
+      in: path
+      name: site-id
+      required: true
+    - content:
+        text/plain; charset=utf-8:
+          schema:
+            type: string
+      description: key {slice-id}
+      in: path
+      name: slice-id
+      required: true
+    - content:
+        text/plain; charset=utf-8:
+          schema:
+            type: string
+      description: key {application}
+      in: path
+      name: application
+      required: true
   /aether/v2.1.x/{enterprise-id}/site/{site-id}/slice/{slice-id}/mbr:
     delete:
       operationId: deleteSite_Slice_Mbr
@@ -2495,6 +2925,8 @@ paths:
         "200":
           description: DELETE 200 OK
       summary: DELETE /site/{site-id}/slice/{slice-id}/mbr
+      tags:
+      - Site_Slice
     description: Per slice Maximum Bit Rate
     get:
       operationId: getSite_Slice_Mbr
@@ -2506,6 +2938,8 @@ paths:
                 $ref: '#/components/schemas/Site_Slice_Mbr'
           description: GET OK 200
       summary: GET /site/{site-id}/slice/{slice-id}/mbr Container
+      tags:
+      - Site_Slice
     parameters:
     - $ref: '#/components/parameters/enterprise-id'
     - content:
@@ -2532,6 +2966,8 @@ paths:
         "201":
           description: created
       summary: POST /site/{site-id}/slice/{slice-id}/mbr
+      tags:
+      - Site_Slice
   /aether/v2.1.x/{enterprise-id}/site/{site-id}/slice/{slice-id}/priority-traffic-rule:
     description: List of priority traffic rules
     get:
@@ -2544,6 +2980,8 @@ paths:
                 $ref: '#/components/schemas/Site_Slice_Priority-traffic-rule_List'
           description: GET OK 200
       summary: GET /site/{site-id}/slice/{slice-id}/priority-traffic-rule List
+      tags:
+      - Site_Slice_Priority-traffic-rule
     parameters:
     - $ref: '#/components/parameters/enterprise-id'
     - content:
@@ -2569,6 +3007,8 @@ paths:
         "200":
           description: DELETE 200 OK
       summary: DELETE /site/{site-id}/slice/{slice-id}/priority-traffic-rule
+      tags:
+      - Site_Slice_Priority-traffic-rule
     description: List of priority traffic rules
     get:
       operationId: getSite_Slice_Priority-traffic-rule
@@ -2580,6 +3020,8 @@ paths:
                 $ref: '#/components/schemas/Site_Slice_Priority-traffic-rule'
           description: GET OK 200
       summary: GET /site/{site-id}/slice/{slice-id}/priority-traffic-rule Container
+      tags:
+      - Site_Slice_Priority-traffic-rule
     parameters:
     - $ref: '#/components/parameters/enterprise-id'
     - content:
@@ -2614,6 +3056,204 @@ paths:
         "201":
           description: created
       summary: POST /site/{site-id}/slice/{slice-id}/priority-traffic-rule
+      tags:
+      - Site_Slice_Priority-traffic-rule
+  ? /aether/v2.1.x/{enterprise-id}/site/{site-id}/slice/{slice-id}/priority-traffic-rule/{priority-traffic-rule-id}/application/values
+  : description: Link to application
+    get:
+      operationId: getSite_Slice_Priority-traffic-rule_Application_Values_Leafref
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LeafRefOptions'
+          description: GET OK 200
+      summary: GET /site/{site-id}/slice/{slice-id}/priority-traffic-rule/{priority-traffic-rule-id}/application/values
+        Leafref
+      tags:
+      - Site_Slice_Priority-traffic-rule_Application
+    parameters:
+    - $ref: '#/components/parameters/enterprise-id'
+    - content:
+        text/plain; charset=utf-8:
+          schema:
+            type: string
+      description: key {site-id}
+      in: path
+      name: site-id
+      required: true
+    - content:
+        text/plain; charset=utf-8:
+          schema:
+            type: string
+      description: key {slice-id}
+      in: path
+      name: slice-id
+      required: true
+    - content:
+        text/plain; charset=utf-8:
+          schema:
+            type: string
+      description: key {priority-traffic-rule-id}
+      in: path
+      name: priority-traffic-rule-id
+      required: true
+  /aether/v2.1.x/{enterprise-id}/site/{site-id}/slice/{slice-id}/priority-traffic-rule/{priority-traffic-rule-id}/device/values:
+    description: Link to device
+    get:
+      operationId: getSite_Slice_Priority-traffic-rule_Device_Values_Leafref
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LeafRefOptions'
+          description: GET OK 200
+      summary: GET /site/{site-id}/slice/{slice-id}/priority-traffic-rule/{priority-traffic-rule-id}/device/values
+        Leafref
+      tags:
+      - Site_Slice_Priority-traffic-rule_Device
+    parameters:
+    - $ref: '#/components/parameters/enterprise-id'
+    - content:
+        text/plain; charset=utf-8:
+          schema:
+            type: string
+      description: key {site-id}
+      in: path
+      name: site-id
+      required: true
+    - content:
+        text/plain; charset=utf-8:
+          schema:
+            type: string
+      description: key {slice-id}
+      in: path
+      name: slice-id
+      required: true
+    - content:
+        text/plain; charset=utf-8:
+          schema:
+            type: string
+      description: key {priority-traffic-rule-id}
+      in: path
+      name: priority-traffic-rule-id
+      required: true
+  /aether/v2.1.x/{enterprise-id}/site/{site-id}/slice/{slice-id}/priority-traffic-rule/{priority-traffic-rule-id}/endpoint/values:
+    description: Link to endpoint in application
+    get:
+      operationId: getSite_Slice_Priority-traffic-rule_Endpoint_Values_Leafref
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LeafRefOptions'
+          description: GET OK 200
+      summary: GET /site/{site-id}/slice/{slice-id}/priority-traffic-rule/{priority-traffic-rule-id}/endpoint/values
+        Leafref
+      tags:
+      - Site_Slice_Priority-traffic-rule_Endpoint
+    parameters:
+    - $ref: '#/components/parameters/enterprise-id'
+    - content:
+        text/plain; charset=utf-8:
+          schema:
+            type: string
+      description: key {site-id}
+      in: path
+      name: site-id
+      required: true
+    - content:
+        text/plain; charset=utf-8:
+          schema:
+            type: string
+      description: key {slice-id}
+      in: path
+      name: slice-id
+      required: true
+    - content:
+        text/plain; charset=utf-8:
+          schema:
+            type: string
+      description: key {priority-traffic-rule-id}
+      in: path
+      name: priority-traffic-rule-id
+      required: true
+  ? /aether/v2.1.x/{enterprise-id}/site/{site-id}/slice/{slice-id}/priority-traffic-rule/{priority-traffic-rule-id}/traffic-class/values
+  : description: Link to traffic class
+    get:
+      operationId: getSite_Slice_Priority-traffic-rule_Traffic-class_Values_Leafref
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LeafRefOptions'
+          description: GET OK 200
+      summary: GET /site/{site-id}/slice/{slice-id}/priority-traffic-rule/{priority-traffic-rule-id}/traffic-class/values
+        Leafref
+      tags:
+      - Site_Slice_Priority-traffic-rule_Traffic-class
+    parameters:
+    - $ref: '#/components/parameters/enterprise-id'
+    - content:
+        text/plain; charset=utf-8:
+          schema:
+            type: string
+      description: key {site-id}
+      in: path
+      name: site-id
+      required: true
+    - content:
+        text/plain; charset=utf-8:
+          schema:
+            type: string
+      description: key {slice-id}
+      in: path
+      name: slice-id
+      required: true
+    - content:
+        text/plain; charset=utf-8:
+          schema:
+            type: string
+      description: key {priority-traffic-rule-id}
+      in: path
+      name: priority-traffic-rule-id
+      required: true
+  /aether/v2.1.x/{enterprise-id}/site/{site-id}/slice/{slice-id}/upf/values:
+    description: Link to user plane that implements this vcf
+    get:
+      operationId: getSite_Slice_Upf_Values_Leafref
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LeafRefOptions'
+          description: GET OK 200
+      summary: GET /site/{site-id}/slice/{slice-id}/upf/values Leafref
+      tags:
+      - Site_Slice_Upf
+    parameters:
+    - $ref: '#/components/parameters/enterprise-id'
+    - content:
+        text/plain; charset=utf-8:
+          schema:
+            type: string
+      description: key {site-id}
+      in: path
+      name: site-id
+      required: true
+    - content:
+        text/plain; charset=utf-8:
+          schema:
+            type: string
+      description: key {slice-id}
+      in: path
+      name: slice-id
+      required: true
   /aether/v2.1.x/{enterprise-id}/site/{site-id}/small-cell:
     description: List of small cell addresses
     get:
@@ -2626,6 +3266,8 @@ paths:
                 $ref: '#/components/schemas/Site_Small-cell_List'
           description: GET OK 200
       summary: GET /site/{site-id}/small-cell List
+      tags:
+      - Site_Small-cell
     parameters:
     - $ref: '#/components/parameters/enterprise-id'
     - content:
@@ -2643,6 +3285,8 @@ paths:
         "200":
           description: DELETE 200 OK
       summary: DELETE /site/{site-id}/small-cell
+      tags:
+      - Site_Small-cell
     description: List of small cell addresses
     get:
       operationId: getSite_Small-cell
@@ -2654,6 +3298,8 @@ paths:
                 $ref: '#/components/schemas/Site_Small-cell'
           description: GET OK 200
       summary: GET /site/{site-id}/small-cell Container
+      tags:
+      - Site_Small-cell
     parameters:
     - $ref: '#/components/parameters/enterprise-id'
     - content:
@@ -2680,6 +3326,8 @@ paths:
         "201":
           description: created
       summary: POST /site/{site-id}/small-cell
+      tags:
+      - Site_Small-cell
   /aether/v2.1.x/{enterprise-id}/site/{site-id}/upf:
     description: A list of named upfs.
     get:
@@ -2692,6 +3340,8 @@ paths:
                 $ref: '#/components/schemas/Site_Upf_List'
           description: GET OK 200
       summary: GET /site/{site-id}/upf List
+      tags:
+      - Site_Upf
     parameters:
     - $ref: '#/components/parameters/enterprise-id'
     - content:
@@ -2709,6 +3359,8 @@ paths:
         "200":
           description: DELETE 200 OK
       summary: DELETE /site/{site-id}/upf
+      tags:
+      - Site_Upf
     description: A list of named upfs.
     get:
       operationId: getSite_Upf
@@ -2720,6 +3372,8 @@ paths:
                 $ref: '#/components/schemas/Site_Upf'
           description: GET OK 200
       summary: GET /site/{site-id}/upf Container
+      tags:
+      - Site_Upf
     parameters:
     - $ref: '#/components/parameters/enterprise-id'
     - content:
@@ -2746,6 +3400,8 @@ paths:
         "201":
           description: created
       summary: POST /site/{site-id}/upf
+      tags:
+      - Site_Upf
   /aether/v2.1.x/{enterprise-id}/template:
     description: List of slice templates
     get:
@@ -2758,6 +3414,8 @@ paths:
                 $ref: '#/components/schemas/Template_List'
           description: GET OK 200
       summary: GET /template List
+      tags:
+      - Template
     parameters:
     - $ref: '#/components/parameters/enterprise-id'
   /aether/v2.1.x/{enterprise-id}/template/{template-id}:
@@ -2767,6 +3425,8 @@ paths:
         "200":
           description: DELETE 200 OK
       summary: DELETE /template
+      tags:
+      - Template
     description: List of slice templates
     get:
       operationId: getTemplate
@@ -2778,6 +3438,8 @@ paths:
                 $ref: '#/components/schemas/Template'
           description: GET OK 200
       summary: GET /template Container
+      tags:
+      - Template
     parameters:
     - $ref: '#/components/parameters/enterprise-id'
     - content:
@@ -2796,6 +3458,8 @@ paths:
         "201":
           description: created
       summary: POST /template
+      tags:
+      - Template
   /aether/v2.1.x/{enterprise-id}/template/{template-id}/mbr:
     delete:
       operationId: deleteTemplate_Mbr
@@ -2803,6 +3467,8 @@ paths:
         "200":
           description: DELETE 200 OK
       summary: DELETE /template/{template-id}/mbr
+      tags:
+      - Template
     description: Per-Slice QOS Settings Maximum Bit Rate
     get:
       operationId: getTemplate_Mbr
@@ -2814,6 +3480,8 @@ paths:
                 $ref: '#/components/schemas/Template_Mbr'
           description: GET OK 200
       summary: GET /template/{template-id}/mbr Container
+      tags:
+      - Template
     parameters:
     - $ref: '#/components/parameters/enterprise-id'
     - content:
@@ -2832,6 +3500,8 @@ paths:
         "201":
           description: created
       summary: POST /template/{template-id}/mbr
+      tags:
+      - Template
   /aether/v2.1.x/{enterprise-id}/traffic-class:
     description: List of traffic class
     get:
@@ -2844,6 +3514,8 @@ paths:
                 $ref: '#/components/schemas/Traffic-class_List'
           description: GET OK 200
       summary: GET /traffic-class List
+      tags:
+      - Traffic-class
     parameters:
     - $ref: '#/components/parameters/enterprise-id'
   /aether/v2.1.x/{enterprise-id}/traffic-class/{traffic-class-id}:
@@ -2853,6 +3525,8 @@ paths:
         "200":
           description: DELETE 200 OK
       summary: DELETE /traffic-class
+      tags:
+      - Traffic-class
     description: List of traffic class
     get:
       operationId: getTraffic-class
@@ -2864,6 +3538,8 @@ paths:
                 $ref: '#/components/schemas/Traffic-class'
           description: GET OK 200
       summary: GET /traffic-class Container
+      tags:
+      - Traffic-class
     parameters:
     - $ref: '#/components/parameters/enterprise-id'
     - content:
@@ -2882,3 +3558,5 @@ paths:
         "201":
           description: created
       summary: POST /traffic-class
+      tags:
+      - Traffic-class
