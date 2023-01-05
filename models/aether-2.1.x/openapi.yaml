@@ -806,10 +806,11 @@ components:
           type: string
         imsi:
           description: IMSI for this sim card
-          format: int64
-          minimum: 0
+          maxLength: 15
+          minLength: 14
+          pattern: '[0-9]{14,15}'
           title: imsi
-          type: integer
+          type: string
         sim-id:
           description: ID for this sim card.
           maxLength: 63

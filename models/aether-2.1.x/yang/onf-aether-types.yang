@@ -27,8 +27,10 @@ module onf-aether-types {
   }
 
   typedef imsi {
-      type uint64 {
-      }
+      type string {
+          length 14..15;
+          pattern '[0-9]{14,15}';
+      }    
     description "International Mobile Subscriber Identity";
   }
 
