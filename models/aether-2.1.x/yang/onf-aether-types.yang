@@ -79,8 +79,8 @@ module onf-aether-types {
 
   typedef tac {
       type string {
-        length 4..8;
-        pattern '[0-9A-F\.]*';
+        length 0..8;
+        pattern '[0-9A-F\.]{0,8}';
       }
     description "The typedef for tac";
   }
@@ -100,16 +100,18 @@ module onf-aether-types {
   }
 
   typedef sst {
-      type uint8 {
-        range 1..255;
-      }
+      type string {
+          length 0..3;
+          pattern '[0-9A-F\.]{0,3}';
+      }    
     description "The typedef for sst";
   }
 
   typedef sd {
-      type uint32 {
-        range 0..16777215;
-      }
+      type string {
+          length 0..8;
+          pattern '[0-9A-F\.]{0,8}';
+      }    
     description "The typedef for sd";
   }
 

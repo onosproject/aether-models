@@ -65,7 +65,7 @@ endif
 endif
 
 jenkins-tools: # @HELP installs tooling needed for Jenkins
-	cd .. && go get -u github.com/jstemmer/go-junit-report && go get github.com/t-yuki/gocover-cobertura
+	cd .. && go install github.com/jstemmer/go-junit-report && go install github.com/t-yuki/gocover-cobertura
 
 build-tools: # @HELP install the ONOS build tools if needed
 	@if [ ! -d "../build-tools" ]; then cd .. && git clone https://github.com/onosproject/build-tools.git; fi

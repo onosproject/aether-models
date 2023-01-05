@@ -144,8 +144,8 @@
           ],
           "display-name": "Chicago Robots Slice",
           "slice-id": "acme-chicago-robots",
-          "sd": 2973238,
-          "sst": 79,
+          "sd": "2973238",
+          "sst": "79",
           "upf": "acme-chicago-pool-entry1",
           "mbr": {
             "downlink": "5000000",
@@ -212,8 +212,8 @@
       "description": "Slice Template 1",
       "display-name": "Template 1",
       "template-id": "template-1",
-      "sd": 10886763,
-      "sst": 158,
+      "sd": "10886763",
+      "sst": "158",
       "mbr": {
         "uplink": "10000000",
         "downlink": "5000000",
@@ -226,8 +226,8 @@
       "description": "Slice Template 2",
       "display-name": "Template 2",
       "template-id": "template-2",
-      "sd": 16619900,
-      "sst": 157,
+      "sd": "16619900",
+      "sst": "157",
       "mbr": {
         "uplink": "10000000",
         "downlink": "5000000",

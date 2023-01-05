@@ -74,8 +74,8 @@
             }
           ],
           "slice-id": "acme-chicago-robots",
-          "sd": 2973238,
-          "sst": 79
+          "sd": "2973238",
+          "sst": "79"
         },
         {
           "default-behavior": "DENY-ALL",
@@ -90,8 +90,8 @@
             }
           ],
           "slice-id": "acme-dallas-robots",
-          "sd": 2973238,
-          "sst": 79
+          "sd": "2973238",
+          "sst": "79"
         }
       ]
     }
