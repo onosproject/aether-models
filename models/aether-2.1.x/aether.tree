@@ -45,6 +45,7 @@ module: onf-site
      |  +--rw description?    description
      |  +--rw iccid?          at:iccid
      |  +--rw imsi?           at:imsi
+     |  +--rw enable?         boolean
      +--rw upf* [upf-id]
      |  +--rw upf-id             upf-id
      |  +--rw display-name?      string

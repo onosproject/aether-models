@@ -797,6 +797,12 @@ components:
           minLength: 1
           title: display-name
           type: string
+        enable:
+          default: true
+          description: Enable this Sim-Card. Sim-Cards that are disabled will not
+            be usable in any device in any slice.
+          title: enable
+          type: boolean
         iccid:
           description: ICCID for this sim card
           maxLength: 22
@@ -874,11 +880,10 @@ components:
           $ref: '#/components/schemas/Site_Slice_Priority-traffic-rule_List'
         sd:
           description: Slice differentiator. Immutable.
-          format: int32
-          maximum: 16777215
-          minimum: 0
+          maxLength: 8
+          pattern: '[0-9A-F\.]{0,8}'
           title: sd
-          type: integer
+          type: string
         slice-id:
           description: ID for this slice.
           maxLength: 63
@@ -889,10 +894,10 @@ components:
           x-go-type: ListKey
         sst:
           description: Slice/Service type. Immutable.
-          maximum: 255
-          minimum: 1
+          maxLength: 3
+          pattern: '[0-9A-F\.]{0,3}'
           title: sst
-          type: integer
+          type: string
         upf:
           description: Link to user plane that implements this vcf
           title: upf
@@ -1163,8 +1168,7 @@ components:
         tac:
           description: Type Allocation Code
           maxLength: 8
-          minLength: 4
-          pattern: '[0-9A-F\.]*'
+          pattern: '[0-9A-F\.]{0,8}'
           title: tac
           type: string
       required:
@@ -1264,17 +1268,16 @@ components:
           $ref: '#/components/schemas/Template_Mbr'
         sd:
           description: Slice differentiator
-          format: int32
-          maximum: 16777215
-          minimum: 0
+          maxLength: 8
+          pattern: '[0-9A-F\.]{0,8}'
           title: sd
-          type: integer
+          type: string
         sst:
           description: Slice/Service type
-          maximum: 255
-          minimum: 1
+          maxLength: 3
+          pattern: '[0-9A-F\.]{0,3}'
           title: sst
-          type: integer
+          type: string
         template-id:
           description: ID for this slice template.
           maxLength: 63

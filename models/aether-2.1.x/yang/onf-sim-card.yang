@@ -50,6 +50,13 @@ submodule onf-sim-card {
           description
               "IMSI for this sim card";
       }
+
+      leaf enable {
+        type boolean;
+        default true;
+        description
+          "Enable this Sim-Card. Sim-Cards that are disabled will not be usable in any device in any slice.";
+      }
     }
   }
 }
