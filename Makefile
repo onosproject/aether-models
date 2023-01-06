@@ -32,10 +32,10 @@ docker-build: models models-openapi # @HELP Build Docker containers for all the 
 	@for model in models/*; do echo -e "Building container for $$model:\n"; make -C $$model image; echo -e "\n\n"; done
 
 docker-push: # @HELP Publish Docker containers for all the models
-	@for model in models/*; make -C $$model publish; done
+	@for model in models/*; do make -C $$model publish; done
 
 kind-load: # @HELP Load Docker containers for all the models in a kind cluster (use: KIND_CLUSTER_NAME to customize the cluster name)
-	@for model in models/*; make -C $$model kind; done
+	@for model in models/*; do make -C $$model kind; done
 
 yang-lint: # @HELP Lint the yang models
 yang-lint: pyang-tool
