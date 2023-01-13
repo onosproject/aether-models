@@ -881,7 +881,8 @@ components:
         sd:
           description: Slice differentiator. Immutable.
           maxLength: 6
-          pattern: '[0-9A-F\.]{0,6}'
+          minLength: 1
+          pattern: '[0-9A-F\.]{1,6}'
           title: sd
           type: string
         slice-id:
@@ -895,7 +896,8 @@ components:
         sst:
           description: Slice/Service type. Immutable.
           maxLength: 2
-          pattern: '[0-9A-F\.]{0,2}'
+          minLength: 1
+          pattern: '[0-9A-F\.]{1,2}'
           title: sst
           type: string
         upf:
@@ -1168,7 +1170,8 @@ components:
         tac:
           description: Type Allocation Code
           maxLength: 6
-          pattern: '[0-9A-F\.]{0,6}'
+          minLength: 1
+          pattern: '[0-9A-F\.]{1,6}'
           title: tac
           type: string
       required:
@@ -1269,13 +1272,15 @@ components:
         sd:
           description: Slice differentiator
           maxLength: 6
-          pattern: '[0-9A-F\.]{0,6}'
+          minLength: 1
+          pattern: '[0-9A-F\.]{1,6}'
           title: sd
           type: string
         sst:
           description: Slice/Service type
           maxLength: 2
-          pattern: '[0-9A-F\.]{0,2}'
+          minLength: 1
+          pattern: '[0-9A-F\.]{1,2}'
           title: sst
           type: string
         template-id:
