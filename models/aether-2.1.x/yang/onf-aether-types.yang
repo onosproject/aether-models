@@ -79,10 +79,10 @@ module onf-aether-types {
 
   typedef tac {
       type string {
-        length 0..8;
-        pattern '[0-9A-F\.]{0,8}';
+        length 1..6;
+        pattern '[0-9A-F\.]{1,6}';
       }
-    description "The typedef for tac";
+    description "The typedef for tac, a 24-bit hexadecimal-encoded number with optional leading zeroes that carry semantic meaning. No 0x prefix is used.";
   }
 
   typedef ent {
@@ -101,18 +101,18 @@ module onf-aether-types {
 
   typedef sst {
       type string {
-          length 0..3;
-          pattern '[0-9A-F\.]{0,3}';
+          length 1..2;
+          pattern '[0-9A-F\.]{1,2}';
       }    
-    description "The typedef for sst";
+    description "The typedef for sst, an 8-bit hexidecimal-encoded number with optional leading zeroes that carry semantic meaning. No 0x prefix is used.";
   }
 
   typedef sd {
       type string {
-          length 0..8;
-          pattern '[0-9A-F\.]{0,8}';
+          length 1..6;
+          pattern '[0-9A-F\.]{1,6}';
       }    
-    description "The typedef for sd";
+    description "The typedef for sd, a 24-bit hexadecimal-encoded number with optional leading zeroes that carry semantic meaning. No 0x prefix is used.";
   }
 
   typedef qci {
