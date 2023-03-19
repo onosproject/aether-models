@@ -129,6 +129,16 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Enterprises_Enterprise_Site_Slice_Priority-traffic-rule'
+    RequestBody_Enterprises_Enterprise_Site_Slice_Priority-traffic-rule_Gbr:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Enterprises_Enterprise_Site_Slice_Priority-traffic-rule_Gbr'
+    RequestBody_Enterprises_Enterprise_Site_Slice_Priority-traffic-rule_Mbr:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Enterprises_Enterprise_Site_Slice_Priority-traffic-rule_Mbr'
     RequestBody_Enterprises_Enterprise_Site_Small-cell:
       content:
         application/json:
@@ -204,6 +214,7 @@ components:
           description: URL of ACC prometheus
           title: acc-prometheus-url
           type: string
+          x-yang-type: uri
         connectivity-service-id:
           description: ID for this connectivity service.
           maxLength: 63
@@ -212,16 +223,19 @@ components:
           title: connectivity-service-id
           type: string
           x-go-type: ListKey
+          x-yang-type: connectivity-service-id
         core-5g-endpoint:
           description: url of the 5g core
           title: core-5g-endpoint
           type: string
+          x-yang-type: uri
         description:
           description: long description field
           maxLength: 1024
           minLength: 1
           title: description
           type: string
+          x-yang-type: description
         display-name:
           description: display name to use in GUI or CLI
           maxLength: 80
@@ -237,6 +251,7 @@ components:
       description: List of connectivity services (list)
       items:
         $ref: '#/components/schemas/Connectivity-services_Connectivity-service'
+      title: Connectivity-services_Connectivity-service_List
       type: array
       uniqueItems: true
       x-keys:
@@ -264,6 +279,7 @@ components:
           minLength: 1
           title: description
           type: string
+          x-yang-type: description
         display-name:
           description: display name to use in GUI or CLI
           maxLength: 80
@@ -278,6 +294,7 @@ components:
           title: enterprise-id
           type: string
           x-go-type: ListKey
+          x-yang-type: enterprise-id
         site:
           $ref: '#/components/schemas/Enterprises_Enterprise_Site_List'
         template:
@@ -307,12 +324,14 @@ components:
           title: application-id
           type: string
           x-go-type: ListKey
+          x-yang-type: application-id
         description:
           description: long description field
           maxLength: 1024
           minLength: 1
           title: description
           type: string
+          x-yang-type: description
         display-name:
           description: display name to use in GUI or CLI
           maxLength: 80
@@ -336,6 +355,7 @@ components:
           minLength: 1
           title: description
           type: string
+          x-yang-type: description
         display-name:
           description: display name to use in GUI or CLI
           maxLength: 80
@@ -350,6 +370,7 @@ components:
           title: endpoint-id
           type: string
           x-go-type: ListKey
+          x-yang-type: aether-identifier
         mbr:
           $ref: '#/components/schemas/Enterprises_Enterprise_Application_Endpoint_Mbr'
         port-end:
@@ -372,6 +393,7 @@ components:
           pattern: TCP|UDP
           title: protocol
           type: string
+          x-yang-type: protocol
         traffic-class:
           description: Link to traffic class
           title: traffic-class
@@ -391,6 +413,7 @@ components:
       description: list for endpoint (list)
       items:
         $ref: '#/components/schemas/Enterprises_Enterprise_Application_Endpoint'
+      title: Enterprises_Enterprise_Application_Endpoint_List
       type: array
       uniqueItems: true
       x-keys:
@@ -417,6 +440,7 @@ components:
       description: List of applications (list)
       items:
         $ref: '#/components/schemas/Enterprises_Enterprise_Application'
+      title: Enterprises_Enterprise_Application_List
       type: array
       uniqueItems: true
       x-keys:
@@ -447,6 +471,7 @@ components:
       description: The list for connectivity-service (list)
       items:
         $ref: '#/components/schemas/Enterprises_Enterprise_Connectivity-service'
+      title: Enterprises_Enterprise_Connectivity-service_List
       type: array
       uniqueItems: true
       x-keys:
@@ -456,6 +481,7 @@ components:
       description: List of enterprises (list)
       items:
         $ref: '#/components/schemas/Enterprises_Enterprise'
+      title: Enterprises_Enterprise_List
       type: array
       uniqueItems: true
       x-keys:
@@ -470,6 +496,7 @@ components:
           minLength: 1
           title: description
           type: string
+          x-yang-type: description
         device:
           $ref: '#/components/schemas/Enterprises_Enterprise_Site_Device_List'
         device-group:
@@ -496,6 +523,7 @@ components:
           title: site-id
           type: string
           x-go-type: ListKey
+          x-yang-type: site-id
         slice:
           $ref: '#/components/schemas/Enterprises_Enterprise_Site_Slice_List'
         small-cell:
@@ -521,6 +549,7 @@ components:
           minLength: 1
           title: description
           type: string
+          x-yang-type: description
         device-id:
           description: ID for this device.
           maxLength: 63
@@ -529,6 +558,7 @@ components:
           title: device-id
           type: string
           x-go-type: ListKey
+          x-yang-type: device-id
         display-name:
           description: display name to use in GUI or CLI
           maxLength: 80
@@ -542,6 +572,7 @@ components:
           pattern: '[0-9]{14,16}'
           title: imei
           type: string
+          x-yang-type: imei
         sim-card:
           description: Link to simcard
           title: sim-card
@@ -565,6 +596,7 @@ components:
           minLength: 1
           title: description
           type: string
+          x-yang-type: description
         device:
           $ref: '#/components/schemas/Enterprises_Enterprise_Site_Device-group_Device_List'
         device-group-id:
@@ -575,6 +607,7 @@ components:
           title: device-group-id
           type: string
           x-go-type: ListKey
+          x-yang-type: device-group-id
         display-name:
           description: display name to use in GUI or CLI
           maxLength: 80
@@ -627,6 +660,7 @@ components:
       description: list of devices in this device-group (list)
       items:
         $ref: '#/components/schemas/Enterprises_Enterprise_Site_Device-group_Device'
+      title: Enterprises_Enterprise_Site_Device-group_Device_List
       type: array
       uniqueItems: true
       x-keys:
@@ -636,6 +670,7 @@ components:
       description: List of device groups (list)
       items:
         $ref: '#/components/schemas/Enterprises_Enterprise_Site_Device-group'
+      title: Enterprises_Enterprise_Site_Device-group_List
       type: array
       uniqueItems: true
       x-keys:
@@ -667,6 +702,7 @@ components:
       description: List of devices (list)
       items:
         $ref: '#/components/schemas/Enterprises_Enterprise_Site_Device'
+      title: Enterprises_Enterprise_Site_Device_List
       type: array
       uniqueItems: true
       x-keys:
@@ -696,11 +732,13 @@ components:
           pattern: '[0-9]{3}'
           title: mcc
           type: string
+          x-yang-type: mcc
         mnc:
           description: mobile network code
           pattern: '[0-9]{2,3}'
           title: mnc
           type: string
+          x-yang-type: mnc
       required:
       - enterprise
       - format
@@ -720,12 +758,14 @@ components:
           pattern: ENABLE|MAINTENANCE|DISABLE
           title: admin-status
           type: string
+          x-yang-type: admin-status
         description:
           description: long description field
           maxLength: 1024
           minLength: 1
           title: description
           type: string
+          x-yang-type: description
         display-name:
           description: display name to use in GUI or CLI
           maxLength: 80
@@ -738,6 +778,7 @@ components:
           minLength: 1
           title: dnn
           type: string
+          x-yang-type: dnn
         dns-primary:
           description: primary dns server name
           title: dns-primary
@@ -754,6 +795,7 @@ components:
           title: ip-domain-id
           type: string
           x-go-type: ListKey
+          x-yang-type: ip-domain-id
         mtu:
           default: 1492
           description: maximum transmission unit
@@ -766,6 +808,7 @@ components:
           pattern: (([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])/(([0-9])|([1-2][0-9])|(3[0-2]))
           title: subnet
           type: string
+          x-yang-type: ipv4-prefix
       required:
       - dnn
       - ip-domain-id
@@ -777,6 +820,7 @@ components:
       description: List of ip domains (list)
       items:
         $ref: '#/components/schemas/Enterprises_Enterprise_Site_Ip-domain'
+      title: Enterprises_Enterprise_Site_Ip-domain_List
       type: array
       uniqueItems: true
       x-keys:
@@ -786,6 +830,7 @@ components:
       description: List of site (list)
       items:
         $ref: '#/components/schemas/Enterprises_Enterprise_Site'
+      title: Enterprises_Enterprise_Site_List
       type: array
       uniqueItems: true
       x-keys:
@@ -798,12 +843,14 @@ components:
           description: URL of edge cluster prometheus
           title: edge-cluster-prometheus-url
           type: string
+          x-yang-type: uri
         edge-device:
           $ref: '#/components/schemas/Enterprises_Enterprise_Site_Monitoring_Edge-device_List'
         edge-monitoring-prometheus-url:
           description: URL of monitoring prometheus
           title: edge-monitoring-prometheus-url
           type: string
+          x-yang-type: uri
       title: Enterprises_Enterprise_Site_Monitoring
       type: object
     Enterprises_Enterprise_Site_Monitoring_Edge-device:
@@ -815,6 +862,7 @@ components:
           minLength: 1
           title: description
           type: string
+          x-yang-type: description
         display-name:
           description: display name to use in GUI or CLI
           maxLength: 80
@@ -829,6 +877,7 @@ components:
           title: edge-device-id
           type: string
           x-go-type: ListKey
+          x-yang-type: aether-identifier
       required:
       - edge-device-id
       title: Enterprises_Enterprise_Site_Monitoring_Edge-device
@@ -838,6 +887,7 @@ components:
       description: List of edge monitoring devices (list)
       items:
         $ref: '#/components/schemas/Enterprises_Enterprise_Site_Monitoring_Edge-device'
+      title: Enterprises_Enterprise_Site_Monitoring_Edge-device_List
       type: array
       uniqueItems: true
       x-keys:
@@ -852,6 +902,7 @@ components:
           minLength: 1
           title: description
           type: string
+          x-yang-type: description
         display-name:
           description: display name to use in GUI or CLI
           maxLength: 80
@@ -865,6 +916,7 @@ components:
           pattern: '[0-9]{18,21}[0-9A-F]'
           title: iccid
           type: string
+          x-yang-type: iccid
         imsi:
           description: IMSI for this sim card
           format: int64
@@ -879,6 +931,7 @@ components:
           title: sim-id
           type: string
           x-go-type: ListKey
+          x-yang-type: sim-card-id
       required:
       - sim-id
       title: Enterprises_Enterprise_Site_Sim-card
@@ -889,6 +942,7 @@ components:
       description: List of sim cards (list)
       items:
         $ref: '#/components/schemas/Enterprises_Enterprise_Site_Sim-card'
+      title: Enterprises_Enterprise_Site_Sim-card_List
       type: array
       uniqueItems: true
       x-keys:
@@ -905,12 +959,14 @@ components:
           pattern: DENY-ALL|ALLOW-ALL|ALLOW-PUBLIC
           title: default-behavior
           type: string
+          x-yang-type: behavior
         description:
           description: long description field
           maxLength: 1024
           minLength: 1
           title: description
           type: string
+          x-yang-type: description
         device-group:
           $ref: '#/components/schemas/Enterprises_Enterprise_Site_Slice_Device-group_List'
         display-name:
@@ -940,6 +996,7 @@ components:
           title: slice-id
           type: string
           x-go-type: ListKey
+          x-yang-type: slice-id
         sst:
           description: Slice/Service type. Immutable.
           maximum: 255
@@ -988,6 +1045,7 @@ components:
         the Slice if the enable field is set to True (list)
       items:
         $ref: '#/components/schemas/Enterprises_Enterprise_Site_Slice_Device-group'
+      title: Enterprises_Enterprise_Site_Slice_Device-group_List
       type: array
       uniqueItems: true
       x-keys:
@@ -1029,6 +1087,7 @@ components:
         of the packet. (list)
       items:
         $ref: '#/components/schemas/Enterprises_Enterprise_Site_Slice_Filter'
+      title: Enterprises_Enterprise_Site_Slice_Filter_List
       type: array
       uniqueItems: true
       x-keys:
@@ -1038,6 +1097,7 @@ components:
       description: List of Slices (list)
       items:
         $ref: '#/components/schemas/Enterprises_Enterprise_Site_Slice'
+      title: Enterprises_Enterprise_Site_Slice_List
       type: array
       uniqueItems: true
       x-keys:
@@ -1091,6 +1151,7 @@ components:
           minLength: 1
           title: description
           type: string
+          x-yang-type: description
         device:
           description: Link to device
           title: device
@@ -1121,6 +1182,7 @@ components:
           title: priority-traffic-rule-id
           type: string
           x-go-type: ListKey
+          x-yang-type: priority-traffic-rule-id
         traffic-class:
           description: Link to traffic class
           title: traffic-class
@@ -1137,7 +1199,7 @@ components:
       x-list-multiple: true
       x-must: []
     Enterprises_Enterprise_Site_Slice_Priority-traffic-rule_Gbr:
-      description: For choice bitrate:gbr-case
+      description: Per-Device per-Application GBR (Guaranteed BitRate) in bps
       properties:
         downlink:
           description: Per-Device per application downlink data rate in bps
@@ -1157,13 +1219,14 @@ components:
       description: List of priority traffic rules (list)
       items:
         $ref: '#/components/schemas/Enterprises_Enterprise_Site_Slice_Priority-traffic-rule'
+      title: Enterprises_Enterprise_Site_Slice_Priority-traffic-rule_List
       type: array
       uniqueItems: true
       x-keys:
       - priority-traffic-rule-id
       x-list-multiple: true
     Enterprises_Enterprise_Site_Slice_Priority-traffic-rule_Mbr:
-      description: For choice bitrate:mbr-case
+      description: Per-Device per-Application MBR (Maximum BitRate) in bps
       properties:
         downlink:
           description: Per-Device per application downlink data rate in bps
@@ -1194,6 +1257,7 @@ components:
           minLength: 1
           title: description
           type: string
+          x-yang-type: description
         display-name:
           description: display name to use in GUI or CLI
           maxLength: 80
@@ -1213,6 +1277,7 @@ components:
           title: small-cell-id
           type: string
           x-go-type: ListKey
+          x-yang-type: aether-identifier
         tac:
           description: Type Allocation Code
           maxLength: 8
@@ -1220,6 +1285,7 @@ components:
           pattern: '[0-9A-F\.]*'
           title: tac
           type: string
+          x-yang-type: tac
       required:
       - small-cell-id
       - tac
@@ -1230,6 +1296,7 @@ components:
       description: List of small cell addresses (list)
       items:
         $ref: '#/components/schemas/Enterprises_Enterprise_Site_Small-cell'
+      title: Enterprises_Enterprise_Site_Small-cell_List
       type: array
       uniqueItems: true
       x-keys:
@@ -1248,12 +1315,14 @@ components:
           description: url for configuring the UPF
           title: config-endpoint
           type: string
+          x-yang-type: uri
         description:
           description: long description field
           maxLength: 1024
           minLength: 1
           title: description
           type: string
+          x-yang-type: description
         display-name:
           description: display name to use in GUI or CLI
           maxLength: 80
@@ -1274,6 +1343,7 @@ components:
           title: upf-id
           type: string
           x-go-type: ListKey
+          x-yang-type: upf-id
       required:
       - address
       - port
@@ -1285,6 +1355,7 @@ components:
       description: A list of named upfs. (list)
       items:
         $ref: '#/components/schemas/Enterprises_Enterprise_Site_Upf'
+      title: Enterprises_Enterprise_Site_Upf_List
       type: array
       uniqueItems: true
       x-keys:
@@ -1301,12 +1372,14 @@ components:
           pattern: DENY-ALL|ALLOW-ALL|ALLOW-PUBLIC
           title: default-behavior
           type: string
+          x-yang-type: behavior
         description:
           description: long description field
           maxLength: 1024
           minLength: 1
           title: description
           type: string
+          x-yang-type: description
         display-name:
           description: display name to use in GUI or CLI
           maxLength: 80
@@ -1336,6 +1409,7 @@ components:
           title: template-id
           type: string
           x-go-type: ListKey
+          x-yang-type: template-id
       required:
       - default-behavior
       - template-id
@@ -1346,6 +1420,7 @@ components:
       description: List of slice templates (list)
       items:
         $ref: '#/components/schemas/Enterprises_Enterprise_Template'
+      title: Enterprises_Enterprise_Template_List
       type: array
       uniqueItems: true
       x-keys:
@@ -1398,6 +1473,7 @@ components:
           minLength: 1
           title: description
           type: string
+          x-yang-type: description
         display-name:
           description: display name to use in GUI or CLI
           maxLength: 80
@@ -1430,6 +1506,7 @@ components:
           title: traffic-class-id
           type: string
           x-go-type: ListKey
+          x-yang-type: traffic-class-id
       required:
       - traffic-class-id
       title: Enterprises_Enterprise_Traffic-class
@@ -1439,6 +1516,7 @@ components:
       description: List of traffic class (list)
       items:
         $ref: '#/components/schemas/Enterprises_Enterprise_Traffic-class'
+      title: Enterprises_Enterprise_Traffic-class_List
       type: array
       uniqueItems: true
       x-keys:
@@ -3737,6 +3815,140 @@ paths:
       in: path
       name: priority-traffic-rule-id
       required: true
+  ? /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/slice/{slice-id}/priority-traffic-rule/{priority-traffic-rule-id}/gbr
+  : delete:
+      operationId: deleteEnterprises_Enterprise_Site_Slice_Priority-traffic-rule_Gbr
+      responses:
+        "200":
+          description: DELETE 200 OK
+      summary: DELETE /enterprises/enterprise/{enterprise-id}/site/{site-id}/slice/{slice-id}/priority-traffic-rule/{priority-traffic-rule-id}/gbr
+      tags:
+      - Enterprises_Enterprise_Site_Slice_Priority-traffic-rule
+    description: Per-Device per-Application GBR (Guaranteed BitRate) in bps
+    get:
+      operationId: getEnterprises_Enterprise_Site_Slice_Priority-traffic-rule_Gbr
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Enterprises_Enterprise_Site_Slice_Priority-traffic-rule_Gbr'
+          description: GET OK 200
+      summary: GET /enterprises/enterprise/{enterprise-id}/site/{site-id}/slice/{slice-id}/priority-traffic-rule/{priority-traffic-rule-id}/gbr
+        Container
+      tags:
+      - Enterprises_Enterprise_Site_Slice_Priority-traffic-rule
+    parameters:
+    - $ref: '#/components/parameters/target'
+    - content:
+        text/plain; charset=utf-8:
+          schema:
+            type: string
+      description: key {enterprise-id}
+      in: path
+      name: enterprise-id
+      required: true
+    - content:
+        text/plain; charset=utf-8:
+          schema:
+            type: string
+      description: key {site-id}
+      in: path
+      name: site-id
+      required: true
+    - content:
+        text/plain; charset=utf-8:
+          schema:
+            type: string
+      description: key {slice-id}
+      in: path
+      name: slice-id
+      required: true
+    - content:
+        text/plain; charset=utf-8:
+          schema:
+            type: string
+      description: key {priority-traffic-rule-id}
+      in: path
+      name: priority-traffic-rule-id
+      required: true
+    post:
+      operationId: postEnterprises_Enterprise_Site_Slice_Priority-traffic-rule_Gbr
+      requestBody:
+        $ref: '#/components/requestBodies/RequestBody_Enterprises_Enterprise_Site_Slice_Priority-traffic-rule_Gbr'
+      responses:
+        "201":
+          description: created
+      summary: POST /enterprises/enterprise/{enterprise-id}/site/{site-id}/slice/{slice-id}/priority-traffic-rule/{priority-traffic-rule-id}/gbr
+      tags:
+      - Enterprises_Enterprise_Site_Slice_Priority-traffic-rule
+  ? /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/slice/{slice-id}/priority-traffic-rule/{priority-traffic-rule-id}/mbr
+  : delete:
+      operationId: deleteEnterprises_Enterprise_Site_Slice_Priority-traffic-rule_Mbr
+      responses:
+        "200":
+          description: DELETE 200 OK
+      summary: DELETE /enterprises/enterprise/{enterprise-id}/site/{site-id}/slice/{slice-id}/priority-traffic-rule/{priority-traffic-rule-id}/mbr
+      tags:
+      - Enterprises_Enterprise_Site_Slice_Priority-traffic-rule
+    description: Per-Device per-Application MBR (Maximum BitRate) in bps
+    get:
+      operationId: getEnterprises_Enterprise_Site_Slice_Priority-traffic-rule_Mbr
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Enterprises_Enterprise_Site_Slice_Priority-traffic-rule_Mbr'
+          description: GET OK 200
+      summary: GET /enterprises/enterprise/{enterprise-id}/site/{site-id}/slice/{slice-id}/priority-traffic-rule/{priority-traffic-rule-id}/mbr
+        Container
+      tags:
+      - Enterprises_Enterprise_Site_Slice_Priority-traffic-rule
+    parameters:
+    - $ref: '#/components/parameters/target'
+    - content:
+        text/plain; charset=utf-8:
+          schema:
+            type: string
+      description: key {enterprise-id}
+      in: path
+      name: enterprise-id
+      required: true
+    - content:
+        text/plain; charset=utf-8:
+          schema:
+            type: string
+      description: key {site-id}
+      in: path
+      name: site-id
+      required: true
+    - content:
+        text/plain; charset=utf-8:
+          schema:
+            type: string
+      description: key {slice-id}
+      in: path
+      name: slice-id
+      required: true
+    - content:
+        text/plain; charset=utf-8:
+          schema:
+            type: string
+      description: key {priority-traffic-rule-id}
+      in: path
+      name: priority-traffic-rule-id
+      required: true
+    post:
+      operationId: postEnterprises_Enterprise_Site_Slice_Priority-traffic-rule_Mbr
+      requestBody:
+        $ref: '#/components/requestBodies/RequestBody_Enterprises_Enterprise_Site_Slice_Priority-traffic-rule_Mbr'
+      responses:
+        "201":
+          description: created
+      summary: POST /enterprises/enterprise/{enterprise-id}/site/{site-id}/slice/{slice-id}/priority-traffic-rule/{priority-traffic-rule-id}/mbr
+      tags:
+      - Enterprises_Enterprise_Site_Slice_Priority-traffic-rule
   ? /aether/v2.0.x/{target}/enterprises/enterprise/{enterprise-id}/site/{site-id}/slice/{slice-id}/priority-traffic-rule/{priority-traffic-rule-id}/traffic-class/values
   : description: Link to traffic class
     get:

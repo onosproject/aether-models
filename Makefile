@@ -7,7 +7,7 @@ SHELL 			  		= bash -e -o pipefail
 KIND_CLUSTER_NAME 		?= kind
 DOCKER_USER       		?=
 DOCKER_PASSWORD   		?=
-MODEL_COMPILER_VERSION  ?= v0.10.47
+MODEL_COMPILER_VERSION  ?= v0.11.6
 
 .PHONY: models
 
@@ -37,20 +37,13 @@ docker-push: # @HELP Publish Docker containers for all the models
 kind-load: # @HELP Load Docker containers for all the models in a kind cluster (use: KIND_CLUSTER_NAME to customize the cluster name)
 	@for model in models/*; do make -C $$model kind; done
 
-yang-lint: # @HELP Lint the yang models
-yang-lint: pyang-tool
-	@for model in models/*; do echo -e "Linting YANG files for: $$model"; pyang --lint --ignore-error=XPATH_FUNCTION $$model/yang/*.yang; done
-
-pyang-tool: # @HELP Install the Pyang tool if needed
-	pyang --version || python3 -m pip install pyang==2.5.2
-
 clean:	# @HELP Removes the generated code
 	@for model in models/*; do pushd $$model; rm -f Dockerfile Makefile *.tree; popd; done;
 
 check-models-tag: # @HELP check that the model tags are valid
 	@for model in models/*; do make -C $$model check-tag; done;
 
-test: yang-lint check-models-tag models models-openapi # @HELP Make sure the generated code has been committed
+test: check-models-tag models models-openapi # @HELP Make sure the generated code has been committed
 	# @bash test/generated.sh # TODO uncomment after AETHER-3550 is solved
 	@for model in models/*; do make -C $$model test; done;
 

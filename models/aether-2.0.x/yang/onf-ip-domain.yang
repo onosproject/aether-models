@@ -1,82 +1,89 @@
-// SPDX-FileCopyrightText: 2021 Open Networking Foundation
-//
-// SPDX-License-Identifier: Apache-2.0
-
 submodule onf-ip-domain {
-  belongs-to onf-enterprise { prefix ent; }
+  belongs-to onf-enterprise {
+    prefix ent;
+  }
 
-  import ietf-inet-types { prefix inet; }
-  import onf-aether-types { prefix at; }
+  import ietf-inet-types {
+    prefix inet;
+  }
+  import onf-aether-types {
+    prefix at;
+  }
 
-  organization "Open Networking Foundation.";
-  contact "Scott Baker";
+  organization
+    "Open Networking Foundation.";
+  contact
+    "Scott Baker";
   description
     "An Aether IP-Domain. This is a list of available subnets
      that may be assigned to UEs, as well as DNS servers and other
      metadata";
 
-  revision "2022-01-14" {
-    description "Refactored as submodule";
-    reference "RFC 6020";
+  revision 2022-01-14 {
+    description
+      "Refactored as submodule";
+    reference
+      "RFC 6020";
   }
-
-  revision "2021-06-02" {
-    description "An Aether IP and Domain Specification";
-    reference "RFC 6087";
+  revision 2021-06-02 {
+    description
+      "An Aether IP and Domain Specification";
+    reference
+      "RFC 6087";
   }
 
   typedef ip-domain-id {
     type at:aether-identifier;
-    description "The typedef for ip-domain-id";
+    description
+      "The typedef for ip-domain-id";
   }
 
   grouping ip-domain {
-    description "The ip-domain grouping";
-
+    description
+      "The ip-domain grouping";
     list ip-domain {
       key "ip-domain-id";
       description
         "List of ip domains";
-
       leaf ip-domain-id {
         type ip-domain-id;
-        description "ID for this ip domain.";
+        description
+          "ID for this ip domain.";
       }
-
       uses at:desc-display-name;
-
       leaf dnn {
         type at:dnn;
         mandatory true;
-        description "DNN/APN";
+        description
+          "DNN/APN";
       }
-
       leaf dns-primary {
         type inet:ip-address;
-        description "primary dns server name";
+        description
+          "primary dns server name";
       }
-
       leaf dns-secondary {
         type inet:ip-address;
-        description "secondary dns server name";
+        description
+          "secondary dns server name";
       }
-
       // Note: Cannot use a subnet as a list key. Dropped support from a
       // list of subnets to a single subnet. Revisit in the future.
       leaf subnet {
         type inet:ipv4-prefix;
         mandatory true;
-        description "subnet to allocate ip addresses from";
+        description
+          "subnet to allocate ip addresses from";
       }
-
       leaf admin-status {
         type at:admin-status;
-        description "administrative status";
+        description
+          "administrative status";
       }
-
       leaf mtu {
         type at:mtu;
-        description "maximum transmission unit";
+        description
+          "maximum transmission unit";
       }
     }
   }
