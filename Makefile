@@ -23,7 +23,17 @@ help: # @HELP Print the command options
 	'
 
 models: clean # @HELP Generate Golang code for all the models
-	@for model in models/*; do echo -e "Generating $$model:\n"; docker run -v $$(pwd)/$$model:/config-model onosproject/model-compiler:${MODEL_COMPILER_VERSION}; echo -e "\n\n"; done
+	@for model in models/*; do \
+		echo -e "Generating $$model:\n"; \
+		docker run -v $$(pwd)/$$model:/config-model onosproject/model-compiler:${MODEL_COMPILER_VERSION}; \
+		for yangfile in $$model/yang/*; do \
+			sed '1 i\// SPDX-License-Identifier: Apache-2.0\n' $$(pwd)/$$yangfile > $$(pwd)/$$yangfile.temp ; \
+			sed '1 i\// SPDX-FileCopyrightText: 2022-present Intel Corporation\n// SPDX-FileCopyrightText: 2021 Open Networking Foundation\n//' $$(pwd)/$$yangfile.temp > $$(pwd)/$$yangfile ; \
+			rm $$(pwd)/$$yangfile.temp; \
+		done; \
+		echo -e "\n\n"; \
+	done
+
 
 models-openapi: # @HELP generates the openapi specs for the models
 	@for model in models/*; do echo -e "Building OpenApi Specs for $$model:\n"; make -C $$model openapi; echo -e "\n\n"; done
