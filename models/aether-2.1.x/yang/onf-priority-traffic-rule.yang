@@ -4,46 +4,56 @@
 // SPDX-License-Identifier: Apache-2.0
 
 submodule onf-priority-traffic-rule {
-  belongs-to onf-site { prefix site; }
+  belongs-to onf-site {
+    prefix site;
+  }
 
-  import onf-aether-types{ prefix at; }
-  import onf-traffic-class{ prefix tc; }
-  import onf-application{ prefix app; }
-
+  import onf-aether-types {
+    prefix at;
+  }
+  import onf-traffic-class {
+    prefix tc;
+  }
+  import onf-application {
+    prefix app;
+  }
   include onf-device;
 
-  organization "Open Networking Foundation.";
-  contact "ROC Engineering";
+  organization
+    "Open Networking Foundation.";
+  contact
+    "ROC Engineering";
   description
     "The aether traffic class associates qos constants
      with a named class of service";
 
-  revision "2022-01-19" {
-    description "An Aether Priority Traffic Rule";
-    reference "RFC 6087";
+  revision 2022-01-19 {
+    description
+      "An Aether Priority Traffic Rule";
+    reference
+      "RFC 6087";
   }
 
   typedef priority-traffic-rule-id {
     type at:aether-identifier;
-    description "The typedef for priority traffic rule id";
+    description
+      "The typedef for priority traffic rule id";
   }
 
   grouping priority-traffic-rule {
-    description "The top level container";
-
+    description
+      "The top level container";
     list priority-traffic-rule {
       key "priority-traffic-rule-id";
       unique "device endpoint";
       description
         "List of priority traffic rules";
-
       leaf priority-traffic-rule-id {
         type priority-traffic-rule-id;
-        description "ID for this priority traffic class.";
+        description
+          "ID for this priority traffic class.";
       }
-
       uses at:desc-display-name;
-
       leaf device {
         type leafref {
           path "../../../device/device-id";
@@ -52,7 +62,6 @@ submodule onf-priority-traffic-rule {
         description
           "Link to device";
       }
-
       leaf application {
         type leafref {
           path "/app:application/app:application-id";
@@ -61,7 +70,6 @@ submodule onf-priority-traffic-rule {
         description
           "Link to application";
       }
-
       leaf endpoint {
         type leafref {
           path "/app:application/app:endpoint/app:endpoint-id";
@@ -70,23 +78,27 @@ submodule onf-priority-traffic-rule {
         description
           "Link to endpoint in application";
       }
-
-      choice bitrate {
-        description "Either an GBR or an MBR can be specified, but not both";
-        case mbr-case {
-          container mbr {
-            description "Per-Device per-Application MBR (Maximum BitRate) in bps";
-            uses bitrate;
-          }
-        }
-        case gbr-case {
-          container gbr {
-            description "Per-Device per-Application GBR (Guaranteed BitRate) in bps";
-            uses bitrate;
-          }
-        }
+      /*      choice bitrate { omitting choice until it can be handled properly
+              description
+                "Either an GBR or an MBR can be specified, but not both";
+              case mbr-case {
+       */
+      container mbr {
+        description
+          "Per-Device per-Application MBR (Maximum BitRate) in bps";
+        uses bitrate;
       }
-
+      /*        }
+              case gbr-case {
+       */
+      container gbr {
+        description
+          "Per-Device per-Application GBR (Guaranteed BitRate) in bps";
+        uses bitrate;
+      }
+      /*        }
+            }
+       */
       leaf traffic-class {
         type leafref {
           path "/tc:traffic-class/tc:traffic-class-id";
@@ -98,17 +110,19 @@ submodule onf-priority-traffic-rule {
   }
 
   grouping bitrate {
-      description "uplink and downlink leafs for GBR and MBR";
-      leaf uplink {
-        type at:bitrate;
-        units bps;
-        description "Per-Device per-Application uplink data rate in bps";
-      }
-
-      leaf downlink {
-        type at:bitrate;
-        units bps;
-        description "Per-Device per application downlink data rate in bps";
-      }
+    description
+      "uplink and downlink leafs for GBR and MBR";
+    leaf uplink {
+      type at:bitrate;
+      units "bps";
+      description
+        "Per-Device per-Application uplink data rate in bps";
+    }
+    leaf downlink {
+      type at:bitrate;
+      units "bps";
+      description
+        "Per-Device per application downlink data rate in bps";
+    }
   }
 }

@@ -4,51 +4,60 @@
 // SPDX-License-Identifier: Apache-2.0
 
 submodule onf-slice {
-  belongs-to onf-site { prefix site; }
+  belongs-to onf-site {
+    prefix site;
+  }
 
-  import onf-aether-types{ prefix at; }
-  import onf-application{ prefix app; }
-
+  import onf-aether-types {
+    prefix at;
+  }
+  import onf-application {
+    prefix app;
+  }
   include onf-upf;
   include onf-device-group;
   include onf-priority-traffic-rule;
 
-  organization "Open Networking Foundation.";
-  contact "ROC Engineering";
+  organization
+    "Open Networking Foundation.";
+  contact
+    "ROC Engineering";
   description
     "An Aether Slice is
      used to connect devices with applications";
 
-  revision "2022-01-14" {
-    description "Refactored as submodule";
-    reference "RFC 6020";
+  revision 2022-01-14 {
+    description
+      "Refactored as submodule";
+    reference
+      "RFC 6020";
   }
-
-  revision "2021-09-10" {
-    description "An Aether Slice";
-    reference "RFC 6087";
+  revision 2021-09-10 {
+    description
+      "An Aether Slice";
+    reference
+      "RFC 6087";
   }
 
   typedef slice-id {
     type at:aether-identifier;
-    description "The typedef for slice-id";
+    description
+      "The typedef for slice-id";
   }
 
   grouping slice {
-    description "The slice grouping";
-
+    description
+      "The slice grouping";
     list slice {
       key "slice-id";
       description
         "List of Slices";
-
       leaf slice-id {
         type slice-id;
-        description "ID for this slice.";
+        description
+          "ID for this slice.";
       }
-
       uses at:desc-display-name;
-
       list device-group {
         key "device-group";
         leaf device-group {
@@ -60,7 +69,7 @@ submodule onf-slice {
         }
         leaf enable {
           type boolean;
-          default true;
+          default "true";
           description
             "Enable this device group";
         }
@@ -68,14 +77,12 @@ submodule onf-slice {
           "A list of device groups. Groups will only participate in
            the Slice if the enable field is set to True";
       }
-
       leaf default-behavior {
         type at:behavior;
         mandatory true;
         description
           "Default behavior if no filter rules match";
       }
-
       list filter {
         key "application";
         leaf application {
@@ -88,13 +95,13 @@ submodule onf-slice {
         }
         leaf priority {
           type at:priority;
-          default 0;
+          default "0";
           description
             "Priority of this application";
         }
         leaf allow {
           type boolean;
-          default true;
+          default "true";
           description
             "Allow or deny this application";
         }
@@ -103,7 +110,6 @@ submodule onf-slice {
            priority order. The first rule to match will determine the fate
            of the packet.";
       }
-
       leaf upf {
         type leafref {
           path "../../upf/upf-id";
@@ -111,65 +117,66 @@ submodule onf-slice {
         description
           "Link to user plane that implements this vcf";
       }
-
       // the following are populated from the template
       leaf sst {
         type at:sst;
         mandatory true;
-        description "Slice/Service type. Immutable.";
+        description
+          "Slice/Service type. Immutable.";
       }
-
       leaf sd {
         type at:sd;
         mandatory true;
-        description "Slice differentiator. Immutable.";
+        description
+          "Slice differentiator. Immutable.";
       }
-
       leaf connectivity-service {
         type enumeration {
           enum 4g {
             value 4;
-            description "Use the 4g connectivity service";
+            description
+              "Use the 4g connectivity service";
           }
           enum 5g {
             value 5;
-            description "Use the 5g connectivity service";
+            description
+              "Use the 5g connectivity service";
           }
         }
-        default 5g;
-        description "The type of connectivity service 4g/5g to use with the slice";
+        default "5g";
+        description
+          "The type of connectivity service 4g/5g to use with the slice";
       }
-
       container mbr {
-        description "Per slice Maximum Bit Rate";
+        description
+          "Per slice Maximum Bit Rate";
         leaf uplink {
           type at:bitrate;
-          units bps;
-          description "Per-Slice MBR uplink data rate in bps";
+          units "bps";
+          description
+            "Per-Slice MBR uplink data rate in bps";
         }
-
         leaf downlink {
           type at:bitrate;
-          units bps;
-          description "Per-Slice MBR downlink data rate in bps";
+          units "bps";
+          description
+            "Per-Slice MBR downlink data rate in bps";
         }
-
         leaf uplink-burst-size {
           type at:burst;
-          units bytes;
-          description "Per-Slice Uplink burst size";
+          units "bytes";
+          description
+            "Per-Slice Uplink burst size";
         }
-
         leaf downlink-burst-size {
           type at:burst;
-          units bytes;
-          description "Per-Slice Downlink burst size";
+          units "bytes";
+          description
+            "Per-Slice Downlink burst size";
         }
       }
-
       // end of items populated from the template
       uses priority-traffic-rule;
-
     }
   }
 }

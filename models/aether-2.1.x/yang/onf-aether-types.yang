@@ -7,204 +7,235 @@ module onf-aether-types {
   namespace "http://opennetworking.org/aether/aether-types";
   prefix at;
 
-  import ietf-inet-types { prefix inet; }
+  import ietf-inet-types {
+    prefix inet;
+  }
 
-  organization "Open Networking Foundation.";
-  contact "ROC Engineering";
-  description "A set of base types for aether modeling.";
+  organization
+    "Open Networking Foundation.";
+  contact
+    "ROC Engineering";
+  description
+    "A set of base types for aether modeling.";
 
-  revision "2021-09-10" {
-    description "Aether Base Types";
-    reference "RFC 6087";
+  revision 2021-09-10 {
+    description
+      "Aether Base Types";
+    reference
+      "RFC 6087";
   }
 
   typedef aether-identifier {
     type string {
-        length 1..63;
-        pattern '[a-z]([a-z0-9-]?[a-z0-9])*';
+      length "1..63";
+      pattern '[a-z]([a-z0-9-]?[a-z0-9])*';
     }
-    description "Identifier for objects in the Aether modeling";
+    description
+      "Identifier for objects in the Aether modeling";
   }
 
   typedef imsi {
-      type string {
-          length 14..15;
-          pattern '[0-9]{14,15}';
-      }    
-    description "International Mobile Subscriber Identity";
+    type string {
+      length "14..15";
+      pattern '[0-9]{14,15}';
+    }
+    description
+      "International Mobile Subscriber Identity";
   }
 
   typedef imei {
-      type string {
-          length 14..16;
-          pattern '[0-9]{14,16}';
-      }
-    description "International Mobile Equipment Identity";
+    type string {
+      length "14..16";
+      pattern '[0-9]{14,16}';
+    }
+    description
+      "International Mobile Equipment Identity";
   }
 
   typedef iccid {
-      type string {
-          length 19..22;
-          pattern '[0-9]{18,21}[0-9A-F]';
-      }      
-    description "Integrated Circuit Card ID";
+    type string {
+      length "19..22";
+      pattern '[0-9]{18,21}[0-9A-F]';
+    }
+    description
+      "Integrated Circuit Card ID";
   }
 
   typedef bitrate {
-      type uint64 {
-      }
-    description "The typedef for bitrate";
+    type uint64;
+    description
+      "The typedef for bitrate";
   }
 
   typedef burst {
-      type uint32 {
-      }
-      default 625000;
-    description "The typedef for burst";
+    type uint32;
+    default "625000";
+    description
+      "The typedef for burst";
   }
 
   typedef mcc {
-      type string {
-        pattern '[0-9]{3}';
-      }
-    description "The typedef for mcc";
+    type string {
+      pattern '[0-9]{3}';
+    }
+    description
+      "The typedef for mcc";
   }
 
   typedef mnc {
-      type string {
-        pattern '[0-9]{2,3}';
-      }
-    description "The typedef for mnc";
+    type string {
+      pattern '[0-9]{2,3}';
+    }
+    description
+      "The typedef for mnc";
   }
 
   typedef tac {
-      type string {
-        length 1..6;
-        pattern '[0-9A-F\.]{1,6}';
-      }
-    description "The typedef for tac, a 24-bit hexadecimal-encoded number with optional leading zeroes that carry semantic meaning. No 0x prefix is used.";
+    type string {
+      length "1..6";
+      pattern '[0-9A-F\.]{1,6}';
+    }
+    description
+      "The typedef for tac, a 24-bit hexadecimal-encoded number with optional leading zeroes that carry semantic meaning. No 0x prefix is used.";
   }
 
   typedef ent {
-      type uint32 {
-        range 0..999;
-      }
-    description "The typedef for ent";
+    type uint32 {
+      range "0..999";
+    }
+    description
+      "The typedef for ent";
   }
 
   typedef dnn {
-      type string {
-        length 1..32;
-      }
-    description "The typedef for dnn";
+    type string {
+      length "1..32";
+    }
+    description
+      "The typedef for dnn";
   }
 
   typedef sst {
-      type string {
-          length 1..2;
-          pattern '[0-9A-F\.]{1,2}';
-      }    
-    description "The typedef for sst, an 8-bit hexidecimal-encoded number with optional leading zeroes that carry semantic meaning. No 0x prefix is used.";
+    type string {
+      length "1..2";
+      pattern '[0-9A-F\.]{1,2}';
+    }
+    description
+      "The typedef for sst, an 8-bit hexidecimal-encoded number with optional leading zeroes that carry semantic meaning. No 0x prefix is used.";
   }
 
   typedef sd {
-      type string {
-          length 1..6;
-          pattern '[0-9A-F\.]{1,6}';
-      }    
-    description "The typedef for sd, a 24-bit hexadecimal-encoded number with optional leading zeroes that carry semantic meaning. No 0x prefix is used.";
+    type string {
+      length "1..6";
+      pattern '[0-9A-F\.]{1,6}';
+    }
+    description
+      "The typedef for sd, a 24-bit hexadecimal-encoded number with optional leading zeroes that carry semantic meaning. No 0x prefix is used.";
   }
 
   typedef qci {
-      type uint8 {
-        range 1..32;
-      }
-    description "The typedef for qci";
+    type uint8 {
+      range "1..32";
+    }
+    description
+      "The typedef for qci";
   }
 
   typedef arp {
-      type uint8 {
-        range 1..15;
-      }
-    description "The typedef for arp";
+    type uint8 {
+      range "1..15";
+    }
+    description
+      "The typedef for arp";
   }
 
   typedef pelr {
-      type int8 {
-        range 0..10;
-      }
-    description "The typedef for pelr";
+    type int8 {
+      range "0..10";
+    }
+    description
+      "The typedef for pelr";
   }
 
   typedef pdb {
-      type uint16 {
-        range 0..1000;
-      }
-    description "The typedef for pdb";
+    type uint16 {
+      range "0..1000";
+    }
+    description
+      "The typedef for pdb";
   }
 
   typedef priority {
     type uint8 {
       // priorities 201-255 are reserved for system use
-      range 0..200;
+      range "0..200";
     }
-    description "The typedef for priority";
+    description
+      "The typedef for priority";
   }
 
   // "TCP" or "UDP"
+
   typedef protocol {
-      type string {
-        length 3;
-        pattern "TCP|UDP";
-      }
-      default "TCP";
-    description "The typedef for protocol";
+    type string {
+      length "3";
+      pattern 'TCP|UDP';
+    }
+    default "TCP";
+    description
+      "The typedef for protocol";
   }
 
   // "ENABLE" | "MAINTENTANCE" | "DISABLE"
+
   typedef admin-status {
-      type string {
-        length 0..16;
-        pattern "ENABLE|MAINTENANCE|DISABLE";
-      }
-      default "ENABLE";
-    description "The typedef for admin-status";
+    type string {
+      length "0..16";
+      pattern 'ENABLE|MAINTENANCE|DISABLE';
+    }
+    default "ENABLE";
+    description
+      "The typedef for admin-status";
   }
 
   typedef behavior {
-      type string {
-        length 0..20;
-        pattern "DENY-ALL|ALLOW-ALL|ALLOW-PUBLIC";
-      }
-    description "The typedef for behavior";
+    type string {
+      length "0..20";
+      pattern 'DENY-ALL|ALLOW-ALL|ALLOW-PUBLIC';
+    }
+    description
+      "The typedef for behavior";
   }
 
   typedef mtu {
-      type inet:port-number;
-      default 1492;
-    description "The typedef for mtu";
+    type inet:port-number;
+    default "1492";
+    description
+      "The typedef for mtu";
   }
 
   typedef description {
     type string {
-      length 1..1024;
+      length "1..1024";
     }
-    description "The typedef for description";
+    description
+      "The typedef for description";
   }
 
   grouping desc-display-name {
-    description "reusable leafs for description and display-name";
+    description
+      "reusable leafs for description and display-name";
     leaf display-name {
       type string {
-          length 1..80;
+        length "1..80";
       }
-      description "display name to use in GUI or CLI";
+      description
+        "display name to use in GUI or CLI";
     }
-
     leaf description {
       type description;
-      description "long description field";
+      description
+        "long description field";
     }
   }
 }
- 

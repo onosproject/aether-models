@@ -81,15 +81,12 @@ module: onf-site
      |     +--rw device                      -> ../../../device/device-id
      |     +--rw application                 -> /app:application/application-id
      |     +--rw endpoint                    -> /app:application/endpoint/endpoint-id
-     |     +--rw (bitrate)?
-     |     |  +--:(mbr-case)
-     |     |  |  +--rw mbr
-     |     |  |     +--rw uplink?     at:bitrate
-     |     |  |     +--rw downlink?   at:bitrate
-     |     |  +--:(gbr-case)
-     |     |     +--rw gbr
-     |     |        +--rw uplink?     at:bitrate
-     |     |        +--rw downlink?   at:bitrate
+     |     +--rw mbr
+     |     |  +--rw uplink?     at:bitrate
+     |     |  +--rw downlink?   at:bitrate
+     |     +--rw gbr
+     |     |  +--rw uplink?     at:bitrate
+     |     |  +--rw downlink?   at:bitrate
      |     +--rw traffic-class?              -> /tc:traffic-class/traffic-class-id
      +--rw device-group* [device-group-id]
      |  +--rw device-group-id    device-group-id

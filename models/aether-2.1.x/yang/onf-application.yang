@@ -7,93 +7,109 @@ module onf-application {
   namespace "http://opennetworking.org/aether/application";
   prefix app;
 
-  import ietf-inet-types{ prefix inet; }
-  import onf-aether-types{ prefix at; }
-  import onf-traffic-class{ prefix tc; }
+  import ietf-inet-types {
+    prefix inet;
+  }
+  import onf-aether-types {
+    prefix at;
+  }
+  import onf-traffic-class {
+    prefix tc;
+  }
 
-  organization "Open Networking Foundation.";
-  contact "ROC Engineering";
+  organization
+    "Open Networking Foundation.";
+  contact
+    "ROC Engineering";
   description
     "An Aether Application is an application that devices may
      connect to. Includes a set of endpoints where services are
      provided.";
 
-  revision "2022-04-01" {
-    description "Brought back up to top level since enterprise moved out";
-    reference "RFC 6020";
+  revision 2022-04-01 {
+    description
+      "Brought back up to top level since enterprise moved out";
+    reference
+      "RFC 6020";
   }
-
-  revision "2022-01-14" {
-    description "Refactored as submodule";
-    reference "RFC 6020";
+  revision 2022-01-14 {
+    description
+      "Refactored as submodule";
+    reference
+      "RFC 6020";
   }
-
-  revision "2021-09-10" {
-    description "Aether Application.";
-    reference "RFC 6087";
+  revision 2021-09-10 {
+    description
+      "Aether Application.";
+    reference
+      "RFC 6087";
   }
 
   typedef application-id {
     type at:aether-identifier;
-    description "The typedef for application-id";
+    description
+      "The typedef for application-id";
   }
 
   list application {
     key "application-id";
-    description "List of applications";
-
+    description
+      "List of applications";
     leaf application-id {
       type application-id;
-      description "ID for this application.";
+      description
+        "ID for this application.";
     }
-
     uses at:desc-display-name;
-
     leaf address {
       type inet:ip-prefix;
       mandatory true;
       description
-          "Address of this application. An IP address with subnet (IPv4 or IPv6)";
+        "Address of this application. An IP address with subnet (IPv4 or IPv6)";
     }
-
     list endpoint {
-      must "number(./app:port-start) <= number(./app:port-end)" {
+      must 'number(./app:port-start) <= number(./app:port-end)' {
         error-message "port-start must be less than or equal to port-end";
-        description "prevent a port-start and -end having negative range";
+        description
+          "prevent a port-start and -end having negative range";
       }
       key "endpoint-id";
       leaf endpoint-id {
         type at:aether-identifier;
-        description "Id of this endpoint";
+        description
+          "Id of this endpoint";
       }
-
       uses at:desc-display-name;
-
       leaf port-start {
         type inet:port-number;
         mandatory true;
-        description "First port in range";
+        description
+          "First port in range";
       }
       leaf port-end {
         type inet:port-number;
-        description "Last port in range";
+        description
+          "Last port in range";
       }
       leaf protocol {
         type at:protocol;
-        description "Protocol of this endpoint";
+        description
+          "Protocol of this endpoint";
       }
       container mbr {
-        description "Maximum bitrate";
+        description
+          "Maximum bitrate";
         leaf uplink {
           type at:bitrate;
-          units bps;
-          description "Per-Device per-Application MBR uplink data rate in bps";
+          units "bps";
+          description
+            "Per-Device per-Application MBR uplink data rate in bps";
         }
-
         leaf downlink {
           type at:bitrate;
-          units bps;
-          description "Per-Device per application MBR downlink data rate in bps";
+          units "bps";
+          description
+            "Per-Device per application MBR downlink data rate in bps";
         }
       }
       leaf traffic-class {
@@ -102,9 +118,9 @@ module onf-application {
         }
         description
           "Link to traffic class";
-        }
-
-      description "list for endpoint";
+      }
+      description
+        "list for endpoint";
     }
   }
 }

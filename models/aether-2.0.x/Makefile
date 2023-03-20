@@ -12,7 +12,8 @@ VERSION           ?= ${BASE_VERSION}-aether-2.0.x
 LATEST_VERSION           ?= ${BASE_VERSION}-aether-latest
 GO_TAG ?= models/aether-2.0.x/v${BASE_VERSION}
 KIND_CLUSTER_NAME ?= kind
-PLATFORM ?= --platform linux/x86_64
+PLATFORM ?= linux/x86_64
+LOCAL_BIN ?= .local/bin
 IS_RELEASED_VERSION=$(shell MY_STRING="${BASE_VERSION}"; MY_REGEX='^([0-9]+)\.([0-9]+)\.([0-9]+)$$'; if [[ $$MY_STRING =~ $$MY_REGEX ]]; then echo true; else echo false; fi)
 
 ## Docker labels. Only set ref and commit date if committed
@@ -51,8 +52,15 @@ mod-update: # @HELP Download the dependencies to the vendor folder
 	go mod tidy
 	go mod vendor
 
-image: mod-update # @HELP Build the docker image (available parameters: DOCKER_REPOSITORY, VERSION)
-	docker build ${PLATFORM} $(DOCKER_BUILD_ARGS) -t ${DOCKER_REPOSITORY}aether-2.0.x:${VERSION} .
+hadolint: #lint the Dockerfile
+	@hadolint --version || (mkdir -p $$HOME/${LOCAL_BIN} && \
+	    curl -L -o $$HOME/${LOCAL_BIN}/hadolint https://github.com/hadolint/hadolint/releases/download/v2.12.0/hadolint-$(shell uname -s)-$(shell uname -m) && \
+	    chmod +x $$HOME/${LOCAL_BIN}/hadolint && \
+	    echo "hadolint downloaded to $$HOME/${LOCAL_BIN} - ensure this dir is in PATH")
+	hadolint Dockerfile
+
+image: hadolint mod-update # @HELP Build the docker image (available parameters: DOCKER_REPOSITORY, VERSION)
+	docker build --platform ${PLATFORM} $(DOCKER_BUILD_ARGS) -t ${DOCKER_REPOSITORY}aether-2.0.x:${VERSION} .
 	docker tag ${DOCKER_REPOSITORY}aether-2.0.x:${VERSION} ${DOCKER_REPOSITORY}aether-2.0.x:${LATEST_VERSION}
 
 .PHONY: build-openapi

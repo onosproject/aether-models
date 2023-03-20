@@ -1,18 +1,24 @@
+// SPDX-FileCopyrightText: 2022-present Intel Corporation
 // SPDX-FileCopyrightText: 2021 Open Networking Foundation
 //
 // SPDX-License-Identifier: Apache-2.0
 
 submodule onf-device-group {
-  belongs-to onf-enterprise { prefix ent; }
+  belongs-to onf-enterprise {
+    prefix ent;
+  }
 
-  import onf-aether-types { prefix at; }
-
+  import onf-aether-types {
+    prefix at;
+  }
   include onf-ip-domain;
   include onf-traffic-class;
   include onf-device;
 
-  organization "Open Networking Foundation.";
-  contact "Scott Baker";
+  organization
+    "Open Networking Foundation.";
+  contact
+    "Scott Baker";
   description
     "An aether device group represents a list of device IMSIS.
      This list is expressed as a set of ranges,
@@ -24,41 +30,43 @@ submodule onf-device-group {
      and DNS settings that apply to devices within the
      group";
 
-  revision "2022-01-14" {
-    description "Refactored as submodule";
-    reference "RFC 6020";
+  revision 2022-01-14 {
+    description
+      "Refactored as submodule";
+    reference
+      "RFC 6020";
   }
-
-  revision "2021-06-02" {
-    description "An Aether Device Group";
-    reference "RFC 6087";
+  revision 2021-06-02 {
+    description
+      "An Aether Device Group";
+    reference
+      "RFC 6087";
   }
 
   typedef device-group-id {
     type at:aether-identifier;
-    description "The typedef for device-group-id";
+    description
+      "The typedef for device-group-id";
   }
 
   grouping device-group {
-    description "The device-group grouping";
-
+    description
+      "The device-group grouping";
     list device-group {
-//      must "count(../ent:ip-domain[@ent:ip-id=ent:ip-domain]) = 1" {
-//        error-message "no 2 device-groups can use same ip-domain DNN";
-//        description "device-group refers to ip-domain. the DNN in ip-domain cannot
-//        be used by more than 1 slice";
-//      }
+      //      must "count(../ent:ip-domain[@ent:ip-id=ent:ip-domain]) = 1" {
+      //        error-message "no 2 device-groups can use same ip-domain DNN";
+      //        description "device-group refers to ip-domain. the DNN in ip-domain cannot
+      //        be used by more than 1 slice";
+      //      }
       key "device-group-id";
       description
         "List of device groups";
-
       leaf device-group-id {
         type device-group-id;
-        description "ID for this device group.";
+        description
+          "ID for this device group.";
       }
-
       uses at:desc-display-name;
-
       list device {
         key "device-id";
         leaf device-id {
@@ -66,17 +74,17 @@ submodule onf-device-group {
             path "../../../device/device-id";
           }
           description
-             "Link to device";
+            "Link to device";
         }
         leaf enable {
           type boolean;
-          default true;
+          default "true";
           description
             "Enable this device";
         }
-        description "list of devices in this device-group";
+        description
+          "list of devices in this device-group";
       }
-
       leaf ip-domain {
         type leafref {
           path "../../ip-domain/ip-domain-id";
@@ -85,24 +93,24 @@ submodule onf-device-group {
           "Link to ip-domain settings that determine the pool of IP addresses,
            as well as the domain resolver settings to use";
       }
-
       container mbr {
-        description "Maximum bitrate";
+        description
+          "Maximum bitrate";
         leaf uplink {
           type at:bitrate;
-          units bps;
+          units "bps";
           mandatory true;
-          description "Per-device MBR uplink data rate in bps";
+          description
+            "Per-device MBR uplink data rate in bps";
         }
-
         leaf downlink {
           type at:bitrate;
-          units bps;
+          units "bps";
           mandatory true;
-          description "Per-device MBR downlink data rate in bps";
+          description
+            "Per-device MBR downlink data rate in bps";
         }
       }
-
       leaf traffic-class {
         type leafref {
           path "../../../traffic-class/traffic-class-id";

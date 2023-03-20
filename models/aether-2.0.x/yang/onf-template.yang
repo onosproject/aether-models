@@ -1,86 +1,96 @@
+// SPDX-FileCopyrightText: 2022-present Intel Corporation
 // SPDX-FileCopyrightText: 2021 Open Networking Foundation
 //
 // SPDX-License-Identifier: Apache-2.0
 
 submodule onf-template {
-  belongs-to onf-enterprise { prefix ent; }
+  belongs-to onf-enterprise {
+    prefix ent;
+  }
 
-  import onf-aether-types{ prefix at; }
+  import onf-aether-types {
+    prefix at;
+  }
 
-  organization "Open Networking Foundation.";
-  contact "Scott Baker";
+  organization
+    "Open Networking Foundation.";
+  contact
+    "Scott Baker";
   description
     "The aether slice-template holds common parameters used
      by a Slice. Templates are used to
      populate a Slice.";
 
-  revision "2022-01-14" {
-    description "Refactored as submodule";
-    reference "RFC 6020";
+  revision 2022-01-14 {
+    description
+      "Refactored as submodule";
+    reference
+      "RFC 6020";
   }
-
-  revision "2021-09-10" {
-    description "An Aether Slice Template";
-    reference "RFC 6087";
+  revision 2021-09-10 {
+    description
+      "An Aether Slice Template";
+    reference
+      "RFC 6087";
   }
 
   typedef template-id {
     type at:aether-identifier;
-    description "The typedef for template-id";
+    description
+      "The typedef for template-id";
   }
 
   grouping template {
-    description "The template grouping";
-
+    description
+      "The template grouping";
     list template {
       key "template-id";
       description
         "List of slice templates";
-
       leaf template-id {
         type template-id;
-        description "ID for this slice template.";
+        description
+          "ID for this slice template.";
       }
-
       uses at:desc-display-name;
-
       leaf sst {
         type at:sst;
-        description "Slice/Service type";
+        description
+          "Slice/Service type";
       }
-
       leaf sd {
         type at:sd;
-        description "Slice differentiator";
+        description
+          "Slice differentiator";
       }
-
       container mbr {
-        description "Per-Slice QOS Settings Maximum Bit Rate";
+        description
+          "Per-Slice QOS Settings Maximum Bit Rate";
         leaf uplink {
           type at:bitrate;
-          units bps;
-          description "Per-Slice MBR uplink data rate in bps";
+          units "bps";
+          description
+            "Per-Slice MBR uplink data rate in bps";
         }
-
         leaf downlink {
           type at:bitrate;
-          units bps;
-          description "Per-Slice MBR downlink data rate in bps";
+          units "bps";
+          description
+            "Per-Slice MBR downlink data rate in bps";
         }
-
         leaf uplink-burst-size {
           type at:burst;
-          units bytes;
-          description "Per-Slice Uplink burst size";
+          units "bytes";
+          description
+            "Per-Slice Uplink burst size";
         }
-
         leaf downlink-burst-size {
           type at:burst;
-          units bytes;
-          description "Per-Slice Downlink burst size";
+          units "bytes";
+          description
+            "Per-Slice Downlink burst size";
         }
       }
-
       leaf default-behavior {
         type at:behavior;
         mandatory true;

@@ -7,7 +7,7 @@ SHELL 			  		= bash -e -o pipefail
 KIND_CLUSTER_NAME 		?= kind
 DOCKER_USER       		?=
 DOCKER_PASSWORD   		?=
-MODEL_COMPILER_VERSION  ?= v0.10.47
+MODEL_COMPILER_VERSION  ?= v0.11.6
 
 .PHONY: models
 
@@ -23,7 +23,17 @@ help: # @HELP Print the command options
 	'
 
 models: clean # @HELP Generate Golang code for all the models
-	@for model in models/*; do echo -e "Generating $$model:\n"; docker run -v $$(pwd)/$$model:/config-model onosproject/model-compiler:${MODEL_COMPILER_VERSION}; echo -e "\n\n"; done
+	@for model in models/*; do \
+		echo -e "Generating $$model:\n"; \
+		docker run -v $$(pwd)/$$model:/config-model onosproject/model-compiler:${MODEL_COMPILER_VERSION}; \
+		for yangfile in $$model/yang/*; do \
+			sed '1 i\// SPDX-License-Identifier: Apache-2.0\n' $$(pwd)/$$yangfile > $$(pwd)/$$yangfile.temp ; \
+			sed '1 i\// SPDX-FileCopyrightText: 2022-present Intel Corporation\n// SPDX-FileCopyrightText: 2021 Open Networking Foundation\n//' $$(pwd)/$$yangfile.temp > $$(pwd)/$$yangfile ; \
+			rm $$(pwd)/$$yangfile.temp; \
+		done; \
+		echo -e "\n\n"; \
+	done
+
 
 models-openapi: # @HELP generates the openapi specs for the models
 	@for model in models/*; do echo -e "Building OpenApi Specs for $$model:\n"; make -C $$model openapi; echo -e "\n\n"; done
@@ -37,20 +47,13 @@ docker-push: # @HELP Publish Docker containers for all the models
 kind-load: # @HELP Load Docker containers for all the models in a kind cluster (use: KIND_CLUSTER_NAME to customize the cluster name)
 	@for model in models/*; do make -C $$model kind; done
 
-yang-lint: # @HELP Lint the yang models
-yang-lint: pyang-tool
-	@for model in models/*; do echo -e "Linting YANG files for: $$model"; pyang --lint --ignore-error=XPATH_FUNCTION $$model/yang/*.yang; done
-
-pyang-tool: # @HELP Install the Pyang tool if needed
-	pyang --version || python3 -m pip install pyang==2.5.2
-
 clean:	# @HELP Removes the generated code
 	@for model in models/*; do pushd $$model; rm -f Dockerfile Makefile *.tree; popd; done;
 
 check-models-tag: # @HELP check that the model tags are valid
 	@for model in models/*; do make -C $$model check-tag; done;
 
-test: yang-lint check-models-tag models models-openapi # @HELP Make sure the generated code has been committed
+test: check-models-tag models models-openapi # @HELP Make sure the generated code has been committed
 	# @bash test/generated.sh # TODO uncomment after AETHER-3550 is solved
 	@for model in models/*; do make -C $$model test; done;
 

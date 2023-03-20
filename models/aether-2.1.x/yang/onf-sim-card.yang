@@ -4,56 +4,61 @@
 // SPDX-License-Identifier: Apache-2.0
 
 submodule onf-sim-card {
-  belongs-to onf-site { prefix site; }
+  belongs-to onf-site {
+    prefix site;
+  }
 
-  import onf-aether-types { prefix at; }
+  import onf-aether-types {
+    prefix at;
+  }
 
-  organization "Open Networking Foundation.";
-    contact "ROC Engineering";
+  organization
+    "Open Networking Foundation.";
+  contact
+    "ROC Engineering";
+  description
+    "A Aether Device...";
+
+  revision 2022-01-19 {
     description
-      "A Aether Device...";
-
-  revision "2022-01-19" {
-    description "An Aether Device";
-    reference "RFC 6087";
+      "An Aether Device";
+    reference
+      "RFC 6087";
   }
 
   typedef sim-card-id {
     type at:aether-identifier;
-    description "The typedef for device-id";
+    description
+      "The typedef for device-id";
   }
 
   grouping sim-card {
-    description "The top level container";
-
+    description
+      "The top level container";
     list sim-card {
       key "sim-id";
       unique "iccid";
       description
         "List of sim cards";
-
       leaf sim-id {
         type sim-card-id;
-        description "ID for this sim card.";
+        description
+          "ID for this sim card.";
       }
-
       uses at:desc-display-name;
-
       leaf iccid {
         type at:iccid;
         description
-           "ICCID for this sim card";
+          "ICCID for this sim card";
       }
-
       leaf imsi {
-          type at:imsi;
-          description
-              "IMSI for this sim card";
+        type at:imsi;
+        description
+          "IMSI for this sim card";
       }
-
       leaf enable {
         type boolean;
-        default true;
+        default "true";
         description
           "Enable this Sim-Card. Sim-Cards that are disabled will not be usable in any device in any slice.";
       }
