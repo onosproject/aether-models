@@ -2,7 +2,6 @@
 // SPDX-FileCopyrightText: 2021 Open Networking Foundation
 //
 // SPDX-License-Identifier: Apache-2.0
-
 module onf-connectivity-service {
   namespace "http://opennetworking.org/aether/connectivity-service";
   prefix cs;

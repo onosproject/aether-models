@@ -7,7 +7,7 @@ SHELL 			  		= bash -e -o pipefail
 KIND_CLUSTER_NAME 		?= kind
 DOCKER_USER       		?=
 DOCKER_PASSWORD   		?=
-MODEL_COMPILER_VERSION  ?= v0.11.6
+MODEL_COMPILER_VERSION  ?= v0.11.7
 
 .PHONY: models
 
@@ -27,9 +27,9 @@ models: clean # @HELP Generate Golang code for all the models
 		echo -e "Generating $$model:\n"; \
 		docker run -v $$(pwd)/$$model:/config-model onosproject/model-compiler:${MODEL_COMPILER_VERSION}; \
 		for yangfile in $$model/yang/*; do \
-			sed '1 i\// SPDX-License-Identifier: Apache-2.0\n' $$(pwd)/$$yangfile > $$(pwd)/$$yangfile.temp ; \
-			sed '1 i\// SPDX-FileCopyrightText: 2022-present Intel Corporation\n// SPDX-FileCopyrightText: 2021 Open Networking Foundation\n//' $$(pwd)/$$yangfile.temp > $$(pwd)/$$yangfile ; \
-			rm $$(pwd)/$$yangfile.temp; \
+			cat YANG_License_Header.txt > $$(pwd)/$$yangfile.temp; \
+			cat $$(pwd)/$$yangfile >> $$(pwd)/$$yangfile.temp; \
+			mv $$(pwd)/$$yangfile.temp $$(pwd)/$$yangfile; \
 		done; \
 		echo -e "\n\n"; \
 	done
