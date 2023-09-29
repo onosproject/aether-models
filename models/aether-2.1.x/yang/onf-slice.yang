@@ -129,6 +129,37 @@ submodule onf-slice {
         description
           "Slice differentiator. Immutable.";
       }
+      container xapp {
+        description
+          "Params related to xApp";
+        leaf rrm-min {
+          type at:ratio;
+          units "%";
+          default "0";
+          description
+            "rRMPolicyMinRatio";
+          reference
+            "3GPP TS 28.541";
+        }
+        leaf rrm-max {
+          type at:ratio;
+          units "%";
+          default "0";
+          description
+            "rRMPolicyMaxRatio";
+          reference
+            "3GPP TS 28.541";
+        }
+        leaf rrm-dedicated {
+          type at:ratio;
+          units "%";
+          default "0";
+          description
+            "rRMPolicyDedicatedRatio";
+          reference
+            "3GPP TS 28.541";
+        }
+      }
       leaf connectivity-service {
         type enumeration {
           enum 4g {

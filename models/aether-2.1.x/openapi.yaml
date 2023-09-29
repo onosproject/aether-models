@@ -49,6 +49,11 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Site_Connectivity-service_Core-5g'
+    RequestBody_Site_Connectivity-service_Ran-5g-service:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Site_Connectivity-service_Ran-5g-service'
     RequestBody_Site_Device:
       content:
         application/json:
@@ -134,6 +139,11 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Site_Slice_Priority-traffic-rule_Mbr'
+    RequestBody_Site_Slice_Xapp:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Site_Slice_Xapp'
     RequestBody_Site_Small-cell:
       content:
         application/json:
@@ -418,6 +428,8 @@ components:
           $ref: '#/components/schemas/Site_Connectivity-service_Core-4g'
         core-5g:
           $ref: '#/components/schemas/Site_Connectivity-service_Core-5g'
+        ran-5g-service:
+          $ref: '#/components/schemas/Site_Connectivity-service_Ran-5g-service'
       title: Site_Connectivity-service
       type: object
     Site_Connectivity-service_Core-4g:
@@ -449,6 +461,16 @@ components:
           type: string
           x-yang-type: uri
       title: Site_Connectivity-service_Core-5g
+      type: object
+    Site_Connectivity-service_Ran-5g-service:
+      description: Connectivity to the xApp
+      properties:
+        xapp-endpoint:
+          description: xApp Endpoint URL
+          title: xapp-endpoint
+          type: string
+          x-yang-type: uri
+      title: Site_Connectivity-service_Ran-5g-service
       type: object
     Site_Device:
       description: List of devices (single)
@@ -962,6 +984,8 @@ components:
           type: string
           x-leafref: ../../upf/upf-id
           x-leafref-resolver: /aether/v2.1.x/{enterprise-id}/site/{site-id}/slice/{slice-id}/upf/values
+        xapp:
+          $ref: '#/components/schemas/Site_Slice_Xapp'
       required:
       - default-behavior
       - sd
@@ -1194,6 +1218,29 @@ components:
           title: uplink
           type: integer
       title: Site_Slice_Priority-traffic-rule_Mbr
+      type: object
+    Site_Slice_Xapp:
+      description: Params related to xApp
+      properties:
+        rrm-dedicated:
+          description: rRMPolicyDedicatedRatio
+          maximum: 100
+          minimum: 0
+          title: rrm-dedicated
+          type: integer
+        rrm-max:
+          description: rRMPolicyMaxRatio
+          maximum: 100
+          minimum: 0
+          title: rrm-max
+          type: integer
+        rrm-min:
+          description: rRMPolicyMinRatio
+          maximum: 100
+          minimum: 0
+          title: rrm-min
+          type: integer
+      title: Site_Slice_Xapp
       type: object
     Site_Small-cell:
       additionalProperties:
@@ -1891,6 +1938,48 @@ paths:
         "201":
           description: created
       summary: POST /site/{site-id}/connectivity-service/core-5g
+      tags:
+      - Site_Connectivity-service
+  /aether/v2.1.x/{enterprise-id}/site/{site-id}/connectivity-service/ran-5g-service:
+    delete:
+      operationId: deleteSite_Connectivity-service_Ran-5g-service
+      responses:
+        "200":
+          description: DELETE 200 OK
+      summary: DELETE /site/{site-id}/connectivity-service/ran-5g-service
+      tags:
+      - Site_Connectivity-service
+    description: Connectivity to the xApp
+    get:
+      operationId: getSite_Connectivity-service_Ran-5g-service
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Site_Connectivity-service_Ran-5g-service'
+          description: GET OK 200
+      summary: GET /site/{site-id}/connectivity-service/ran-5g-service Container
+      tags:
+      - Site_Connectivity-service
+    parameters:
+    - $ref: '#/components/parameters/enterprise-id'
+    - content:
+        text/plain; charset=utf-8:
+          schema:
+            type: string
+      description: key {site-id}
+      in: path
+      name: site-id
+      required: true
+    post:
+      operationId: postSite_Connectivity-service_Ran-5g-service
+      requestBody:
+        $ref: '#/components/requestBodies/RequestBody_Site_Connectivity-service_Ran-5g-service'
+      responses:
+        "201":
+          description: created
+      summary: POST /site/{site-id}/connectivity-service/ran-5g-service
       tags:
       - Site_Connectivity-service
   /aether/v2.1.x/{enterprise-id}/site/{site-id}/device:
@@ -3460,6 +3549,56 @@ paths:
       in: path
       name: slice-id
       required: true
+  /aether/v2.1.x/{enterprise-id}/site/{site-id}/slice/{slice-id}/xapp:
+    delete:
+      operationId: deleteSite_Slice_Xapp
+      responses:
+        "200":
+          description: DELETE 200 OK
+      summary: DELETE /site/{site-id}/slice/{slice-id}/xapp
+      tags:
+      - Site_Slice
+    description: Params related to xApp
+    get:
+      operationId: getSite_Slice_Xapp
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Site_Slice_Xapp'
+          description: GET OK 200
+      summary: GET /site/{site-id}/slice/{slice-id}/xapp Container
+      tags:
+      - Site_Slice
+    parameters:
+    - $ref: '#/components/parameters/enterprise-id'
+    - content:
+        text/plain; charset=utf-8:
+          schema:
+            type: string
+      description: key {site-id}
+      in: path
+      name: site-id
+      required: true
+    - content:
+        text/plain; charset=utf-8:
+          schema:
+            type: string
+      description: key {slice-id}
+      in: path
+      name: slice-id
+      required: true
+    post:
+      operationId: postSite_Slice_Xapp
+      requestBody:
+        $ref: '#/components/requestBodies/RequestBody_Site_Slice_Xapp'
+      responses:
+        "201":
+          description: created
+      summary: POST /site/{site-id}/slice/{slice-id}/xapp
+      tags:
+      - Site_Slice
   /aether/v2.1.x/{enterprise-id}/site/{site-id}/small-cell:
     description: List of small cell addresses
     get:

@@ -27,8 +27,10 @@ module: onf-site
      |  |  +--rw endpoint?             inet:uri
      |  |  +--rw acc-prometheus-url?   inet:uri
      |  +--rw core-5g
-     |     +--rw endpoint?             inet:uri
-     |     +--rw acc-prometheus-url?   inet:uri
+     |  |  +--rw endpoint?             inet:uri
+     |  |  +--rw acc-prometheus-url?   inet:uri
+     |  +--rw ran-5g-service
+     |     +--rw xapp-endpoint?   inet:uri
      +--rw device* [device-id]
      |  +--rw device-id       device-id
      |  +--rw display-name?   string
@@ -68,6 +70,10 @@ module: onf-site
      |  +--rw upf?                     -> ../../upf/upf-id
      |  +--rw sst                      at:sst
      |  +--rw sd                       at:sd
+     |  +--rw xapp
+     |  |  +--rw rrm-min?         at:ratio
+     |  |  +--rw rrm-max?         at:ratio
+     |  |  +--rw rrm-dedicated?   at:ratio
      |  +--rw connectivity-service?    enumeration
      |  +--rw mbr
      |  |  +--rw uplink?                at:bitrate
